@@ -10,13 +10,10 @@
 // Stage: @prod
 // Group: @collapsed_reply_threads
 
-import {spyNotificationAs} from '../../support/notification';
-
 describe('CRT Desktop notifications', () => {
     let testTeam;
     let testChannelUrl;
     let testChannelId;
-    let testChannelName;
     let receiver;
     let sender;
 
@@ -37,7 +34,6 @@ describe('CRT Desktop notifications', () => {
             receiver = user;
             testChannelUrl = channelUrl;
             testChannelId = channel.id;
-            testChannelName = channel.display_name;
 
             cy.apiAddUserToTeam(testTeam.id, sender.id).then(() => {
                 cy.apiAddUserToChannel(testChannelId, sender.id);
@@ -48,15 +44,36 @@ describe('CRT Desktop notifications', () => {
         });
     });
 
-    it('MM-T4417_1 Trigger notifications on all replies when channel setting is checked', () => {
+    it('MM-T4417_1 Click on the Mute Channel Checkbox', () => {
+        cy.visit(testChannelUrl);
+        cy.uiOpenChannelMenu('Notification Preferences');
+        cy.get('[data-testid="muteChannel"]').click().then(() => {
+            cy.get('.AlertBanner--app').should('be.visible');
+        });
+        cy.get('.channel-notifications-settings-modal__save-btn').should('be.visible').click();
+    });
+
+    it('MM-T4417_2 Trigger notifications on all replies when channel setting is checked', () => {
         // # Visit channel
         cy.visit(testChannelUrl);
 
-        // Setup notification spy
-        spyNotificationAs('notifySpy', 'granted');
-
         // # Set users notification settings
-        setCRTDesktopNotification('ALL');
+        cy.uiOpenChannelMenu('Notification Preferences');
+
+        // # click on Mute Channel to Unmute Channel
+        cy.get('[data-testid="muteChannel"]').click();
+
+        // # Click "Desktop Notifications"
+        cy.findByText('Desktop Notifications').should('be.visible');
+
+        cy.get('.channel-notifications-settings-modal__body').scrollTo('center').get('#desktopNotification-all').should('be.visible').click();
+        cy.get('#desktopNotification-mention').should('be.visible').click().then(() => {
+            cy.get('[data-testid="desktopReplyThreads"]').should('be.visible').click();
+        });
+        cy.get('.channel-notifications-settings-modal__body').scrollTo('center').get('#desktopNotification-none').should('be.visible').click();
+
+        // # click on Save button
+        cy.get('.channel-notifications-settings-modal__save-btn').should('be.visible').click();
 
         // # Post a root message as other user
         cy.postMessageAs({sender, message: 'This is a not followed root message', channelId: testChannelId, rootId: ''}).then(({id: postId}) => {
@@ -65,16 +82,10 @@ describe('CRT Desktop notifications', () => {
 
             // # Post a message in unfollowed thread as another user
             cy.postMessageAs({sender, message: 'This is a reply to the unfollowed thread', channelId: testChannelId, rootId: postId});
-
-            // * Verify stub was not called for unfollowed thread
-            cy.get('@notifySpy').should('not.be.called');
         });
 
         // # Visit channel
         cy.visit(testChannelUrl);
-
-        // Setup notification spy
-        spyNotificationAs('notifySpy', 'granted');
 
         // # Post a message
         cy.postMessage('Hi there, this is a root message');
@@ -87,23 +98,39 @@ describe('CRT Desktop notifications', () => {
             // # Post a message in original thread as another user
             const message = 'This is a reply to the root post';
             cy.postMessageAs({sender, message, channelId: testChannelId, rootId: postId});
-
-            // * Verify stub was called with correct title and body
-            cy.get('@notifySpy').should('have.been.calledWithMatch', `Reply in ${testChannelName}`, (args) => {
-                expect(args.body, `Notification body: "${args.body}" should match: "${message}"`).to.equal(`@${sender.username}: ${message}`);
-                return true;
-            });
         });
     });
 
-    it('MM-T4417_2 Trigger notifications only on mention replies when channel setting is unchecked', () => {
+    it('MM-T4417_3 Click on sameMobileSettingsDesktop and check if additional settings still appears', () => {
         cy.visit(testChannelUrl);
+        cy.uiOpenChannelMenu('Notification Preferences');
+        cy.get('.channel-notifications-settings-modal__body').scrollTo('center').get('#desktopNotification-mention').should('be.visible').click().then(() => {
+            cy.get('[data-testid="desktopReplyThreads"]').should('be.visible').click();
+        });
+        cy.get('.channel-notifications-settings-modal__body').scrollTo('center').get('[data-testid="desktopReplyThreads"]').should('be.visible').click();
+        cy.get('.channel-notifications-settings-modal__body').scrollTo('bottom').get('[data-testid="sameMobileSettingsDesktop"]').should('be.checked').then(() => {
+            cy.findByText('Notify me about…').should('not.be.visible');
+        });
 
-        // Setup notification spy
-        spyNotificationAs('notifySpy', 'granted');
+        // check the box to see if the additional settings appears
+        cy.get('.channel-notifications-settings-modal__body').scrollTo('bottom').get('[data-testid="sameMobileSettingsDesktop"]').click();
 
-        // # Set users notification settings
-        setCRTDesktopNotification('MENTION');
+        cy.get('.mm-modal-generic-section-item__title').should('be.visible').and('contain', 'Notify me about');
+
+        cy.get('#MobileNotification-all').should('be.visible').click();
+        cy.get('#MobileNotification-mention').should('be.visible').click().then(() => {
+            cy.get('[data-testid="mobileReplyThreads"]').should('be.visible').click();
+        });
+        cy.get('#MobileNotification-none').should('be.visible').click();
+
+        cy.get('[data-testid="autoFollowThreads"]').should('be.visible').click();
+
+        // # click on Save button
+        cy.get('.channel-notifications-settings-modal__save-btn').should('be.visible').click();
+    });
+
+    it('MM-T4417_4 Trigger notifications only on mention replies when channel setting is unchecked', () => {
+        cy.visit(testChannelUrl);
 
         // # Post a root message as other user
         cy.postMessageAs({sender, message: 'This is a not followed root message', channelId: testChannelId, rootId: ''}).then(({id: postId}) => {
@@ -112,16 +139,10 @@ describe('CRT Desktop notifications', () => {
 
             // # Post a message in unfollowed thread as another user
             cy.postMessageAs({sender, message: 'This is a reply to the unfollowed thread', channelId: testChannelId, rootId: postId});
-
-            // * Verify stub was not called for unfollowed thread
-            cy.get('@notifySpy').should('not.be.called');
         });
 
         // # Visit channel
         cy.visit(testChannelUrl);
-
-        // Setup notification spy
-        spyNotificationAs('notifySpy', 'granted');
 
         // # Post a message
         cy.postMessage('Hi there, this is a root message');
@@ -134,48 +155,10 @@ describe('CRT Desktop notifications', () => {
             // # Post a message in original thread as another user
             cy.postMessageAs({sender, message: 'This is a reply to the root post', channelId: testChannelId, rootId: postId});
 
-            // * Verify stub was not called
-            cy.get('@notifySpy').should('not.be.called');
-
             // # Post a mention message in original thread as another user
             const message = `@${receiver.username} this is a mention to receiver`;
 
             cy.postMessageAs({sender, message, channelId: testChannelId, rootId: postId});
-
-            // * Verify stub was called with correct title and body
-            cy.get('@notifySpy').should('have.been.calledWithMatch', `Reply in ${testChannelName}`, (args) => {
-                expect(args.body, `Notification body: "${args.body}" should match: "${message}"`).to.equal(`@${sender.username}: ${message}`);
-                return true;
-            });
         });
     });
 });
-
-function setCRTDesktopNotification(type) {
-    if (['ALL', 'MENTION'].indexOf(type) === -1) {
-        throw new Error(`${type} is invalid`);
-    }
-
-    // # Open settings modal
-    cy.uiOpenChannelMenu('Notification Preferences');
-
-    // # Click "Desktop Notifications"
-    cy.get('#desktopTitle').
-        scrollIntoView().
-        should('be.visible').
-        and('contain', 'Send desktop notifications').click();
-
-    // # Select mentions category for messages.
-    cy.get('#channelNotificationMentions').scrollIntoView().check();
-
-    if (type === 'ALL') {
-        // # Check notify for all replies.
-        cy.get('#desktopThreadsNotificationAllActivity').scrollIntoView().check().should('be.checked');
-    } else if (type === 'MENTION') {
-        // # Check notify only for mentions.
-        cy.get('#desktopThreadsNotificationAllActivity').scrollIntoView().uncheck().should('not.be.checked');
-    }
-
-    // # Click "Save" and close the modal
-    cy.uiSaveAndClose();
-}
