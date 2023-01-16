@@ -246,7 +246,7 @@ export default class EmailNotificationSetting extends React.PureComponent<Props,
                             />
                         </div>,
                     ]}
-                    server_error={this.props.serverError}
+                    serverError={this.props.serverError}
                     section={'email'}
                     updateSection={this.handleUpdateSection}
                 />

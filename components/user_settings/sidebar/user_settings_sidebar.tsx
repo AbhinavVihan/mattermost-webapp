@@ -5,17 +5,14 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {ValueType} from 'react-select';
 
 import {Preferences} from 'mattermost-redux/constants';
+import SectionCreator from 'components/widgets/modals/generic/section_creator';
+import SaveChangesPanel from 'components/widgets/modals/generic/save_changes_panel';
+import CheckboxItemCreator from 'components/widgets/modals/generic/checkbox-item-creator';
+import RadioItemCreator from 'components/widgets/modals/generic/radio-item-creator';
+import ReactSelectItemCreator, {Limit} from 'components/widgets/modals/generic/react-select-item-creator';
 
-import SectionCreator from '../generic/section_creator';
-
-import {CategorySorting, ChannelCategory} from '@mattermost/types/channel_categories';
 import {PreferenceType} from '@mattermost/types/preferences';
-import SaveChangesPanel from '../generic/save_changes_panel';
-
-import CheckboxItemCreator from '../generic/checkbox-item-creator';
-
-import RadioItemCreator from '../generic/radio-item-creator';
-import ReactSelectItemCreator, {Limit} from '../generic/react-select-item-creator';
+import {CategorySorting, ChannelCategory} from '@mattermost/types/channel_categories';
 
 import {
     channelsSortDesc,
@@ -76,10 +73,10 @@ export default function UserSettingsSidebar({showUnreadsCategory, dmGmLimit, cat
         setHaveChanges(true);
     }
 
-    const handleUnreadsChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setChecked(!checked);
+    const handleUnreadsChange = useCallback((e: boolean) => {
+        setChecked(e);
         setHaveChanges(true);
-    }, [checked]);
+    }, []);
 
     function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
         setDmSorting(e.target.value);

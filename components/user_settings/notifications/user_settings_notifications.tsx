@@ -18,9 +18,9 @@ import {t} from 'utils/i18n';
 import SettingItemMax from 'components/setting_item_max';
 import SettingItemMin from 'components/setting_item_min';
 
-import {UserNotifyProps, UserProfile} from '@mattermost/types/users';
+import SectionCreator from 'components/widgets/modals/generic/section_creator';
 
-import SectionCreator from '../generic/section_creator';
+import {UserNotifyProps, UserProfile} from '@mattermost/types/users';
 
 import DesktopNotificationSettings from './desktop_notification_setting/desktop_notification_settings';
 import EmailNotificationSetting from './email_notification_setting';

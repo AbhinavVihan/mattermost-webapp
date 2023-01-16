@@ -4,15 +4,12 @@
 import React, {useCallback, useState} from 'react';
 import {Theme} from 'mattermost-redux/selectors/entities/preferences';
 import {applyTheme} from 'utils/utils';
-
-import {ActionFunc} from 'mattermost-redux/types/actions';
-
 import {Preferences} from 'mattermost-redux/constants';
+import SectionCreator from 'components/widgets/modals/generic/section_creator';
+import SaveChangesPanel from 'components/widgets/modals/generic/save_changes_panel';
+import CheckboxItemCreator from 'components/widgets/modals/generic/checkbox-item-creator';
 
-import SectionCreator from '../generic/section_creator';
 import {PreferenceType} from '@mattermost/types/preferences';
-import SaveChangesPanel from '../generic/save_changes_panel';
-import CheckboxItemCreator from '../generic/checkbox-item-creator';
 
 import PremadeThemeChooser from './premade_theme_chooser';
 
@@ -59,7 +56,6 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
     });
 
     const handleChange = useCallback((values: Record<string, boolean | string | Theme>) => {
-        console.log('handleChange', values);
         setSettings({...settings, ...values});
         setHaveChanges(true);
     }, [settings]);
@@ -89,7 +85,7 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
 
         await savePreferences(currentUserId, preferences);
         setHaveChanges(false);
-        props.saveTheme(props.teamId, currentTheme);
+        await props.saveTheme(props.teamId, currentTheme);
     };
 
     const SyncWithOsSectionContent = (
@@ -97,7 +93,7 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
             <CheckboxItemCreator
                 inputFieldValue={settings[ThemeSettings.SYNC_THEME_WITH_OS]}
                 inputFieldData={SyncWithOsSectionInputFieldData}
-                handleChange={(e) => handleChange({[ThemeSettings.SYNC_THEME_WITH_OS]: e.target.value === 'true'})}
+                handleChange={(e) => handleChange({[ThemeSettings.SYNC_THEME_WITH_OS]: e})}
             />
         </>
     );

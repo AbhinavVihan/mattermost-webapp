@@ -1,18 +1,20 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
+
 import React, {useCallback, useState} from 'react';
 import {ActionResult} from 'mattermost-redux/types/actions';
 import Constants from 'utils/constants';
 
 import {Preferences} from 'mattermost-redux/constants';
 
-import {UserProfile} from '@mattermost/types/users';
-import {PreferenceType} from '@mattermost/types/preferences';
-import SectionCreator from '../generic/section_creator';
-import RadioItemCreator from '../generic/radio-item-creator';
-import SaveChangesPanel from '../generic/save_changes_panel';
+import SectionCreator from 'components/widgets/modals/generic/section_creator';
+import RadioItemCreator from 'components/widgets/modals/generic/radio-item-creator';
+import SaveChangesPanel from 'components/widgets/modals/generic/save_changes_panel';
 
-import CheckboxItemCreator from '../generic/checkbox-item-creator';
+import CheckboxItemCreator from 'components/widgets/modals/generic/checkbox-item-creator';
+
+import {PreferenceType} from '@mattermost/types/preferences';
+import {UserProfile} from '@mattermost/types/users';
 
 import {
     AdvanceSettings,
@@ -157,17 +159,17 @@ export default function AdvancedSettingsDisplay(props: Props) {
             <CheckboxItemCreator
                 inputFieldValue={settings[AdvanceSettings.NAME_DISABLE_CLIENT_PLUGINS] === 'true'}
                 inputFieldData={DebuggingPluginInputFieldData}
-                handleChange={(e) => handleChange({[AdvanceSettings.NAME_DISABLE_CLIENT_PLUGINS]: e.target.value})}
+                handleChange={(e) => handleChange({[AdvanceSettings.NAME_DISABLE_CLIENT_PLUGINS]: e.toString()})}
             />
             <CheckboxItemCreator
                 inputFieldValue={settings[AdvanceSettings.NAME_DISABLE_TELEMETRY] === 'true'}
                 inputFieldData={DebuggingTelemetryInputFieldData}
-                handleChange={(e) => handleChange({[AdvanceSettings.NAME_DISABLE_TELEMETRY]: e.target.value})}
+                handleChange={(e) => handleChange({[AdvanceSettings.NAME_DISABLE_TELEMETRY]: e.toString()})}
             />
             <CheckboxItemCreator
                 inputFieldValue={settings[AdvanceSettings.NAME_DISABLE_TYPING_MESSAGES] === 'true'}
                 inputFieldData={DebuggingTypingInputFieldData}
-                handleChange={(e) => handleChange({[AdvanceSettings.NAME_DISABLE_TYPING_MESSAGES]: e.target.value})}
+                handleChange={(e) => handleChange({[AdvanceSettings.NAME_DISABLE_TYPING_MESSAGES]: e.toString()})}
             />
         </>
     );

@@ -26,7 +26,7 @@ import {holders, useUserSettingsTabs} from '../utils';
 import './user_settings_modal.scss';
 
 const UserSettings = React.lazy(() => import(/* webpackPrefetch: true */ 'components/user_settings'));
-const ModalSidebar = React.lazy(() => import(/* webpackPrefetch: true */ '../generic/modal_sidebar'));
+const ModalSidebar = React.lazy(() => import(/* webpackPrefetch: true */ 'components/widgets/modals/modal_sidebar'));
 
 export type Props = {
     currentUser: UserProfile;

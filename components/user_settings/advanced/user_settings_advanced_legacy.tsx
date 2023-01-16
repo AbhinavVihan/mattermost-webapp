@@ -210,7 +210,7 @@ export default class AdvancedSettingsDisplay extends React.PureComponent<Props, 
                         setting={'deactivateAccount'}
                         submit={this.handleShowDeactivateAccountModal}
                         saving={this.state.isSaving}
-                        server_error={this.state.serverError}
+                        serverError={this.state.serverError}
                         updateSection={this.handleUpdateSection}
                     />
                 );

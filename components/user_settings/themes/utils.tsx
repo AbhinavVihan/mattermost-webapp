@@ -1,11 +1,12 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
+
 import {t} from 'utils/i18n';
 
 import {Theme, ThemeKey} from 'mattermost-redux/selectors/entities/preferences';
 import {Preferences} from 'mattermost-redux/constants';
 
-import {FieldsetCheckbox} from '../generic/checkbox-item-creator';
+import {FieldsetCheckbox} from 'components/widgets/modals/generic/checkbox-item-creator';
 
 export const PreMadeLightTheme: Partial<Record<ThemeKey, Theme>> = {
     denim: Preferences.THEMES.denim,

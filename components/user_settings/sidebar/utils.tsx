@@ -4,10 +4,11 @@
 import {t} from 'utils/i18n';
 import {localizeMessage} from 'utils/utils';
 
+import {FieldsetCheckbox} from 'components/widgets/modals/generic/checkbox-item-creator';
+import {FieldsetRadio} from 'components/widgets/modals/generic/radio-item-creator';
+import {FieldsetReactSelect, Limit} from 'components/widgets/modals/generic/react-select-item-creator';
+
 import {CategorySorting} from '@mattermost/types/channel_categories';
-import {FieldsetCheckbox} from '../generic/checkbox-item-creator';
-import {FieldsetRadio} from '../generic/radio-item-creator';
-import {FieldsetReactSelect, Limit} from '../generic/react-select-item-creator';
 
 export const showUnreadsCategoryTitle = {
     id: t('user.settings.sidebar.unread.title'),
