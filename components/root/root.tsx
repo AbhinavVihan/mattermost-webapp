@@ -81,11 +81,13 @@ import {getSiteURL} from 'utils/url';
 import A11yController from 'utils/a11y_controller';
 import TeamSidebar from 'components/team_sidebar';
 
-import {UserProfile} from '@mattermost/types/users';
-
 import {ActionResult} from 'mattermost-redux/types/actions';
 
 import WelcomePostRenderer from 'components/welcome_post_renderer';
+
+import {applyTheme} from 'utils/utils';
+
+import {UserProfile} from '@mattermost/types/users';
 
 import {applyLuxonDefaults} from './effects';
 
@@ -224,7 +226,15 @@ export default class Root extends React.PureComponent<Props, State> {
 
         this.updateWindowSize();
 
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', this.handleOsColorSchemeChange);
+        }
+
         store.subscribe(() => applyLuxonDefaults(store.getState()));
+    }
+
+    handleOsColorSchemeChange = (e: MediaQueryListEvent) => {
+        applyTheme(e.matches ? Preferences.THEMES.indigo : Preferences.THEMES.denim);
     }
 
     onConfigLoaded = () => {
@@ -425,6 +435,9 @@ export default class Root extends React.PureComponent<Props, State> {
         this.mounted = true;
 
         this.initiateMeRequests();
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', this.handleOsColorSchemeChange);
+        }
 
         // See figma design on issue https://mattermost.atlassian.net/browse/MM-43649
         this.props.actions.registerCustomPostRenderer('custom_up_notification', OpenPricingModalPost, 'upgrade_post_message_renderer');

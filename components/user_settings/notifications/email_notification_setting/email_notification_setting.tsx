@@ -1,17 +1,16 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, {RefObject} from 'react';
+import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import {getEmailInterval} from 'mattermost-redux/utils/notify_props';
 
 import {Preferences, NotificationLevels} from 'utils/constants';
-import {a11yFocus, localizeMessage} from 'utils/utils';
+import {localizeMessage} from 'utils/utils';
 
-import SettingItemMin from 'components/setting_item_min';
 import SettingItemMax from 'components/setting_item_max';
-import SettingItemMinComponent from 'components/setting_item_min/setting_item_min';
+import SettingItemMin from 'components/setting_item_min';
 
 import {UserNotifyProps} from '@mattermost/types/users';
 import {PreferenceType} from '@mattermost/types/preferences';
@@ -50,8 +49,6 @@ type State = {
 };
 
 export default class EmailNotificationSetting extends React.PureComponent<Props, State> {
-    minRef: RefObject<SettingItemMinComponent>;
-
     constructor(props: Props) {
         super(props);
 
@@ -71,8 +68,6 @@ export default class EmailNotificationSetting extends React.PureComponent<Props,
             sendEmailNotifications,
             newInterval: getEmailInterval(enableEmail && sendEmailNotifications, enableEmailBatching, emailInterval),
         };
-
-        this.minRef = React.createRef();
     }
 
     static getDerivedStateFromProps(nextProps: Props, prevState: State) {
@@ -114,10 +109,6 @@ export default class EmailNotificationSetting extends React.PureComponent<Props,
         return null;
     }
 
-    focusEditButton(): void {
-        this.minRef.current?.focus();
-    }
-
     handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const enableEmail = e.currentTarget.getAttribute('data-enable-email')!;
         const newInterval = parseInt(e.currentTarget.getAttribute('data-email-interval')!, 10);
@@ -126,8 +117,6 @@ export default class EmailNotificationSetting extends React.PureComponent<Props,
             enableEmail: enableEmail === 'true',
             newInterval,
         });
-
-        a11yFocus(e.currentTarget);
 
         this.props.onChange(enableEmail as UserNotifyProps['email']);
     }
@@ -237,7 +226,6 @@ export default class EmailNotificationSetting extends React.PureComponent<Props,
                 describe={description}
                 section={'email'}
                 updateSection={this.handleUpdateSection}
-                ref={this.minRef}
             />
         );
     }
@@ -258,7 +246,7 @@ export default class EmailNotificationSetting extends React.PureComponent<Props,
                             />
                         </div>,
                     ]}
-                    serverError={this.props.serverError}
+                    server_error={this.props.serverError}
                     section={'email'}
                     updateSection={this.handleUpdateSection}
                 />
@@ -357,81 +345,69 @@ export default class EmailNotificationSetting extends React.PureComponent<Props,
         }
 
         return (
-            <SettingItemMax
-                title={localizeMessage('user.settings.notifications.emailNotifications', 'Email Notifications')}
-                inputs={[
-                    <fieldset key='userNotificationEmailOptions'>
-                        <legend className='form-legend'>
-                            <FormattedMessage
-                                id='user.settings.notifications.email.send'
-                                defaultMessage='Send email notifications'
+            <>
+                <fieldset key='userNotificationEmailOptions'>
+                    <legend className='form-legend'>
+                        <FormattedMessage
+                            id='user.settings.notifications.email.send'
+                            defaultMessage='Send email notifications'
+                        />
+                    </legend>
+                    <div className='radio'>
+                        <label>
+                            <input
+                                id='emailNotificationImmediately'
+                                type='radio'
+                                name='emailNotifications'
+                                checked={newInterval === Preferences.INTERVAL_IMMEDIATE}
+                                data-enable-email={'true'}
+                                data-email-interval={Preferences.INTERVAL_IMMEDIATE}
+                                onChange={this.handleChange}
                             />
-                        </legend>
-                        <div className='radio'>
-                            <label>
-                                <input
-                                    id='emailNotificationImmediately'
-                                    type='radio'
-                                    name='emailNotifications'
-                                    checked={newInterval === Preferences.INTERVAL_IMMEDIATE}
-                                    data-enable-email={'true'}
-                                    data-email-interval={Preferences.INTERVAL_IMMEDIATE}
-                                    onChange={this.handleChange}
-                                />
-                                <FormattedMessage
-                                    id='user.settings.notifications.email.immediately'
-                                    defaultMessage='Immediately'
-                                />
-                            </label>
-                        </div>
-                        {batchingOptions}
-                        <div className='radio'>
-                            <label>
-                                <input
-                                    id='emailNotificationNever'
-                                    type='radio'
-                                    name='emailNotifications'
-                                    checked={newInterval === Preferences.INTERVAL_NEVER}
-                                    data-enable-email={'false'}
-                                    data-email-interval={Preferences.INTERVAL_NEVER}
-                                    onChange={this.handleChange}
-                                />
-                                <FormattedMessage
-                                    id='user.settings.notifications.email.never'
-                                    defaultMessage='Never'
-                                />
-                            </label>
-                        </div>
-                        <div className='mt-3'>
                             <FormattedMessage
-                                id='user.settings.notifications.emailInfo'
-                                defaultMessage='Email notifications are sent for mentions and direct messages when you are offline or away for more than 5 minutes.'
+                                id='user.settings.notifications.email.immediately'
+                                defaultMessage='Immediately'
                             />
-                            {' '}
-                            {batchingInfo}
-                        </div>
-                    </fieldset>,
-                    threadsNotificationSelection,
-                ]}
-                submit={this.handleSubmit}
-                saving={this.props.saving}
-                serverError={this.props.serverError}
-                updateSection={this.handleUpdateSection}
-            />
+                        </label>
+                    </div>
+                    {batchingOptions}
+                    <div className='radio'>
+                        <label>
+                            <input
+                                id='emailNotificationNever'
+                                type='radio'
+                                name='emailNotifications'
+                                checked={newInterval === Preferences.INTERVAL_NEVER}
+                                data-enable-email={'false'}
+                                data-email-interval={Preferences.INTERVAL_NEVER}
+                                onChange={this.handleChange}
+                            />
+                            <FormattedMessage
+                                id='user.settings.notifications.email.never'
+                                defaultMessage='Never'
+                            />
+                        </label>
+                    </div>
+                    <div className='mt-3'>
+                        <FormattedMessage
+                            id='user.settings.notifications.emailInfo'
+                            defaultMessage='Email notifications are sent for mentions and direct messages when you are offline or away for more than 5 minutes.'
+                        />
+                        {' '}
+                        {batchingInfo}
+                    </div>
+                </fieldset>,
+                {threadsNotificationSelection}
+            </>
+
+        // submit={this.handleSubmit}
+        // saving={this.props.saving}
+        // server_error={this.props.serverError}
+        // updateSection={this.handleUpdateSection}
         );
     }
 
-    componentDidUpdate(prevProps: Props) {
-        if (prevProps.activeSection === 'email' && this.props.activeSection === '') {
-            this.focusEditButton();
-        }
-    }
-
     render() {
-        if (this.props.activeSection !== 'email') {
-            return this.renderMinSettingView();
-        }
-
         return this.renderMaxSettingView();
     }
 }
