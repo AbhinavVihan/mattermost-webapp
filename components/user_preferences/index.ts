@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
 import {GlobalState} from '@mattermost/types/store';
 
-import UserSettings from '../user_preferences';
+import UserSettings from './user_settings';
 
 function mapStateToProps(state: GlobalState) {
     return {

@@ -10,8 +10,7 @@ import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
 import {GlobalState} from 'types/store';
 import {Action} from 'mattermost-redux/types/actions';
 
-import UserSettingsModal, {Props} from '../../user_preferences/modal/user_settings_modal';
-
+import UserSettingsModal, {Props} from './user_settings_modal';
 
 function mapStateToProps(state: GlobalState) {
     const config = getConfig(state);

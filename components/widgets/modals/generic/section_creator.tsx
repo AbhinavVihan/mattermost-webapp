@@ -15,7 +15,7 @@ type Props = {
         id: string;
         defaultMessage: string;
     };
-    content: JSX.Element;
+    content?: JSX.Element;
     titleSuffix?: JSX.Element;
 };
 

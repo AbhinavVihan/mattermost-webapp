@@ -7,26 +7,28 @@ import ReactSelect, {ValueType} from 'react-select';
 import SectionItemCreator, {SectionItemProps} from './section_item_creator';
 
 export type Limit = {
-    value: number;
+    value: number | string;
     label: string;
 };
 
 export type FieldsetReactSelect = {
     dataTestId?: string;
     options: Limit[];
-}
+};
 
 type Props = SectionItemProps & {
     inputFieldData: FieldsetReactSelect;
     inputFieldValue: Limit;
     handleChange: (selected: ValueType<Limit>) => void;
-}
+    isDisabled?: boolean;
+};
 function ReactSelectItemCreator({
     title,
     description,
     inputFieldData,
     inputFieldValue,
     handleChange,
+    isDisabled,
 }: Props): JSX.Element {
     const content = (
         <fieldset className='mm-modal-generic-section-item__fieldset-react-select'>
@@ -41,6 +43,7 @@ function ReactSelectItemCreator({
                 isSearchable={false}
                 menuPortalTarget={document.body}
                 styles={reactStyles}
+                isDisabled={isDisabled}
             />
         </fieldset>
     );

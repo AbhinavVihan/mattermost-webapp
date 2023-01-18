@@ -16,9 +16,9 @@ export type FieldsetCheckbox = {
 }
 
 type Props = SectionItemProps & {
-    inputFieldData: FieldsetCheckbox;
+    inputFieldData?: FieldsetCheckbox;
     inputFieldValue: boolean;
-    handleChange: (e: boolean) => void;
+    handleChange?: (e: boolean) => void;
 }
 function CheckboxItemCreator({
     title,
@@ -29,21 +29,21 @@ function CheckboxItemCreator({
 }: Props): JSX.Element {
     const content = (
         <fieldset
-            key={inputFieldData.name}
+            key={inputFieldData?.name}
             className='mm-modal-generic-section-item__fieldset-checkbox-ctr'
         >
             <label className='mm-modal-generic-section-item__fieldset-checkbox'>
                 <input
                     className='mm-modal-generic-section-item__input-checkbox'
-                    data-testid={inputFieldData.dataTestId}
+                    data-testid={inputFieldData?.dataTestId}
                     type='checkbox'
-                    name={inputFieldData.name}
+                    name={inputFieldData?.name}
                     checked={inputFieldValue}
-                    onChange={(e) => handleChange(e.target.checked)}
+                    onChange={(e) => handleChange?.(e.target.checked)}
                 />
                 <FormattedMessage
-                    id={inputFieldData.title.id}
-                    defaultMessage={inputFieldData.title.defaultMessage}
+                    id={inputFieldData?.title.id}
+                    defaultMessage={inputFieldData?.title.defaultMessage}
                 />
             </label>
             <br/>
