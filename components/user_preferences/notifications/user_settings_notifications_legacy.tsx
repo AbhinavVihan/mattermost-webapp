@@ -21,9 +21,9 @@ import LocalizedIcon from 'components/localized_icon';
 
 import {UserNotifyProps, UserProfile} from '@mattermost/types/users';
 
-import DesktopNotificationSettings from './desktop_notification_setting/desktop_notification_settings';
+import DesktopNotificationSettings from './desktop_notification_settings';
 import EmailNotificationSetting from './email_notification_setting';
-import ManageAutoResponder from './manage_auto_responder/manage_auto_responder';
+import ManageAutoResponder from './manage_auto_responder';
 
 export type Props = {
     user: UserProfile;

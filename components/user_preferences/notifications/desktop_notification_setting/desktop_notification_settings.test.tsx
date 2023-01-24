@@ -6,7 +6,7 @@ import {shallow} from 'enzyme';
 
 import {NotificationLevels} from 'utils/constants';
 
-import DesktopNotificationSettings from './desktop_notification_settings';
+import DesktopNotificationSettings from '../desktop_notification_settings';
 
 jest.mock('utils/utils', () => {
     const original = jest.requireActual('utils/utils');

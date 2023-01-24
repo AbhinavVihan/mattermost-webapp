@@ -1,10 +1,10 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React from 'react';
-import {FormattedMessage} from 'react-intl';
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import SectionItemCreator, {SectionItemProps} from './section_item_creator';
+import SectionItemCreator, { SectionItemProps } from "./section_item_creator";
 
 export type FieldsetRadio = {
     options: Array<{
@@ -15,16 +15,16 @@ export type FieldsetRadio = {
         };
         name: string;
         key: string;
-        value: string;
+        value: string | number;
         suffix?: JSX.Element;
     }>;
-}
+};
 
 type Props = SectionItemProps & {
     inputFieldData: FieldsetRadio;
-    inputFieldValue: string;
+    inputFieldValue: string | number;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+};
 function RadioItemCreator({
     title,
     description,
@@ -36,12 +36,12 @@ function RadioItemCreator({
         return (
             <label
                 key={option.key}
-                className='mm-modal-generic-section-item__label-radio'
+                className="mm-modal-generic-section-item__label-radio"
             >
                 <input
                     id={option.key}
                     data-testid={option.dataTestId}
-                    type='radio'
+                    type="radio"
                     name={option.name}
                     checked={option.value === inputFieldValue}
                     value={option.value}
@@ -58,7 +58,7 @@ function RadioItemCreator({
 
     const content = (
         <>
-            <fieldset className='mm-modal-generic-section-item__fieldset-radio'>
+            <fieldset className="mm-modal-generic-section-item__fieldset-radio">
                 {[...fields]}
             </fieldset>
         </>

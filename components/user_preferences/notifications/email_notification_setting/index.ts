@@ -15,7 +15,7 @@ import {get as getPreference} from 'mattermost-redux/selectors/entities/preferen
 import {GlobalState} from '@mattermost/types/store';
 import {ActionFunc} from 'mattermost-redux/types/actions';
 
-import EmailNotificationSetting from './email_notification_setting';
+import {EmailNotificationsSetting} from './email_notification_setting';
 
 type Actions = {
     savePreferences: (currentUserId: string, emailIntervalPreference: PreferenceType[]) =>
@@ -47,4 +47,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EmailNotificationSetting);
+export default connect(mapStateToProps, mapDispatchToProps)(EmailNotificationsSetting);

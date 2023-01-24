@@ -7,7 +7,7 @@ import {useIntl} from 'react-intl';
 import './section_creator.scss';
 
 type Props = {
-    title: {
+    title?: {
         id: string;
         defaultMessage: string;
     };
@@ -26,7 +26,7 @@ function SectionCreator({
     titleSuffix,
 }: Props): JSX.Element {
     const {formatMessage} = useIntl();
-    const Title = (
+    const Title = title && (
         <h4 className='mm-modal-generic-section__title'>
             {formatMessage({id: title.id, defaultMessage: title.defaultMessage})}
         </h4>
