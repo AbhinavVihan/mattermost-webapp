@@ -109,10 +109,6 @@ export default function DesktopNotificationSettings(props: Props) {
 
     return (
         <>
-            <SectionCreator
-                title={DesktopNotificationsTitle}
-                description={DesktopNotificationsDesc}
-            />
             <SectionCreator title={notifyAboutTitle} />
             <RadioItemCreator
                 inputFieldData={notifyAboutData("desktop")}

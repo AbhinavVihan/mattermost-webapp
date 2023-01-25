@@ -1,38 +1,31 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, {useCallback, useState} from 'react';
+import React, { useCallback, useState } from "react";
 
-import {ValueType} from 'react-select';
+import { Timezone } from "timezones.json";
 
-import {Timezone} from 'timezones.json';
+import { ActionFunc } from "mattermost-redux/types/actions";
+import Constants from "utils/constants";
 
-import {ActionFunc, ActionResult} from 'mattermost-redux/types/actions';
-import Constants from 'utils/constants';
+import SectionCreator from "components/widgets/modals/generic/section_creator";
+import RadioItemCreator from "components/widgets/modals/generic/radio-item-creator";
+import SaveChangesPanel from "components/widgets/modals/generic/save_changes_panel";
 
-import {Preferences} from 'mattermost-redux/constants';
+import CheckboxItemCreator from "components/widgets/modals/generic/checkbox-item-creator";
 
-import SectionCreator from 'components/widgets/modals/generic/section_creator';
-import RadioItemCreator from 'components/widgets/modals/generic/radio-item-creator';
-import SaveChangesPanel from 'components/widgets/modals/generic/save_changes_panel';
+import { PreferenceType } from "@mattermost/types/preferences";
+import { UserProfile } from "@mattermost/types/users";
 
-import CheckboxItemCreator from 'components/widgets/modals/generic/checkbox-item-creator';
-
-import {PreferenceType} from '@mattermost/types/preferences';
-import {UserProfile} from '@mattermost/types/users';
-
-import ReactSelectItemCreator, {
-    Limit,
-} from 'components/widgets/modals/generic/react-select-item-creator';
-import * as I18n from 'i18n/i18n.jsx';
-import {getBrowserTimezone} from 'utils/timezone';
-import {getTimezoneLabel} from 'mattermost-redux/utils/timezone_utils';
+import ReactSelectItemCreator from "components/widgets/modals/generic/react-select-item-creator";
+import * as I18n from "i18n/i18n.jsx";
+import { getBrowserTimezone } from "utils/timezone";
+import { getTimezoneLabel } from "mattermost-redux/utils/timezone_utils";
 
 import {
     languageSelectDescription,
     languageSelectInputFieldData,
-    SelectedOption,
-    showAutoTimezoneCheckboxTitle,
+    showAutoTimezoneData,
     showLanguageTitle,
     showLanguageTitleDescription,
     showTimeFormatDescription,
@@ -40,7 +33,7 @@ import {
     showTimezoneDescription,
     showTimezoneTitle,
     TimeFormatData,
-} from './utils';
+} from "./utils";
 
 export type Props = {
     user: UserProfile;
@@ -49,7 +42,7 @@ export type Props = {
     timezones: Timezone[];
     timezoneLabel: string;
     userTimezone: {
-        useAutomaticTimezone: boolean;
+        useAutomaticTimezone: string;
         automaticTimezone: string;
         manualTimezone: string;
     };
@@ -62,181 +55,138 @@ export type Props = {
     };
 };
 
-export default function UserSettingsLanguageAndTime(props: Props) {
+export default function UserSettingsLanguageAndTime({
+    userTimezone,
+    militaryTime,
+    user,
+    defaultClientLocale,
+    timezoneLabel,
+    timezones,
+    actions,
+}: Props) {
     const Preferences = Constants.Preferences;
-
     const locales: any = I18n.getLanguages();
-    let userLocale = props.user.locale;
+    let userLocale = user.locale;
     if (!I18n.isLanguageAvailable(userLocale)) {
-        userLocale = props.defaultClientLocale;
+        userLocale = defaultClientLocale;
     }
-    const [language, setLanguage] = useState<Limit>({
-        value: locales[userLocale].value,
-        label: locales[userLocale].name,
-    });
+
     const [haveChanges, setHaveChanges] = useState(false);
-    function handleChange(selected: ValueType<Limit>) {
-        if (selected && 'value' in selected) {
-            setLanguage(selected);
-        }
-        setHaveChanges(true);
-    }
-
-    const handleTimezoneChange = (selectedOption: ValueType<Limit>) => {
-        if (selectedOption && 'value' in selectedOption) {
-            setManualTimezone(selectedOption.value as string);
-            setSelectedOption(selectedOption as any);
-            setHaveChanges(true);
-        }
-    };
-
-    const [manualTimezone, setManualTimezone] = useState(
-        props.userTimezone.manualTimezone,
-    );
-    const [useAutomaticTimezone, setUseAutomaticTimeZone] = useState(
-        Boolean(props.userTimezone.useAutomaticTimezone),
-    );
-    const [automaticTimezone, setAutomaticTimezone] = useState(
-        props.userTimezone.automaticTimezone,
-    );
-    const [selectedOption, setSelectedOption] = useState({
-        label: props.timezoneLabel,
-        value: props.userTimezone.useAutomaticTimezone ?
-            props.userTimezone.automaticTimezone :
-            props.userTimezone.manualTimezone,
+    const [settings, setSettings] = useState({
+        use_military_time: militaryTime,
+        selectedOption: {
+            label: timezoneLabel,
+            value: userTimezone.useAutomaticTimezone
+                ? userTimezone.automaticTimezone
+                : userTimezone.manualTimezone,
+        },
+        automaticTimezone: userTimezone.automaticTimezone,
+        useAutomaticTimezone: Boolean(userTimezone.useAutomaticTimezone),
+        manualTimezone: userTimezone.manualTimezone,
+        language: {
+            value: locales[userLocale].value,
+            label: locales[userLocale].name,
+        },
     });
 
     const changeLanguage = () => {
-        let userLocale = props.user.locale;
+        let userLocale = user.locale;
         if (!I18n.isLanguageAvailable(userLocale)) {
-            userLocale = props.defaultClientLocale;
+            userLocale = defaultClientLocale;
         }
         const localeName = I18n.getLanguageInfo(userLocale).name;
-        if (props.user.locale === language.value) {
-
+        if (user.locale === settings.language.value) {
+            return;
         } else {
-            props.actions.updateMe({
-                ...props.user,
-                locale: language.value as string,
+            actions.updateMe({
+                ...user,
+                locale: settings.language.value as string,
             });
         }
     };
 
-    const [settings, setSettings] = useState({
-        [Preferences.USE_MILITARY_TIME]: props.militaryTime,
-    });
-
-    const handleOnChange = useCallback(
-        (values: Record<string, string>) => {
-            setSettings({...settings, ...values});
-            setHaveChanges(true);
-        },
-        [settings],
-    );
-
-    const languageSelect = (
-        <ReactSelectItemCreator
-            description={languageSelectDescription}
-            inputFieldValue={language}
-            inputFieldData={languageSelectInputFieldData}
-            handleChange={handleChange}
-        />
-    );
-
-    const handleAutomaticTimezone = (e: boolean) => {
-        const useAutomaticTimezone = e;
-        let automaticTimezone = '';
+    const handlechange = (
+        e: any,
+        dataKey: "timeFormat" | "autoTimeZone" | "timeZoneChange" | "language"
+    ) => {
+        let value;
+        let automaticTimezone = "";
         let timezoneLabel: string;
         let selectedOptionValue: string;
-
-        if (useAutomaticTimezone) {
-            automaticTimezone = getBrowserTimezone();
-            timezoneLabel = getTimezoneLabel(
-                props.timezones,
-                automaticTimezone,
-            );
-            selectedOptionValue = automaticTimezone;
-        } else {
-            timezoneLabel = getTimezoneLabel(
-                props.timezones,
-                getBrowserTimezone(),
-            );
-            selectedOptionValue = getBrowserTimezone();
-            setManualTimezone(getBrowserTimezone());
+        let manualTimezone: string;
+        switch (dataKey) {
+            case "timeFormat":
+                value = e.target.value === "true" ? "true" : "false";
+                setSettings({
+                    ...settings,
+                    [Preferences.USE_MILITARY_TIME]: value,
+                });
+                break;
+            case "autoTimeZone":
+                if (e) {
+                    automaticTimezone = getBrowserTimezone();
+                    timezoneLabel = getTimezoneLabel(
+                        timezones,
+                        automaticTimezone
+                    );
+                    selectedOptionValue = automaticTimezone;
+                } else {
+                    timezoneLabel = getTimezoneLabel(
+                        timezones,
+                        getBrowserTimezone()
+                    );
+                    selectedOptionValue = getBrowserTimezone();
+                    manualTimezone = getBrowserTimezone();
+                    setSettings({
+                        ...settings,
+                        manualTimezone: getBrowserTimezone(),
+                    });
+                }
+                setSettings({
+                    ...settings,
+                    automaticTimezone,
+                    useAutomaticTimezone: e,
+                    selectedOption: {
+                        label: timezoneLabel,
+                        value: selectedOptionValue,
+                    },
+                });
+                break;
+            case "timeZoneChange":
+                if (e && "value" in e) {
+                    setSettings({
+                        ...settings,
+                        manualTimezone: e.value,
+                        selectedOption: e,
+                    });
+                }
+                break;
+            case "language":
+                if (e && "value" in e) {
+                    setSettings({ ...settings, language: e });
+                }
+                break;
+            default:
+                value = null;
         }
-        setAutomaticTimezone(automaticTimezone);
-        setUseAutomaticTimeZone(useAutomaticTimezone);
-        setSelectedOption({label: timezoneLabel, value: selectedOptionValue});
         setHaveChanges(true);
     };
 
-    const timeOptions = props.timezones.map((timeObject) => {
-        return {
-            value: timeObject.utc[0],
-            label: timeObject.text,
-        };
-    });
-
-    const showAutoTimezoneData = {
-        dataTestId: 'AutoTimezone-test-id',
-        title: {
-            id: 'user.settings.languageAndTime.setAutomaticTimezone',
-            defaultMessage: 'Set timezone automatically',
-        },
-        name: 'AutoTimezone-name',
-        key: 'AutoTimezone-key',
-        value: selectedOption,
-    };
-
-    const timeZoneContainer = (
-        <>
-            <CheckboxItemCreator
-                inputFieldData={showAutoTimezoneData}
-                inputFieldValue={useAutomaticTimezone}
-                handleChange={handleAutomaticTimezone}
-            />
-            <ReactSelectItemCreator
-                description={languageSelectDescription}
-                inputFieldValue={selectedOption}
-                inputFieldData={{options: timeOptions}}
-                handleChange={handleTimezoneChange}
-                isDisabled={useAutomaticTimezone}
-            />
-        </>
-    );
-
-    const timeFormatContainer = (
-        <RadioItemCreator
-            inputFieldValue={settings[Preferences.USE_MILITARY_TIME]}
-            inputFieldData={TimeFormatData}
-            handleChange={(e) => {
-                handleOnChange({
-                    [Preferences.USE_MILITARY_TIME]:
-                        e.target.value === 'true' ? 'true' : 'false',
-                });
-            }}
-        />
-    );
-
-    function handleSubmit() {
+    const handleSubmit = () => {
         const preferences: PreferenceType[] = [];
-        const {actions, user} = props;
         const userId = user.id;
         const category = Preferences.CATEGORY_DISPLAY_SETTINGS;
-
-        Object.keys(settings).forEach((setting) => {
-            preferences.push({
-                user_id: userId,
-                category,
-                name: setting,
-                value: settings[setting],
-            });
+        preferences.push({
+            user_id: userId,
+            category,
+            name: "use_military_time",
+            value: settings.use_military_time,
         });
 
         const timezone = {
-            useAutomaticTimezone: useAutomaticTimezone.toString(),
-            automaticTimezone,
-            manualTimezone,
+            useAutomaticTimezone: settings.useAutomaticTimezone.toString(),
+            automaticTimezone: settings.automaticTimezone,
+            manualTimezone: settings.manualTimezone,
         };
 
         const updatedUser = {
@@ -244,13 +194,76 @@ export default function UserSettingsLanguageAndTime(props: Props) {
             timezone,
         };
 
+        if (userTimezone !== updatedUser.timezone) {
+            actions.updateMe(updatedUser);
+        }
+
+        if (settings.use_military_time !== militaryTime) {
+            actions.savePreferences(userId, preferences);
+        }
         changeLanguage();
-        actions.updateMe(updatedUser);
-        actions.savePreferences(userId, preferences);
+
         setHaveChanges(false);
-    }
+    };
+
+    const languageSelect = (
+        <ReactSelectItemCreator
+            description={languageSelectDescription}
+            inputFieldValue={settings.language}
+            inputFieldData={languageSelectInputFieldData}
+            handleChange={(e) => handlechange(e, "language")}
+        />
+    );
+
+    const timeOptions = timezones.map((timeObject) => {
+        return {
+            value: timeObject.utc[0],
+            label: timeObject.text,
+        };
+    });
+
+    const timeZoneContainer = (
+        <>
+            <CheckboxItemCreator
+                inputFieldData={showAutoTimezoneData}
+                inputFieldValue={settings.useAutomaticTimezone}
+                handleChange={(e) => handlechange(e, "autoTimeZone")}
+            />
+            <ReactSelectItemCreator
+                description={languageSelectDescription}
+                inputFieldValue={settings.selectedOption}
+                inputFieldData={{ options: timeOptions }}
+                handleChange={(e) => handlechange(e, "timeZoneChange")}
+                isDisabled={settings.useAutomaticTimezone}
+            />
+        </>
+    );
+
+    const timeFormatContainer = (
+        <RadioItemCreator
+            inputFieldValue={settings.use_military_time}
+            inputFieldData={TimeFormatData}
+            handleChange={(e) => handlechange(e, "timeFormat")}
+        />
+    );
+
     function handleCancel() {
-        // setDefaults();
+        setSettings({
+            use_military_time: militaryTime,
+            selectedOption: {
+                label: timezoneLabel,
+                value: userTimezone.useAutomaticTimezone
+                    ? userTimezone.automaticTimezone
+                    : userTimezone.manualTimezone,
+            },
+            automaticTimezone: userTimezone.automaticTimezone,
+            useAutomaticTimezone: Boolean(userTimezone.useAutomaticTimezone),
+            manualTimezone: userTimezone.manualTimezone,
+            language: {
+                value: locales[userLocale].value,
+                label: locales[userLocale].name,
+            },
+        });
         setHaveChanges(false);
     }
 
@@ -261,7 +274,7 @@ export default function UserSettingsLanguageAndTime(props: Props) {
                 content={languageSelect}
                 description={showLanguageTitleDescription}
             />
-            <div className='user-settings-modal__divider'/>
+            <div className="user-settings-modal__divider" />
             <SectionCreator
                 title={showTimezoneTitle}
                 content={timeZoneContainer}

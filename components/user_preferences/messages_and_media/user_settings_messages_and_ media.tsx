@@ -64,27 +64,29 @@ export type Props = {
     };
 };
 
+type settingsType = {
+    [key: string]: string;
+};
+
 export default function UserSettingsMessageesAndMedia(props: Props) {
     const [haveChanges, setHaveChanges] = useState(false);
-    const [settings, setSettings] = useState({
-        [Preferences.COLLAPSED_REPLY_THREADS]: props.collapsedReplyThreads,
-        [Preferences.NAME_NAME_FORMAT]: props.lockTeammateNameDisplay
+    const [settings, setSettings] = useState<settingsType>({
+        collapsed_reply_threads: props.collapsedReplyThreads,
+        name_format: props.lockTeammateNameDisplay
             ? props.configTeammateNameDisplay
             : props.teammateNameDisplay,
-        [Preferences.AVAILABILITY_STATUS_ON_POSTS]:
-            props.availabilityStatusOnPosts,
-        [Preferences.COLLAPSE_DISPLAY]: props.collapseDisplay,
-        [Preferences.LINK_PREVIEW_DISPLAY]: props.linkPreviewDisplay,
-        [Preferences.ONE_CLICK_REACTIONS_ENABLED]:
-            props.oneClickReactionsOnPosts,
-        [Preferences.CLICK_TO_REPLY]: props.collapseDisplay,
-        [Preferences.MESSAGE_DISPLAY]: props.messageDisplay,
-        [Preferences.CHANNEL_DISPLAY_MODE]: props.channelDisplayMode,
+        availability_status_on_posts: props.availabilityStatusOnPosts,
+        collapse_previews: props.collapseDisplay,
+        link_previews: props.linkPreviewDisplay,
+        one_click_reactions_enabled: props.oneClickReactionsOnPosts,
+        click_to_reply: props.collapseDisplay,
+        message_display: props.messageDisplay,
+        channel_display_mode: props.channelDisplayMode,
     });
 
     const messageDensityContainer = (
         <RadioItemCreator
-            inputFieldValue={settings[Preferences.MESSAGE_DISPLAY]}
+            inputFieldValue={settings.message_display}
             inputFieldData={MessageDensityData}
             handleChange={(e) => {
                 handleChange({
@@ -99,7 +101,7 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
 
     const messageWidthContainer = (
         <RadioItemCreator
-            inputFieldValue={settings[Preferences.CHANNEL_DISPLAY_MODE]}
+            inputFieldValue={settings.channel_display_mode}
             inputFieldData={MessageWidthData}
             handleChange={(e) => {
                 handleChange({
@@ -115,10 +117,10 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
 
     const teamMateNameContainer = (
         <RadioItemCreator
-            inputFieldValue={settings[Preferences.NAME_NAME_FORMAT]}
+            inputFieldValue={settings.name_format}
             inputFieldData={teammateNameData}
             handleChange={(e) => {
-                let name = settings[Preferences.NAME_NAME_FORMAT];
+                let name = settings.name_format;
                 if (
                     e.target.value ===
                     Constants.TEAMMATE_NAME_DISPLAY.SHOW_USERNAME
@@ -143,9 +145,7 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
     const profileStatusContainer = (
         <CheckboxItemCreator
             inputFieldData={profileStatusData}
-            inputFieldValue={
-                settings[Preferences.AVAILABILITY_STATUS_ON_POSTS] === "true"
-            }
+            inputFieldValue={settings.availability_status_on_posts === "true"}
             handleChange={(e) => {
                 handleChange({
                     [Preferences.AVAILABILITY_STATUS_ON_POSTS]: e.toString(),
@@ -159,7 +159,7 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
             <CheckboxItemCreator
                 inputFieldData={enableCRTData}
                 inputFieldValue={
-                    settings[Preferences.COLLAPSED_REPLY_THREADS] ===
+                    settings.collapsed_reply_threads ===
                     Preferences.COLLAPSED_REPLY_THREADS_ON
                 }
                 handleChange={(e) => {
@@ -174,9 +174,7 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
             />
             <CheckboxItemCreator
                 inputFieldData={openThreadsData}
-                inputFieldValue={
-                    settings[Preferences.CLICK_TO_REPLY] === "true"
-                }
+                inputFieldValue={settings.click_to_reply === "true"}
                 handleChange={(e) => {
                     handleChange({
                         [Preferences.CLICK_TO_REPLY]:
@@ -192,9 +190,7 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
         <>
             <CheckboxItemCreator
                 inputFieldData={imagePreviewsData}
-                inputFieldValue={
-                    settings[Preferences.COLLAPSE_DISPLAY] === "true"
-                }
+                inputFieldValue={settings.collapse_previews === "true"}
                 handleChange={(e) => {
                     handleChange({
                         [Preferences.COLLAPSE_DISPLAY]:
@@ -204,9 +200,7 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
             />
             <CheckboxItemCreator
                 inputFieldData={websitePreviewsData}
-                inputFieldValue={
-                    settings[Preferences.LINK_PREVIEW_DISPLAY] === "true"
-                }
+                inputFieldValue={settings.link_previews === "true"}
                 handleChange={(e) => {
                     handleChange({
                         [Preferences.LINK_PREVIEW_DISPLAY]:
@@ -222,7 +216,7 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
             <CheckboxItemCreator
                 inputFieldData={quickReactionCheckboxData}
                 inputFieldValue={
-                    settings[Preferences.ONE_CLICK_REACTIONS_ENABLED] === "true"
+                    settings.one_click_reactions_enabled === "true"
                 }
                 handleChange={(e) => {
                     handleChange({
@@ -238,7 +232,7 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
                 inputFieldValue={
                     props.lockTeammateNameDisplay
                         ? props.configTeammateNameDisplay
-                        : settings[Preferences.NAME_NAME_FORMAT]
+                        : settings.name_format
                 }
                 inputFieldData={quickReactionRadioData}
                 handleChange={(e) => {
@@ -279,19 +273,17 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
 
     const handleCancel = () => {
         setSettings({
-            [Preferences.COLLAPSED_REPLY_THREADS]: props.collapsedReplyThreads,
-            [Preferences.NAME_NAME_FORMAT]: props.lockTeammateNameDisplay
+            collapsed_reply_threads: props.collapsedReplyThreads,
+            name_format: props.lockTeammateNameDisplay
                 ? props.configTeammateNameDisplay
                 : props.teammateNameDisplay,
-            [Preferences.AVAILABILITY_STATUS_ON_POSTS]:
-                props.availabilityStatusOnPosts,
-            [Preferences.COLLAPSE_DISPLAY]: props.collapseDisplay,
-            [Preferences.LINK_PREVIEW_DISPLAY]: props.linkPreviewDisplay,
-            [Preferences.ONE_CLICK_REACTIONS_ENABLED]:
-                props.oneClickReactionsOnPosts,
-            [Preferences.CLICK_TO_REPLY]: props.collapseDisplay,
-            [Preferences.MESSAGE_DISPLAY]: props.messageDisplay,
-            [Preferences.CHANNEL_DISPLAY_MODE]: props.channelDisplayMode,
+            availability_status_on_posts: props.availabilityStatusOnPosts,
+            collapse_previews: props.collapseDisplay,
+            link_previews: props.linkPreviewDisplay,
+            one_click_reactions_enabled: props.oneClickReactionsOnPosts,
+            click_to_reply: props.collapseDisplay,
+            message_display: props.messageDisplay,
+            channel_display_mode: props.channelDisplayMode,
         });
         setHaveChanges(false);
     };
