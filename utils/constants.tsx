@@ -1561,27 +1561,27 @@ export const Constants = {
             uiName: 'Sidebar Text Active Color',
         },
         {
-            group: 'sidebarElements',
+            group: 'statusElements',
             id: 'onlineIndicator',
             uiName: 'Online Indicator',
         },
         {
-            group: 'sidebarElements',
+            group: 'statusElements',
             id: 'awayIndicator',
             uiName: 'Away Indicator',
         },
         {
-            group: 'sidebarElements',
+            group: 'statusElements',
             id: 'dndIndicator',
             uiName: 'Away Indicator',
         },
         {
-            group: 'sidebarElements',
+            group: 'statusElements',
             id: 'mentionBg',
             uiName: 'Mention Jewel BG',
         },
         {
-            group: 'sidebarElements',
+            group: 'statusElements',
             id: 'mentionColor',
             uiName: 'Mention Jewel Text',
         },
