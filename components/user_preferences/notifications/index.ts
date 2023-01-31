@@ -6,15 +6,15 @@ import {ActionCreatorsMapObject, bindActionCreators, Dispatch} from 'redux';
 
 import {updateMe} from 'mattermost-redux/actions/users';
 import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
+import {isCollapsedThreadsEnabled, get as getPreference} from 'mattermost-redux/selectors/entities/preferences';
 import {ActionFunc} from 'mattermost-redux/types/actions';
 import {savePreferences} from 'mattermost-redux/actions/preferences';
 
 import {GlobalState} from 'types/store';
-import {get as getPreference} from 'mattermost-redux/selectors/entities/preferences';
+
+import {Preferences} from 'mattermost-redux/constants';
 
 import UserSettingsNotifications, {Props} from './user_settings_notifications';
-import { Preferences } from 'mattermost-redux/constants';
 
 function mapStateToProps(state: GlobalState) {
     const config = getConfig(state);

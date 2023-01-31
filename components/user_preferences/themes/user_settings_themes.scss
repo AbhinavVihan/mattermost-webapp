@@ -1,4 +1,9 @@
-.modal {
-    // transition: width 2s;
-    transition-timing-function: ease-in;
+.text {
+    color: yellow;
+}
+
+@media (prefers-color-scheme: dark) {
+    .text {
+        color: black;
+    }
 }

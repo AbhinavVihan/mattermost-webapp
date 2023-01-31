@@ -197,7 +197,7 @@ function UserSettingsModal(props: Props): JSX.Element {
     return (
         <Modal
             id='accountSettingsModal'
-            dialogClassName='a11y__modal settings-modal user-settings-modal'
+            dialogClassName='a11y__modal user-settings-modal'
             show={show}
             onHide={handleHide}
             onExited={handleHidden}
@@ -241,8 +241,11 @@ function UserSettingsModal(props: Props): JSX.Element {
                     />
                 </div>
             </Modal.Header>
-            <Modal.Body ref={modalBodyRef}>
-                <div className='user-settings-modal__body'>
+            <Modal.Body
+                style={{padding: 0}}
+                ref={modalBodyRef}
+            >
+                <div className='user-settings-modal___body'>
                     <div className='user-settings-modal__sidebar'>
                         <React.Suspense fallback={null}>
                             <Provider store={store}>

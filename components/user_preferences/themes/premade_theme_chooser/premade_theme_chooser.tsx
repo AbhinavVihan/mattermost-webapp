@@ -5,6 +5,8 @@ import React from 'react';
 
 import classNames from 'classnames';
 
+import {CheckCircleIcon} from '@mattermost/compass-icons/components';
+
 import {Preferences} from 'mattermost-redux/constants';
 import {changeOpacity} from 'mattermost-redux/utils/theme_utils';
 import {Theme, ThemeKey} from 'mattermost-redux/selectors/entities/preferences';
@@ -13,7 +15,6 @@ import {toTitleCase} from 'utils/utils';
 import ThemeThumbnail from '../theme_thumbnail';
 
 import './premade_theme_chooser.scss';
-import {CheckCircleIcon} from '@mattermost/compass-icons/components';
 
 type Props = {
     theme: Theme;

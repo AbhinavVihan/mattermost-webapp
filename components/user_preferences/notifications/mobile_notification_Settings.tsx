@@ -1,11 +1,25 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, { useCallback, useEffect, useState } from "react";
-import { ValueType } from "react-select";
+import React, {useCallback, useEffect, useState} from 'react';
+import {ValueType} from 'react-select';
 
-import { NotificationLevels } from "utils/constants";
-import SectionCreator from "components/widgets/modals/generic/section_creator";
+import {NotificationLevels} from 'utils/constants';
+import SectionCreator from 'components/widgets/modals/generic/section_creator';
+
+import RadioItemCreator from 'components/widgets/modals/generic/radio-item-creator';
+import SectionItemCreator from 'components/widgets/modals/generic/section_item_creator';
+import CheckboxItemCreator from 'components/widgets/modals/generic/checkbox-item-creator';
+import ReactSelectItemCreator, {
+    Limit,
+} from 'components/widgets/modals/generic/react-select-item-creator';
+import {UserProfile} from '@mattermost/types/users';
+import {ActionResult} from 'mattermost-redux/types/actions';
+import {
+    MobileNotificationsSectionDesc,
+    MobileNotificationsSectionTitle,
+} from 'components/channel_notifications_modal/utils';
+
 import {
     desktopOrMobileConstants,
     notifyAboutData,
@@ -17,19 +31,7 @@ import {
     triggerNotificationsOptions,
     triggers,
     useSameAsDesktopDataCheckbox,
-} from "./utils";
-import RadioItemCreator from "components/widgets/modals/generic/radio-item-creator";
-import SectionItemCreator from "components/widgets/modals/generic/section_item_creator";
-import CheckboxItemCreator from "components/widgets/modals/generic/checkbox-item-creator";
-import ReactSelectItemCreator, {
-    Limit,
-} from "components/widgets/modals/generic/react-select-item-creator";
-import { UserProfile } from "@mattermost/types/users";
-import { ActionResult } from "mattermost-redux/types/actions";
-import {
-    MobileNotificationsSectionDesc,
-    MobileNotificationsSectionTitle,
-} from "components/channel_notifications_modal/utils";
+} from './utils';
 
 type Props = {
     user: UserProfile;
@@ -54,14 +56,14 @@ export function MobileNotificationsSettings(props: Props) {
             !props.getUseSameDesktopSetting() &&
             mobileSettingsSameAsDesktop
         ) {
-            console.log("i am running");
+            console.log('i am running');
             props.setParentState(
                 desktopOrMobileConstants.MobileActivity,
-                props.deskTopActivity
+                props.deskTopActivity,
             );
             props.setParentState(
                 desktopOrMobileConstants.MobileThreads,
-                props.desktopThreads as string
+                props.desktopThreads as string,
             );
         }
     }, [props.getUseSameDesktopSetting()]);
@@ -69,14 +71,14 @@ export function MobileNotificationsSettings(props: Props) {
     function handleOnChange(e?: any, dataKey?: string): void {
         let value;
         switch (dataKey) {
-            case desktopOrMobileConstants.MobileActivity:
-                value = e.currentTarget.getAttribute("value");
-                break;
-            case desktopOrMobileConstants.MobileThreads:
-                value = e ? NotificationLevels.ALL : NotificationLevels.MENTION;
-                break;
-            default:
-                value = null;
+        case desktopOrMobileConstants.MobileActivity:
+            value = e.currentTarget.getAttribute('value');
+            break;
+        case desktopOrMobileConstants.MobileThreads:
+            value = e ? NotificationLevels.ALL : NotificationLevels.MENTION;
+            break;
+        default:
+            value = null;
         }
         if (dataKey && value) {
             props.setParentState(dataKey, value);
@@ -85,27 +87,27 @@ export function MobileNotificationsSettings(props: Props) {
     }
 
     const handlePushStatusChange = (selectedOption: ValueType<Limit>) => {
-        if (selectedOption && "value" in selectedOption) {
-            props.setParentState("pushStatus", selectedOption.value as string);
+        if (selectedOption && 'value' in selectedOption) {
+            props.setParentState('pushStatus', selectedOption.value as string);
             handleOnChange();
         }
     };
 
     const handleMobileSettingsChange = useCallback(
         (e: boolean) => {
-            console.log("i am also running");
+            console.log('i am also running');
             setMobileSettingsSameAsDesktop(e);
             props.setParentState(
                 desktopOrMobileConstants.MobileActivity,
-                props.deskTopActivity
+                props.deskTopActivity,
             );
             props.setParentState(
                 desktopOrMobileConstants.MobileThreads,
-                props.desktopThreads as string
+                props.desktopThreads as string,
             );
             handleOnChange();
         },
-        [mobileSettingsSameAsDesktop, props.activity, props.threads]
+        [mobileSettingsSameAsDesktop, props.activity, props.threads],
     );
 
     const sameAsDesktopContainer = (
@@ -114,12 +116,12 @@ export function MobileNotificationsSettings(props: Props) {
                 title={notifyAboutTitle}
                 content={
                     <RadioItemCreator
-                        inputFieldData={notifyAboutData("mobile")}
+                        inputFieldData={notifyAboutData('mobile')}
                         inputFieldValue={props.activity}
                         handleChange={(e) =>
                             handleOnChange(
                                 e,
-                                desktopOrMobileConstants.MobileActivity
+                                desktopOrMobileConstants.MobileActivity,
                             )
                         }
                     />
@@ -132,11 +134,11 @@ export function MobileNotificationsSettings(props: Props) {
                         inputFieldValue={
                             props.threads === NotificationLevels.ALL
                         }
-                        inputFieldData={threadNotificationsData("mobile")}
+                        inputFieldData={threadNotificationsData('mobile')}
                         handleChange={(e) =>
                             handleOnChange(
                                 e,
-                                desktopOrMobileConstants.MobileThreads
+                                desktopOrMobileConstants.MobileThreads,
                             )
                         }
                     />
@@ -175,5 +177,5 @@ export function MobileNotificationsSettings(props: Props) {
         </>
     );
 
-    return <SectionCreator content={mobileNotificationsContainer} />;
+    return <SectionCreator content={mobileNotificationsContainer}/>;
 }

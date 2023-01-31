@@ -16,7 +16,7 @@ import {t} from 'utils/i18n';
 import ConfirmModal from 'components/confirm_modal';
 
 const UserSettings = React.lazy(
-    () => import(/* webpackPrefetch: true */ 'components/user_settings'),
+    () => import(/* webpackPrefetch: true */ 'components/user_preferences'),
 );
 const SettingsSidebar = React.lazy(
     () => import(/* webpackPrefetch: true */ '../../settings_sidebar'),

@@ -33,8 +33,8 @@ function mapStateToProps(state: GlobalState) {
 const mapDispatchToProps = {
     savePreferences,
     saveTheme,
-    deleteTeamSpecificThemes
-    
+    deleteTeamSpecificThemes,
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserSettingsThemes);

@@ -12,7 +12,6 @@ import {Action} from 'mattermost-redux/types/actions';
 
 import UserSettingsModal, {Props} from '../../user_preferences/modal/user_settings_modal';
 
-
 function mapStateToProps(state: GlobalState) {
     const config = getConfig(state);
 

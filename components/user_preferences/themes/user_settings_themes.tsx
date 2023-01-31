@@ -1,18 +1,18 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, { useCallback, useState } from "react";
+import React, {useCallback, useState, MouseEvent, useRef} from 'react';
 
-import { Theme } from "mattermost-redux/selectors/entities/preferences";
-import { applyTheme } from "utils/utils";
-import { Preferences } from "mattermost-redux/constants";
-import SectionCreator from "components/widgets/modals/generic/section_creator";
-import SaveChangesPanel from "components/widgets/modals/generic/save_changes_panel";
-import CheckboxItemCreator from "components/widgets/modals/generic/checkbox-item-creator";
+import {FormattedMessage} from 'react-intl';
 
-import { PreferenceType } from "@mattermost/types/preferences";
+import {Theme} from 'mattermost-redux/selectors/entities/preferences';
+import {applyTheme} from 'utils/utils';
+import {Preferences} from 'mattermost-redux/constants';
+import SectionCreator from 'components/widgets/modals/generic/section_creator';
+import SaveChangesPanel from 'components/widgets/modals/generic/save_changes_panel';
+import CheckboxItemCreator from 'components/widgets/modals/generic/checkbox-item-creator';
 
-import PremadeThemeChooser from "./premade_theme_chooser";
+import {PreferenceType} from '@mattermost/types/preferences';
 
 import {
     DarkThemeColorsSectionDesc,
@@ -27,15 +27,9 @@ import {
     SyncWithOsSectionTitle,
     ThemeColorsSectionTitle,
     ThemeSettings,
-    // toggleSidebarStyles,
-} from "./utils";
-import Constants from "utils/constants";
-import ColorChooser from "../display/user_settings_theme/color_chooser/color_chooser";
-import { defineMessages, FormattedMessage } from "react-intl";
-import OverlayTrigger from "components/overlay_trigger";
-import Popover from "components/widgets/popover";
-import { ActionFunc, ActionResult } from "mattermost-redux/types/actions";
-import './user_settings_themes.scss'
+} from './utils';
+import PremadeThemeChooser from './premade_theme_chooser';
+import './user_settings_themes.scss';
 export type Props = {
     currentUserId: string;
     teamId: string;
@@ -62,6 +56,14 @@ type SettingsType = {
 export default function UserSettingsThemes(props: Props): JSX.Element {
     const [haveChanges, setHaveChanges] = useState(false);
     const [currentTheme, setCurrentTheme] = useState(props.theme);
+    const linkAndButtonStylesHeaderRef = useRef<HTMLDivElement>(null);
+    const linkAndButtonStylesRef = useRef<HTMLDivElement>(null);
+    const sidebarStylesHeaderRef = useRef<HTMLDivElement>(null);
+    const centerChannelStylesHeaderRef = useRef<HTMLDivElement>(null);
+    const sidebarStylesRef = useRef<HTMLDivElement>(null);
+    const centerChannelStylesRef = useRef<HTMLDivElement>(null);
+    const statusStylesHeaderRef = useRef<HTMLDivElement>(null);
+    const statusStylesRef = useRef<HTMLDivElement>(null);
 
     const [settings, setSettings] = useState<SettingsType>({
         [ThemeSettings.SYNC_THEME_WITH_OS]: props.syncThemeWithOs,
@@ -69,25 +71,43 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
         [ThemeSettings.WEB_DARK_THEME]: props.webDarkTheme,
         [ThemeSettings.APPLY_TO_ALL_TEAMS]: props.applyToAllTeams,
     });
+    const [copyTheme, setCopyTheme] = useState<string>(
+        setCopytheme(props.theme),
+    );
 
-    type ShowType = {
-        [key: string]: { modal: string; open: boolean };
+    type ModalType = {
+        [key: string]: {
+            headerRef: React.RefObject<HTMLDivElement>;
+            contentRef: React.RefObject<HTMLDivElement>;
+        };
     };
-    let initial = { modal: "", open: false };
-    const [show, setShow] = useState<ShowType>({
-        sidebarElements: initial,
-        centerChannelElements: initial,
-        statusElements: initial,
-        linkAndButtonElements: initial,
-    });
-    const [showColorsElement, setShowColorsElement] = useState(false);
+
+    const initialRefs = (
+        headerRef: React.RefObject<HTMLDivElement>,
+        contentRef: React.RefObject<HTMLDivElement>,
+    ) => {
+        return {headerRef, contentRef};
+    };
+    const modal: ModalType = {
+        sidebarElements: initialRefs(sidebarStylesHeaderRef, sidebarStylesRef),
+        centerChannelElements: initialRefs(
+            centerChannelStylesHeaderRef,
+            centerChannelStylesRef,
+        ),
+        statusElements: initialRefs(statusStylesHeaderRef, statusStylesRef),
+        linkAndButtonElements: initialRefs(
+            linkAndButtonStylesHeaderRef,
+            linkAndButtonStylesRef,
+        ),
+    };
+    const [showCustomElements, setShowCustomElements] = useState(false);
 
     const handleChange = useCallback(
         (values: Record<string, boolean | string | Theme>) => {
-            setSettings({ ...settings, ...values });
+            setSettings({...settings, ...values});
             setHaveChanges(true);
         },
-        [settings]
+        [settings],
     );
 
     function handleCancel() {
@@ -95,16 +115,18 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
             [ThemeSettings.SYNC_THEME_WITH_OS]: props.syncThemeWithOs,
             [ThemeSettings.WEB_LIGHT_THEME]: props.webLightTheme,
             [ThemeSettings.WEB_DARK_THEME]: props.webDarkTheme,
-            [ThemeSettings.APPLY_TO_ALL_TEAMS]: props.applyToAllTeams
+            [ThemeSettings.APPLY_TO_ALL_TEAMS]: props.applyToAllTeams,
         });
         setHaveChanges(false);
     }
 
     const handleSubmit = async (): Promise<void> => {
-        const teamId = settings[ThemeSettings.APPLY_TO_ALL_TEAMS] ? '' : props.teamId;
+        const teamId = settings[ThemeSettings.APPLY_TO_ALL_TEAMS] ?
+            '' :
+            props.teamId;
 
         const preferences: PreferenceType[] = [];
-        const { savePreferences, currentUserId } = props;
+        const {savePreferences, currentUserId} = props;
 
         Object.keys(settings).forEach((setting) => {
             const category = Preferences.CATEGORY_THEME;
@@ -113,9 +135,9 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
                 category,
                 name: setting,
                 value:
-                    typeof settings[setting] === "string"
-                        ? String(settings[setting])
-                        : JSON.stringify(settings[setting]),
+                    typeof settings[setting] === 'string' ?
+                        String(settings[setting]) :
+                        JSON.stringify(settings[setting]),
             });
         });
 
@@ -133,7 +155,7 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
                 inputFieldValue={settings[ThemeSettings.SYNC_THEME_WITH_OS]}
                 inputFieldData={SyncWithOsSectionInputFieldData}
                 handleChange={(e) =>
-                    handleChange({ [ThemeSettings.SYNC_THEME_WITH_OS]: e })
+                    handleChange({[ThemeSettings.SYNC_THEME_WITH_OS]: e})
                 }
             />
         </>
@@ -153,23 +175,31 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
         }
         setCurrentTheme(newTheme);
         applyTheme(newTheme);
+        setHaveChanges(true);
     };
 
     const PreMadeThemeContent = (
         <>
             <div>
                 <FormattedMessage
-                    id="user.settings.themes.themeColors.desc"
-                    defaultMessage="Choose a theme from the options below or "
+                    id='user.settings.themes.themeColors.desc'
+                    defaultMessage='Choose a theme from the options below or '
                 />
-                <span style={{color: 'blue', cursor: 'pointer'}} onClick={() => setShowColorsElement(true)}>
-                    create a custom theme
+                <span
+                    style={{color: 'blue', cursor: 'pointer'}}
+                    onClick={() => setShowCustomElements(!showCustomElements)}
+                >
+                    {!showCustomElements ?
+                        'create a custom theme' :
+                        'create a preset theme'}
                 </span>
             </div>
-            <PremadeThemeChooser
-                theme={props.theme}
-                updateTheme={updateTheme}
-            />
+            {!showCustomElements && (
+                <PremadeThemeChooser
+                    theme={props.theme}
+                    updateTheme={updateTheme}
+                />
+            )}
         </>
     );
 
@@ -178,7 +208,7 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
             themes={PreMadeDarkTheme}
             theme={settings[ThemeSettings.WEB_DARK_THEME]}
             updateTheme={(newTheme) =>
-                handleChange({ [ThemeSettings.WEB_DARK_THEME]: newTheme })
+                handleChange({[ThemeSettings.WEB_DARK_THEME]: newTheme})
             }
         />
     );
@@ -188,50 +218,80 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
             themes={PreMadeLightTheme}
             theme={settings[ThemeSettings.WEB_LIGHT_THEME]}
             updateTheme={(newTheme) => {
-                handleChange({ [ThemeSettings.WEB_LIGHT_THEME]: newTheme });
+                handleChange({[ThemeSettings.WEB_LIGHT_THEME]: newTheme});
             }}
         />
     );
 
-    const handleShowModal = (id: string, open: boolean) => {
-        switch (id) {
-            case "sidebarElements":
-            case "centerChannelElements":
-            case "statusElements":
-            case "linkAndButtonElements":
-                setShow({ ...show, [id]: { modal: id, open } });
-                break;
-            default:
-                setShow({ ...show });
-        }
-    };
-
     const handleColorChange = (settingId: string, color: string) => {
-        const { theme } = props;
+        const {theme} = props;
         if (theme[settingId] !== color) {
             const newTheme: Theme = {
                 ...theme,
-                type: "custom",
+                type: 'custom',
                 [settingId]: color,
             };
 
             // For backwards compatability
-            if (settingId === "mentionBg") {
+            if (settingId === 'mentionBg') {
                 newTheme.mentionBj = color;
             }
 
             updateTheme(newTheme);
 
-            // const copyTheme = this.setCopyTheme(newTheme);
+            const copyTheme = setCopytheme(newTheme);
 
-            // this.setState({
-            //     copyTheme,
-            // });
+            setCopyTheme(copyTheme);
         }
     };
 
+    function setCopytheme(theme: Theme) {
+        const copyTheme = Object.assign({}, theme);
+        delete copyTheme.type;
+        delete copyTheme.image;
+
+        return JSON.stringify(copyTheme);
+    }
+
+    const toggleStyles = (
+        e: MouseEvent<HTMLDivElement>,
+        el: {
+            id: string;
+        },
+    ) => {
+        e.preventDefault();
+        modal[el.id].headerRef?.current?.classList.toggle('open');
+        toggleSection(modal[el.id].contentRef?.current);
+    };
+
+    function toggleSection(node: HTMLDivElement | null) {
+        if (!node) {
+            return;
+        }
+        node.classList.toggle('open');
+
+        // set overflow after animation, so the colorchooser is fully shown
+        node.ontransitionend = () => {
+            if (node.classList.contains('open')) {
+                node.style.overflowY = 'inherit';
+            } else {
+                node.style.overflowY = 'hidden';
+            }
+        };
+    }
+
+    const onCodeThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const theme: Theme = {
+            ...props.theme,
+            type: 'custom',
+            codeTheme: e.target.value,
+        };
+
+        updateTheme(theme);
+    };
+
     return (
-        <>
+        <div className='appearance-section'>
             <SectionCreator
                 title={SyncWithOsSectionTitle}
                 content={SyncWithOsSectionContent}
@@ -239,11 +299,12 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
             />
             {!settings[ThemeSettings.SYNC_THEME_WITH_OS] && (
                 <>
-                    <div className="user-settings-modal__divider" />
+                    <div className='user-settings-modal__divider'/>
                     {
                         <SectionCreator
                             title={ThemeColorsSectionTitle}
                             content={PreMadeThemeContent}
+
                             // description={ThemeColorsSectionDesc}
                         />
                     }
@@ -251,19 +312,19 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
             )}
             {settings[ThemeSettings.SYNC_THEME_WITH_OS] && (
                 <>
-                    <div className="user-settings-modal__divider" />
+                    <div className='user-settings-modal__divider'/>
                     {
                         <SectionCreator
                             title={LightThemeColorsSectionTitle}
                             content={
-                                !showColorsElement
-                                    ? PreMadeLightThemeContent
-                                    : undefined
+                                !showCustomElements ?
+                                    PreMadeLightThemeContent :
+                                    undefined
                             }
                             description={LightThemeColorsSectionDesc}
                         />
                     }
-                    <div className="user-settings-modal__divider" />
+                    <div className='user-settings-modal__divider'/>
                     <SectionCreator
                         title={DarkThemeColorsSectionTitle}
                         content={PreMadeDarkThemeContent}
@@ -272,38 +333,37 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
                 </>
             )}
 
-            {showColorsElement &&
-                showElements(props, handleColorChange).map((el, index) => (
-                    <div key={el.id + index}>
-                        <SectionCreator
-                            key={el.message.id + index}
-                            content={
-                                <div
-                                    id="sidebarStyles"
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() =>
-                                        handleShowModal(
-                                            el.id,
-                                            !show[el.id]?.open
-                                        )
-                                    }
-                                >
-                                    {console.log({ ...el.message })}
-                                    <FormattedMessage {...el.message} />
-                                </div>
-                            }
-                        />
-                        {showColorsElement && show[el.id]?.open && (
-                            <div 
+            {showCustomElements &&
+                showElements(props, handleColorChange, onCodeThemeChange).map(
+                    (el, index) => (
+                        <div
+                            className='theme-elements row'
+                            key={el.id + index}
+                        >
+                            <SectionCreator
+                                key={el.message.id + index}
+                                content={
+                                    <div
+                                        ref={modal[el.id].headerRef}
+                                        className='theme-elements__header'
+                                        id='sidebarStyles'
+                                        style={{cursor: 'pointer'}}
+                                        onClick={(e) => toggleStyles(e, el)}
+                                    >
+                                        <FormattedMessage {...el.message}/>
+                                    </div>
+                                }
+                            />
+                            <div
+                                ref={modal[el.id].contentRef}
                                 key={el.id + index}
-                                style={show[el.id].open ? { overflowY: 'inherit'} : { overflowY: 'hidden'}}
-                                className={`theme-elements__body ${show[el.id].open ? 'open' : ''}`}
+                                className='theme-elements__body'
                             >
                                 {el.element}
                             </div>
-                        )}
-                    </div>
-                ))}
+                        </div>
+                    ),
+                )}
 
             {haveChanges && (
                 <SaveChangesPanel
@@ -311,6 +371,6 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
                     handleCancel={handleCancel}
                 />
             )}
-        </>
+        </div>
     );
 }

@@ -1,26 +1,26 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, { useCallback, useState } from "react";
+import React, {useCallback, useState} from 'react';
 
-import { Timezone } from "timezones.json";
+import {Timezone} from 'timezones.json';
 
-import { ActionFunc } from "mattermost-redux/types/actions";
-import Constants from "utils/constants";
+import {ActionFunc} from 'mattermost-redux/types/actions';
+import Constants from 'utils/constants';
 
-import SectionCreator from "components/widgets/modals/generic/section_creator";
-import RadioItemCreator from "components/widgets/modals/generic/radio-item-creator";
-import SaveChangesPanel from "components/widgets/modals/generic/save_changes_panel";
+import SectionCreator from 'components/widgets/modals/generic/section_creator';
+import RadioItemCreator from 'components/widgets/modals/generic/radio-item-creator';
+import SaveChangesPanel from 'components/widgets/modals/generic/save_changes_panel';
 
-import CheckboxItemCreator from "components/widgets/modals/generic/checkbox-item-creator";
+import CheckboxItemCreator from 'components/widgets/modals/generic/checkbox-item-creator';
 
-import { PreferenceType } from "@mattermost/types/preferences";
-import { UserProfile } from "@mattermost/types/users";
+import {PreferenceType} from '@mattermost/types/preferences';
+import {UserProfile} from '@mattermost/types/users';
 
-import ReactSelectItemCreator from "components/widgets/modals/generic/react-select-item-creator";
-import * as I18n from "i18n/i18n.jsx";
-import { getBrowserTimezone } from "utils/timezone";
-import { getTimezoneLabel } from "mattermost-redux/utils/timezone_utils";
+import ReactSelectItemCreator from 'components/widgets/modals/generic/react-select-item-creator';
+import * as I18n from 'i18n/i18n.jsx';
+import {getBrowserTimezone} from 'utils/timezone';
+import {getTimezoneLabel} from 'mattermost-redux/utils/timezone_utils';
 
 import {
     languageSelectDescription,
@@ -33,7 +33,7 @@ import {
     showTimezoneDescription,
     showTimezoneTitle,
     TimeFormatData,
-} from "./utils";
+} from './utils';
 
 export type Props = {
     user: UserProfile;
@@ -76,9 +76,9 @@ export default function UserSettingsLanguageAndTime({
         use_military_time: militaryTime,
         selectedOption: {
             label: timezoneLabel,
-            value: userTimezone.useAutomaticTimezone
-                ? userTimezone.automaticTimezone
-                : userTimezone.manualTimezone,
+            value: userTimezone.useAutomaticTimezone ?
+                userTimezone.automaticTimezone :
+                userTimezone.manualTimezone,
         },
         automaticTimezone: userTimezone.automaticTimezone,
         useAutomaticTimezone: Boolean(userTimezone.useAutomaticTimezone),
@@ -96,7 +96,7 @@ export default function UserSettingsLanguageAndTime({
         }
         const localeName = I18n.getLanguageInfo(userLocale).name;
         if (user.locale === settings.language.value) {
-            return;
+
         } else {
             actions.updateMe({
                 ...user,
@@ -107,67 +107,67 @@ export default function UserSettingsLanguageAndTime({
 
     const handlechange = (
         e: any,
-        dataKey: "timeFormat" | "autoTimeZone" | "timeZoneChange" | "language"
+        dataKey: 'timeFormat' | 'autoTimeZone' | 'timeZoneChange' | 'language',
     ) => {
         let value;
-        let automaticTimezone = "";
+        let automaticTimezone = '';
         let timezoneLabel: string;
         let selectedOptionValue: string;
         let manualTimezone: string;
         switch (dataKey) {
-            case "timeFormat":
-                value = e.target.value === "true" ? "true" : "false";
-                setSettings({
-                    ...settings,
-                    [Preferences.USE_MILITARY_TIME]: value,
-                });
-                break;
-            case "autoTimeZone":
-                if (e) {
-                    automaticTimezone = getBrowserTimezone();
-                    timezoneLabel = getTimezoneLabel(
-                        timezones,
-                        automaticTimezone
-                    );
-                    selectedOptionValue = automaticTimezone;
-                } else {
-                    timezoneLabel = getTimezoneLabel(
-                        timezones,
-                        getBrowserTimezone()
-                    );
-                    selectedOptionValue = getBrowserTimezone();
-                    manualTimezone = getBrowserTimezone();
-                    setSettings({
-                        ...settings,
-                        manualTimezone: getBrowserTimezone(),
-                    });
-                }
-                setSettings({
-                    ...settings,
+        case 'timeFormat':
+            value = e.target.value === 'true' ? 'true' : 'false';
+            setSettings({
+                ...settings,
+                [Preferences.USE_MILITARY_TIME]: value,
+            });
+            break;
+        case 'autoTimeZone':
+            if (e) {
+                automaticTimezone = getBrowserTimezone();
+                timezoneLabel = getTimezoneLabel(
+                    timezones,
                     automaticTimezone,
-                    useAutomaticTimezone: e,
-                    selectedOption: {
-                        label: timezoneLabel,
-                        value: selectedOptionValue,
-                    },
+                );
+                selectedOptionValue = automaticTimezone;
+            } else {
+                timezoneLabel = getTimezoneLabel(
+                    timezones,
+                    getBrowserTimezone(),
+                );
+                selectedOptionValue = getBrowserTimezone();
+                manualTimezone = getBrowserTimezone();
+                setSettings({
+                    ...settings,
+                    manualTimezone: getBrowserTimezone(),
                 });
-                break;
-            case "timeZoneChange":
-                if (e && "value" in e) {
-                    setSettings({
-                        ...settings,
-                        manualTimezone: e.value,
-                        selectedOption: e,
-                    });
-                }
-                break;
-            case "language":
-                if (e && "value" in e) {
-                    setSettings({ ...settings, language: e });
-                }
-                break;
-            default:
-                value = null;
+            }
+            setSettings({
+                ...settings,
+                automaticTimezone,
+                useAutomaticTimezone: e,
+                selectedOption: {
+                    label: timezoneLabel,
+                    value: selectedOptionValue,
+                },
+            });
+            break;
+        case 'timeZoneChange':
+            if (e && 'value' in e) {
+                setSettings({
+                    ...settings,
+                    manualTimezone: e.value,
+                    selectedOption: e,
+                });
+            }
+            break;
+        case 'language':
+            if (e && 'value' in e) {
+                setSettings({...settings, language: e});
+            }
+            break;
+        default:
+            value = null;
         }
         setHaveChanges(true);
     };
@@ -179,7 +179,7 @@ export default function UserSettingsLanguageAndTime({
         preferences.push({
             user_id: userId,
             category,
-            name: "use_military_time",
+            name: 'use_military_time',
             value: settings.use_military_time,
         });
 
@@ -211,7 +211,7 @@ export default function UserSettingsLanguageAndTime({
             description={languageSelectDescription}
             inputFieldValue={settings.language}
             inputFieldData={languageSelectInputFieldData}
-            handleChange={(e) => handlechange(e, "language")}
+            handleChange={(e) => handlechange(e, 'language')}
         />
     );
 
@@ -227,13 +227,13 @@ export default function UserSettingsLanguageAndTime({
             <CheckboxItemCreator
                 inputFieldData={showAutoTimezoneData}
                 inputFieldValue={settings.useAutomaticTimezone}
-                handleChange={(e) => handlechange(e, "autoTimeZone")}
+                handleChange={(e) => handlechange(e, 'autoTimeZone')}
             />
             <ReactSelectItemCreator
                 description={languageSelectDescription}
                 inputFieldValue={settings.selectedOption}
-                inputFieldData={{ options: timeOptions }}
-                handleChange={(e) => handlechange(e, "timeZoneChange")}
+                inputFieldData={{options: timeOptions}}
+                handleChange={(e) => handlechange(e, 'timeZoneChange')}
                 isDisabled={settings.useAutomaticTimezone}
             />
         </>
@@ -243,7 +243,7 @@ export default function UserSettingsLanguageAndTime({
         <RadioItemCreator
             inputFieldValue={settings.use_military_time}
             inputFieldData={TimeFormatData}
-            handleChange={(e) => handlechange(e, "timeFormat")}
+            handleChange={(e) => handlechange(e, 'timeFormat')}
         />
     );
 
@@ -252,9 +252,9 @@ export default function UserSettingsLanguageAndTime({
             use_military_time: militaryTime,
             selectedOption: {
                 label: timezoneLabel,
-                value: userTimezone.useAutomaticTimezone
-                    ? userTimezone.automaticTimezone
-                    : userTimezone.manualTimezone,
+                value: userTimezone.useAutomaticTimezone ?
+                    userTimezone.automaticTimezone :
+                    userTimezone.manualTimezone,
             },
             automaticTimezone: userTimezone.automaticTimezone,
             useAutomaticTimezone: Boolean(userTimezone.useAutomaticTimezone),
@@ -274,7 +274,7 @@ export default function UserSettingsLanguageAndTime({
                 content={languageSelect}
                 description={showLanguageTitleDescription}
             />
-            <div className="user-settings-modal__divider" />
+            <div className='user-settings-modal__divider'/>
             <SectionCreator
                 title={showTimezoneTitle}
                 content={timeZoneContainer}

@@ -14,6 +14,7 @@ type Props = {
 
 export default function ColorChooser(props: Props) {
     const handleChange = (newColor: string) => {
+        console.log(props.onChange?.(props.id, newColor));
         props.onChange?.(props.id, newColor);
     };
 

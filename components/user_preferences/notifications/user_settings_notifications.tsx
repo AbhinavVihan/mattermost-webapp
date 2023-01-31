@@ -17,14 +17,17 @@ import SectionCreator from 'components/widgets/modals/generic/section_creator';
 
 import {UserNotifyProps, UserProfile} from '@mattermost/types/users';
 
+import SaveChangesPanel from 'components/widgets/modals/generic/save_changes_panel';
+
+import {PreferenceType} from '@mattermost/types/preferences';
+
 import DesktopNotificationSettings from './desktop_notification_settings';
 import {EmailNotificationsSetting} from './email_notification_setting/email_notification_setting';
-import { ManageAutoResponderSection } from './manage_auto_responder';
-import { MobileNotificationsSettings } from './mobile_notification_Settings';
-import SaveChangesPanel from 'components/widgets/modals/generic/save_changes_panel';
-import { PreferenceType } from '@mattermost/types/preferences';
-import { MentionKeyWordsSetting } from './mention_keywords_setting';
-import { DesktopNotificationsDesc, DesktopNotificationsTitle, emailNotificationSettingDesc, emailNotificationSettingTitle } from './utils';
+import {ManageAutoResponderSection} from './manage_auto_responder';
+import {MobileNotificationsSettings} from './mobile_notification_Settings';
+
+import {MentionKeyWordsSetting} from './mention_keywords_setting';
+import {DesktopNotificationsDesc, DesktopNotificationsTitle, emailNotificationSettingDesc, emailNotificationSettingTitle} from './utils';
 
 export type Props = {
     user: UserProfile;
@@ -39,11 +42,11 @@ export type Props = {
         savePreferences: (
             currentUserId: string,
             emailIntervalPreference: PreferenceType[]
-        ) => Promise<{ data: boolean }>;    };
+        ) => Promise<{ data: boolean }>; };
     isCollapsedThreadsEnabled: boolean;
-    emailInterval: number
-        enableEmailBatching: boolean
-        sendEmailNotifications: boolean
+    emailInterval: number;
+    enableEmailBatching: boolean;
+    sendEmailNotifications: boolean;
 }
 
 type State = {
@@ -66,7 +69,7 @@ type State = {
     notifyCommentsLevel: UserNotifyProps['comments'];
     isSaving: boolean;
     serverError: string;
-    haveChanges: boolean
+    haveChanges: boolean;
 };
 
 function getNotificationsStateFromProps(props: Props): State {
@@ -273,15 +276,7 @@ export default class NotificationsTab extends React.PureComponent<Props, State> 
         this.setState((prevState) => ({...prevState, ...data}));
     }
 
-
-
-
-
-
     handleEmailRadio = (enableEmail: UserNotifyProps['email']): void => this.setState({enableEmail});
-
-
-
 
     getUseSameDesktopSetting = () => {
         const isSameAsDesktopActivity = this.state.desktopActivity === this.state.pushActivity;
@@ -290,38 +285,36 @@ export default class NotificationsTab extends React.PureComponent<Props, State> 
     }
 
     render() {
-        const autoResponderSection = 
-        <ManageAutoResponderSection
-            autoResponderActive={this.state.autoResponderActive}
-            autoResponderMessage={this.state.autoResponderMessage || ''}
-            updateSection={this.handleUpdateSection}
+        const autoResponderSection =
+            (<ManageAutoResponderSection
+                autoResponderActive={this.state.autoResponderActive}
+                autoResponderMessage={this.state.autoResponderMessage || ''}
+                updateSection={this.handleUpdateSection}
+                setParentState={this.setStateValue}
+                submit={this.handleSubmit}
+                error={this.state.serverError}
+                saving={this.state.isSaving}
+            />);
+
+        const pushNotificationSection = (<MobileNotificationsSettings
+            user={this.props.user}
+            updateMe={this.props.actions.updateMe}
             setParentState={this.setStateValue}
-            submit={this.handleSubmit}
-            error={this.state.serverError}
-            saving={this.state.isSaving}
-        />
+            activity={this.state.pushActivity}
+            threads={this.state.pushThreads}
+            getUseSameDesktopSetting={this.getUseSameDesktopSetting}
+            pushStatus={this.state.pushStatus}
+            deskTopActivity={this.state.desktopActivity}
+            desktopThreads={this.state.desktopThreads}
+        />);
 
-        const pushNotificationSection = <MobileNotificationsSettings
-        user={this.props.user}
-        updateMe={this.props.actions.updateMe}
-        setParentState={this.setStateValue}
-        activity={this.state.pushActivity}
-        threads={this.state.pushThreads}
-        getUseSameDesktopSetting={this.getUseSameDesktopSetting}
-        pushStatus={this.state.pushStatus}
-        deskTopActivity={this.state.desktopActivity}
-        desktopThreads={this.state.desktopThreads}   
-         />
-
-        const mentionKeyWordsSection = <MentionKeyWordsSetting
-        setParentState={this.setStateValue}
-        firstNameKey={this.state.firstNameKey}
-        channelKey={this.state.channelKey}
-        firstName={this.props.user.first_name}
-        customKeys={this.state.customKeys}
-
-        />
-
+        const mentionKeyWordsSection = (<MentionKeyWordsSetting
+            setParentState={this.setStateValue}
+            firstNameKey={this.state.firstNameKey}
+            channelKey={this.state.channelKey}
+            firstName={this.props.user.first_name}
+            customKeys={this.state.customKeys}
+                                        />);
 
         const desktopAndWebNotificationContent = (
             <DesktopNotificationSettings
@@ -352,8 +345,8 @@ export default class NotificationsTab extends React.PureComponent<Props, State> 
                 user={this.props.user}
                 savePreferences={this.props.actions.savePreferences}
                 emailInterval={this.props.emailInterval}
-        enableEmailBatching={this.props.enableEmailBatching}
-        sendEmailNotifications={this.props.sendEmailNotifications}
+                enableEmailBatching={this.props.enableEmailBatching}
+                sendEmailNotifications={this.props.sendEmailNotifications}
             />
         );
 
@@ -379,10 +372,10 @@ export default class NotificationsTab extends React.PureComponent<Props, State> 
                 {mentionKeyWordsSection}
                 {autoResponderSection}
                 <div className='divider-dark'/>
-                {this.state.haveChanges &&  <SaveChangesPanel
+                {this.state.haveChanges && <SaveChangesPanel
                     handleSubmit={this.handleSubmit}
                     handleCancel={this.handleCancel}
-                />}
+                                           />}
             </div>
         );
     }

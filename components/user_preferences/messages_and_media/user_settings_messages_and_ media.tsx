@@ -1,21 +1,21 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, { useCallback, useState } from "react";
+import React, {useCallback, useState} from 'react';
 
-import { ActionFunc } from "mattermost-redux/types/actions";
-import Constants from "utils/constants";
+import {ActionFunc} from 'mattermost-redux/types/actions';
+import Constants from 'utils/constants';
 
-import SectionCreator from "components/widgets/modals/generic/section_creator";
-import RadioItemCreator from "components/widgets/modals/generic/radio-item-creator";
-import SaveChangesPanel from "components/widgets/modals/generic/save_changes_panel";
+import SectionCreator from 'components/widgets/modals/generic/section_creator';
+import RadioItemCreator from 'components/widgets/modals/generic/radio-item-creator';
+import SaveChangesPanel from 'components/widgets/modals/generic/save_changes_panel';
 
-import CheckboxItemCreator from "components/widgets/modals/generic/checkbox-item-creator";
+import CheckboxItemCreator from 'components/widgets/modals/generic/checkbox-item-creator';
 
-import { PreferenceType } from "@mattermost/types/preferences";
-import { UserProfile } from "@mattermost/types/users";
+import {PreferenceType} from '@mattermost/types/preferences';
+import {UserProfile} from '@mattermost/types/users';
 
-const { Preferences } = Constants;
+const {Preferences} = Constants;
 
 import {
     enableCRTData,
@@ -40,7 +40,7 @@ import {
     teamMateNameDisplayTitle,
     threadsTitle,
     websitePreviewsData,
-} from "./utils";
+} from './utils';
 
 export type Props = {
     currentUser: UserProfile;
@@ -72,9 +72,9 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
     const [haveChanges, setHaveChanges] = useState(false);
     const [settings, setSettings] = useState<settingsType>({
         collapsed_reply_threads: props.collapsedReplyThreads,
-        name_format: props.lockTeammateNameDisplay
-            ? props.configTeammateNameDisplay
-            : props.teammateNameDisplay,
+        name_format: props.lockTeammateNameDisplay ?
+            props.configTeammateNameDisplay :
+            props.teammateNameDisplay,
         availability_status_on_posts: props.availabilityStatusOnPosts,
         collapse_previews: props.collapseDisplay,
         link_previews: props.linkPreviewDisplay,
@@ -91,9 +91,9 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
             handleChange={(e) => {
                 handleChange({
                     [Preferences.MESSAGE_DISPLAY]:
-                        e.target.value === Preferences.MESSAGE_DISPLAY_CLEAN
-                            ? Preferences.MESSAGE_DISPLAY_CLEAN
-                            : Preferences.MESSAGE_DISPLAY_COMPACT,
+                        e.target.value === Preferences.MESSAGE_DISPLAY_CLEAN ?
+                            Preferences.MESSAGE_DISPLAY_CLEAN :
+                            Preferences.MESSAGE_DISPLAY_COMPACT,
                 });
             }}
         />
@@ -107,9 +107,9 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
                 handleChange({
                     [Preferences.CHANNEL_DISPLAY_MODE]:
                         e.target.value ===
-                        Preferences.CHANNEL_DISPLAY_MODE_FULL_SCREEN
-                            ? Preferences.CHANNEL_DISPLAY_MODE_FULL_SCREEN
-                            : Preferences.CHANNEL_DISPLAY_MODE_CENTERED,
+                        Preferences.CHANNEL_DISPLAY_MODE_FULL_SCREEN ?
+                            Preferences.CHANNEL_DISPLAY_MODE_FULL_SCREEN :
+                            Preferences.CHANNEL_DISPLAY_MODE_CENTERED,
                 });
             }}
         />
@@ -145,7 +145,7 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
     const profileStatusContainer = (
         <CheckboxItemCreator
             inputFieldData={profileStatusData}
-            inputFieldValue={settings.availability_status_on_posts === "true"}
+            inputFieldValue={settings.availability_status_on_posts === 'true'}
             handleChange={(e) => {
                 handleChange({
                     [Preferences.AVAILABILITY_STATUS_ON_POSTS]: e.toString(),
@@ -165,20 +165,20 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
                 handleChange={(e) => {
                     handleChange({
                         [Preferences.COLLAPSED_REPLY_THREADS]:
-                            e === true
-                                ? Preferences.COLLAPSED_REPLY_THREADS_ON
-                                : Preferences.COLLAPSED_REPLY_THREADS_OFF,
+                            e === true ?
+                                Preferences.COLLAPSED_REPLY_THREADS_ON :
+                                Preferences.COLLAPSED_REPLY_THREADS_OFF,
                     });
                 }}
                 description={enableCRTData.description}
             />
             <CheckboxItemCreator
                 inputFieldData={openThreadsData}
-                inputFieldValue={settings.click_to_reply === "true"}
+                inputFieldValue={settings.click_to_reply === 'true'}
                 handleChange={(e) => {
                     handleChange({
                         [Preferences.CLICK_TO_REPLY]:
-                            e === true ? "true" : "false",
+                            e === true ? 'true' : 'false',
                     });
                 }}
                 description={openThreadsData.description}
@@ -190,21 +190,21 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
         <>
             <CheckboxItemCreator
                 inputFieldData={imagePreviewsData}
-                inputFieldValue={settings.collapse_previews === "true"}
+                inputFieldValue={settings.collapse_previews === 'true'}
                 handleChange={(e) => {
                     handleChange({
                         [Preferences.COLLAPSE_DISPLAY]:
-                            e === true ? "true" : "false",
+                            e === true ? 'true' : 'false',
                     });
                 }}
             />
             <CheckboxItemCreator
                 inputFieldData={websitePreviewsData}
-                inputFieldValue={settings.link_previews === "true"}
+                inputFieldValue={settings.link_previews === 'true'}
                 handleChange={(e) => {
                     handleChange({
                         [Preferences.LINK_PREVIEW_DISPLAY]:
-                            e === true ? "true" : "false",
+                            e === true ? 'true' : 'false',
                     });
                 }}
             />
@@ -216,23 +216,24 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
             <CheckboxItemCreator
                 inputFieldData={quickReactionCheckboxData}
                 inputFieldValue={
-                    settings.one_click_reactions_enabled === "true"
+                    settings.one_click_reactions_enabled === 'true'
                 }
                 handleChange={(e) => {
                     handleChange({
                         [Preferences.ONE_CLICK_REACTIONS_ENABLED]:
-                            e === true ? "true" : "false",
+                            e === true ? 'true' : 'false',
                     });
                 }}
             />
 
             <RadioItemCreator
                 title={quickReactionRadioTitle}
+
                 //need to take a look
                 inputFieldValue={
-                    props.lockTeammateNameDisplay
-                        ? props.configTeammateNameDisplay
-                        : settings.name_format
+                    props.lockTeammateNameDisplay ?
+                        props.configTeammateNameDisplay :
+                        settings.name_format
                 }
                 inputFieldData={quickReactionRadioData}
                 handleChange={(e) => {
@@ -246,15 +247,15 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
 
     const handleChange = useCallback(
         (values: Record<string, string>) => {
-            setSettings({ ...settings, ...values });
+            setSettings({...settings, ...values});
             setHaveChanges(true);
         },
-        [settings]
+        [settings],
     );
 
     const handleSubmit = async (): Promise<void> => {
         const preferences: PreferenceType[] = [];
-        const { actions, currentUser } = props;
+        const {actions, currentUser} = props;
         const userId = currentUser.id;
 
         Object.keys(settings).forEach((setting) => {
@@ -274,9 +275,9 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
     const handleCancel = () => {
         setSettings({
             collapsed_reply_threads: props.collapsedReplyThreads,
-            name_format: props.lockTeammateNameDisplay
-                ? props.configTeammateNameDisplay
-                : props.teammateNameDisplay,
+            name_format: props.lockTeammateNameDisplay ?
+                props.configTeammateNameDisplay :
+                props.teammateNameDisplay,
             availability_status_on_posts: props.availabilityStatusOnPosts,
             collapse_previews: props.collapseDisplay,
             link_previews: props.linkPreviewDisplay,
@@ -294,7 +295,7 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
                 title={messageDisplayTtle}
                 description={messageDisplayDescription}
                 content={
-                    <div style={{ height: "100px" }}>
+                    <div style={{height: '100px'}}>
                         Hi, Content goes here :
                     </div>
                 }
@@ -315,11 +316,17 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
                 title={profileStatusTitle}
                 content={profileStatusContainer}
             />
-            <div className="user-settings-modal__divider" />
-            <SectionCreator title={threadsTitle} content={ThreadsContainer} />
-            <div className="user-settings-modal__divider" />
-            <SectionCreator title={previewsTitle} content={PreviewsContainer} />
-            <div className="user-settings-modal__divider" />
+            <div className='user-settings-modal__divider'/>
+            <SectionCreator
+                title={threadsTitle}
+                content={ThreadsContainer}
+            />
+            <div className='user-settings-modal__divider'/>
+            <SectionCreator
+                title={previewsTitle}
+                content={PreviewsContainer}
+            />
+            <div className='user-settings-modal__divider'/>
             <SectionCreator
                 title={quickReactionTitle}
                 description={quickReactionDescription}
@@ -328,7 +335,7 @@ export default function UserSettingsMessageesAndMedia(props: Props) {
             <SectionCreator
                 title={reactionsDemoTitle}
                 content={
-                    <div style={{ height: "100px" }}>
+                    <div style={{height: '100px'}}>
                         Hi, Content goes here :
                     </div>
                 }
