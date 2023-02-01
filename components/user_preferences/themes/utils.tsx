@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, {MouseEvent, RefObject} from 'react';
+import React, {MouseEvent, RefObject, ClipboardEvent} from 'react';
 
 import {defineMessages, FormattedMessage} from 'react-intl';
 
@@ -36,7 +36,6 @@ export enum ThemeSettings {
     SYNC_THEME_WITH_OS = 'sync_theme_with_os',
     WEB_DARK_THEME = 'web_dark_theme',
     WEB_LIGHT_THEME = 'web_light_theme',
-    APPLY_TO_ALL_TEAMS = 'applyToAllTeams',
 }
 
 export const SyncWithOsSectionTitle = {
@@ -386,3 +385,56 @@ export const showElements = (
         },
     ];
 };
+
+export const appltForALlTeamData = {
+    dataTestId: 'appltForALlTitle-test-id',
+    title: {
+        id: t('user.settings.themes.applyForAll.title'),
+        defaultMessage: 'Apply these theme settings for all my teams'
+    },
+    name: 'appltForALlTitle-name',
+    key: 'appltForALlTitle-key',
+};
+
+
+export const pasteBox = (ref: any, value: string,onPasteboxChange: (e: ClipboardEvent<HTMLTextAreaElement>) => void, onClick: () => void) =>  (
+    <div className='col-sm-12'>
+        <label className='custom-label'>
+            <FormattedMessage
+                id='user.settings.custom_theme.copyPaste'
+                defaultMessage='Copy to share or paste theme colors here:'
+            />
+        </label>
+        <textarea
+            ref={ref}
+            className='form-control'
+            id='pasteBox'
+            value={value}
+            // onCopy={this.showCopySuccess}
+            onPaste={onPasteboxChange}
+            onChange={(e) => e.stopPropagation()}
+            onClick={onClick}
+        />
+        <div className='mt-3'>
+            <button
+                className='btn btn-link copy-theme-button'
+                // onClick={this.copyTheme}
+            >
+                <FormattedMessage
+                    id='user.settings.custom_theme.copyThemeColors'
+                    defaultMessage='Copy Theme Colors'
+                />
+            </button>
+            <span
+                className='alert alert-success copy-theme-success'
+                role='alert'
+                style={{display: 'none'}}
+            >
+                <FormattedMessage
+                    id='user.settings.custom_theme.copied'
+                    defaultMessage='✔ Copied'
+                />
+            </span>
+        </div>
+    </div>
+);

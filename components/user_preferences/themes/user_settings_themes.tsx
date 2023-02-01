@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, {useCallback, useState, MouseEvent, useRef} from 'react';
+import React, {useCallback, useState, MouseEvent, useRef, ClipboardEvent} from 'react';
 
 import {FormattedMessage} from 'react-intl';
 
@@ -15,6 +15,7 @@ import CheckboxItemCreator from 'components/widgets/modals/generic/checkbox-item
 import {PreferenceType} from '@mattermost/types/preferences';
 
 import {
+    appltForALlTeamData,
     DarkThemeColorsSectionDesc,
     DarkThemeColorsSectionTitle,
     LightThemeColorsSectionDesc,
@@ -30,6 +31,7 @@ import {
 } from './utils';
 import PremadeThemeChooser from './premade_theme_chooser';
 import './user_settings_themes.scss';
+import { setThemeDefaults } from 'mattermost-redux/utils/theme_utils';
 export type Props = {
     currentUserId: string;
     teamId: string;
@@ -49,7 +51,6 @@ type SettingsType = {
     [ThemeSettings.SYNC_THEME_WITH_OS]: boolean;
     [ThemeSettings.WEB_LIGHT_THEME]: Theme;
     [ThemeSettings.WEB_DARK_THEME]: Theme;
-    [ThemeSettings.APPLY_TO_ALL_TEAMS]: boolean;
     [key: string]: boolean | string | undefined | Theme;
 };
 
@@ -64,12 +65,14 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
     const centerChannelStylesRef = useRef<HTMLDivElement>(null);
     const statusStylesHeaderRef = useRef<HTMLDivElement>(null);
     const statusStylesRef = useRef<HTMLDivElement>(null);
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+    const [applyToAllTeams, setApplyToAllTeams] = useState(props.applyToAllTeams)
 
     const [settings, setSettings] = useState<SettingsType>({
         [ThemeSettings.SYNC_THEME_WITH_OS]: props.syncThemeWithOs,
         [ThemeSettings.WEB_LIGHT_THEME]: props.webLightTheme,
         [ThemeSettings.WEB_DARK_THEME]: props.webDarkTheme,
-        [ThemeSettings.APPLY_TO_ALL_TEAMS]: props.applyToAllTeams,
     });
     const [copyTheme, setCopyTheme] = useState<string>(
         setCopytheme(props.theme),
@@ -98,7 +101,7 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
         linkAndButtonElements: initialRefs(
             linkAndButtonStylesHeaderRef,
             linkAndButtonStylesRef,
-        ),
+            ),
     };
     const [showCustomElements, setShowCustomElements] = useState(false);
 
@@ -115,13 +118,13 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
             [ThemeSettings.SYNC_THEME_WITH_OS]: props.syncThemeWithOs,
             [ThemeSettings.WEB_LIGHT_THEME]: props.webLightTheme,
             [ThemeSettings.WEB_DARK_THEME]: props.webDarkTheme,
-            [ThemeSettings.APPLY_TO_ALL_TEAMS]: props.applyToAllTeams,
         });
+        setApplyToAllTeams(props.applyToAllTeams)
         setHaveChanges(false);
     }
 
     const handleSubmit = async (): Promise<void> => {
-        const teamId = settings[ThemeSettings.APPLY_TO_ALL_TEAMS] ?
+        const teamId = applyToAllTeams ?
             '' :
             props.teamId;
 
@@ -142,7 +145,7 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
         });
 
         await savePreferences(currentUserId, preferences);
-        if (settings[ThemeSettings.APPLY_TO_ALL_TEAMS]) {
+        if (applyToAllTeams) {
             await props.deleteTeamSpecificThemes();
         }
         setHaveChanges(false);
@@ -175,7 +178,6 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
         }
         setCurrentTheme(newTheme);
         applyTheme(newTheme);
-        setHaveChanges(true);
     };
 
     const PreMadeThemeContent = (
@@ -237,7 +239,9 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
                 newTheme.mentionBj = color;
             }
 
-            updateTheme(newTheme);
+            new Promise((res) => {
+                res(updateTheme(newTheme))
+            }).then(() => setHaveChanges(true))
 
             const copyTheme = setCopytheme(newTheme);
 
@@ -290,6 +294,40 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
         updateTheme(theme);
     };
 
+    const pasteBoxChange = (e: ClipboardEvent<HTMLTextAreaElement>) => {
+        let text = '';
+
+        if ((window as any).clipboardData && (window as any).clipboardData.getData) { // IE
+            text = (window as any).clipboardData.getData('Text');
+        } else {
+            text = e.clipboardData.getData('Text');//e.clipboardData.getData('text/plain');
+        }
+
+        if (text.length === 0) {
+            return;
+        }
+
+        let theme;
+        try {
+            theme = JSON.parse(text);
+        } catch (err) {
+            return;
+        }
+
+        theme = setThemeDefaults(theme);
+
+        setCopyTheme(JSON.stringify(theme))
+
+
+        theme.type = 'custom';
+        updateTheme(theme);
+    }
+    
+    const selectTheme = () => {
+        textareaRef.current?.focus();
+        textareaRef.current?.setSelectionRange(0, copyTheme.length);
+    }
+
     return (
         <div className='appearance-section'>
             <SectionCreator
@@ -304,8 +342,6 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
                         <SectionCreator
                             title={ThemeColorsSectionTitle}
                             content={PreMadeThemeContent}
-
-                            // description={ThemeColorsSectionDesc}
                         />
                     }
                 </>
@@ -364,6 +400,17 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
                         </div>
                     ),
                 )}
+                
+                <SectionCreator 
+                    content =
+                    {
+                        <CheckboxItemCreator
+                            inputFieldData={appltForALlTeamData}
+                            inputFieldValue={applyToAllTeams}
+                            handleChange={(e) => {setApplyToAllTeams(e); setHaveChanges(true)}}
+                        />
+                    }
+                />
 
             {haveChanges && (
                 <SaveChangesPanel
@@ -374,3 +421,13 @@ export default function UserSettingsThemes(props: Props): JSX.Element {
         </div>
     );
 }
+
+
+// const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+// darkThemeMq.addListener(e => {
+//  if (e.matches) {
+//   // Theme set to dark.
+//  } else {
+//     // Theme set to light.
+//   }
+// });
