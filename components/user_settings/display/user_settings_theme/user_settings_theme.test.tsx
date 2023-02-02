@@ -19,7 +19,7 @@ jest.mock('utils/utils', () => ({
     a11yFocus: jest.fn(),
 }));
 
-describe('components/user_settings/display/user_settings_theme/user_settings_theme.jsx', () => {
+describe('components/user_settings/display/user_theme_settings/user_theme_settings.jsx', () => {
     const initialState = {
         entities: {
             general: {
