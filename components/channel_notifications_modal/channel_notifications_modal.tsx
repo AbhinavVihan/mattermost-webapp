@@ -223,6 +223,7 @@ export default function ChannelNotificationsModal(props: Props) {
         }
         await props.actions.updateChannelNotifyProps(props.currentUser.id, props.channel.id, userSettings);
         handleHide();
+
         // if (error) {
         //     setServerError(error.message);
         // }
