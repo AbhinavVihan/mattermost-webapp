@@ -221,11 +221,11 @@ export default function ChannelNotificationsModal(props: Props) {
             delete userSettings.desktop_threads;
             delete userSettings.channel_auto_follow_threads;
         }
-        const {error} = await props.actions.updateChannelNotifyProps(props.currentUser.id, props.channel.id, userSettings);
+        await props.actions.updateChannelNotifyProps(props.currentUser.id, props.channel.id, userSettings);
         handleHide();
-        if (error) {
-            setServerError(error.message);
-        }
+        // if (error) {
+        //     setServerError(error.message);
+        // }
     }
 
     const resetToDefaultBtn = useCallback((settingName: string) => {
