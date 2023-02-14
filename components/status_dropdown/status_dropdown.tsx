@@ -23,7 +23,7 @@ import ExpiryTime from 'components/custom_status/expiry_time';
 import DndCustomTimePicker from 'components/dnd_custom_time_picker_modal';
 import OverlayTrigger from 'components/overlay_trigger';
 import ResetStatusModal from 'components/reset_status_modal';
-import UserSettingsModal from 'components/user_settings/modal';
+import UserSettingsModal from 'components/user_preferences/modal';
 import EmojiIcon from 'components/widgets/icons/emoji_icon';
 import Menu from 'components/widgets/menu/menu';
 import MenuWrapper from 'components/widgets/menu/menu_wrapper';

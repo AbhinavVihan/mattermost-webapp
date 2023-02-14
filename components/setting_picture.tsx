@@ -155,6 +155,7 @@ export default class SettingPicture extends Component<Props, State> {
                     orientationStyles,
                 });
             };
+
             reader.readAsArrayBuffer(file);
         }
     }
@@ -259,6 +260,7 @@ export default class SettingPicture extends Component<Props, State> {
 
     render() {
         const img = this.renderImg();
+        console.log(this.state.image, this.state.orientationStyles)
 
         let confirmButtonClass = 'btn btn-sm';
         let disableSaveButtonFocus = false;

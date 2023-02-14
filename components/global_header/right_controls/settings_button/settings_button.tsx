@@ -8,7 +8,7 @@ import IconButton from '@mattermost/compass-components/components/icon-button';
 
 import OverlayTrigger from 'components/overlay_trigger';
 import Tooltip from 'components/tooltip';
-import UserSettingsModal from 'components/user_settings/modal';
+import UserSettingsModal from 'components/user_preferences/modal';
 
 import {ModalData} from 'types/actions';
 
