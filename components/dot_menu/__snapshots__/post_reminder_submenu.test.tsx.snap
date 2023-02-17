@@ -1,0 +1,286 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/dot_menu/PostReminderCustomTimePicker should submit the tomorrow's date in milliseconds for the reminder on a post 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body
+    style="padding-right: 1024px; overflow: hidden;"
+  >
+    <div
+      aria-hidden="true"
+    >
+      <li
+        aria-controls="remind_post_1y8hpek81byspd4enyk9mp1ncw-menu"
+        aria-expanded="true"
+        aria-haspopup="true"
+        class="MuiButtonBase-root-JvZdr clbaxI MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters Mui-focusVisible MuiMenuItem-root-dXqYNm kIRdVO MuiMenuItem-root MuiMenuItem-gutters sc-dkrFOg joCcgr"
+        id="remind_post_1y8hpek81byspd4enyk9mp1ncw"
+        role="menuitem"
+        tabindex="-1"
+      >
+        <div
+          class="leading-element"
+        >
+          <svg
+            fill="currentColor"
+            height="18"
+            version="1.1"
+            viewBox="0 0 24 24"
+            width="18"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12,20c4.4,0,8-3.6,8-8s-3.6-8-8-8s-8,3.6-8,8S7.6,20,12,20 M12,2c5.5,0,10,4.5,10,10s-4.5,10-10,10S2,17.5,2,12S6.5,2,12,2 M15.535,16.949L11,12.414V7h2v4.586l3.949,3.949L15.535,16.949z"
+            />
+          </svg>
+        </div>
+        <div
+          class="label-elements"
+        >
+          Remind
+        </div>
+        <div
+          class="trailing-elements"
+        >
+          <span
+            class="dot-menu__item-trailing-icon"
+          >
+            <svg
+              fill="currentColor"
+              height="16"
+              version="1.1"
+              viewBox="0 0 24 24"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
+              />
+            </svg>
+          </span>
+        </div>
+      </li>
+    </div>
+    <div
+      class="MuiModal-root-jIkgkT RTvUA MuiPopover-root-kMgVQh MuiPopover-root MuiMenu-root-egsdNX kLcSa-d sc-gswNZR itpnDJ MuiModal-root"
+      role="presentation"
+    >
+      <div
+        aria-hidden="true"
+        class="MuiBackdrop-root-edlnby bKKkeP MuiBackdrop-root MuiBackdrop-invisible MuiModal-backdrop-kzahUP leuFnJ MuiModal-backdrop"
+        style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+      />
+      <div
+        data-testid="sentinelStart"
+        tabindex="0"
+      />
+      <div
+        class="MuiPaper-root-jrVkwW cfvvet MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiMenu-paper-kuMxyn gYbHPs MuiPaper-root-jrVkwW lfMpuC MuiPaper-root MuiMenu-paper MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiPopover-paper-neeJt eoZUsW MuiPopover-paper"
+        style="opacity: 1; transform: scale(1, 1); transition: opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,transform 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; top: 16px; left: 16px; transform-origin: -16px -16px;"
+        tabindex="-1"
+      >
+        <ul
+          class="MuiList-root-fKJJSC gDElgH MuiList-root MuiList-padding MuiMenu-list-bHwQqP gXlVqk MuiMenu-list"
+          role="menu"
+          tabindex="-1"
+        >
+          <ul
+            class="MuiList-root-fKJJSC HHixE MuiList-root MuiList-padding a11y__popup"
+            id="remind_post_1y8hpek81byspd4enyk9mp1ncw-menu"
+            role="menu"
+            tabindex="0"
+          >
+            <h5
+              class="dot-menu__post-reminder-menu-header"
+              tabindex="0"
+            >
+              Set a reminder for:
+            </h5>
+            <li
+              class="MuiButtonBase-root-JvZdr clbaxI MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root-dXqYNm kIRdVO MuiMenuItem-root MuiMenuItem-gutters sc-dkrFOg joCcgr"
+              id="remind_post_options_thirty_minutes"
+              role="menuitem"
+              tabindex="-1"
+            >
+              <div
+                class="label-elements"
+              >
+                30 mins
+              </div>
+            </li>
+            <li
+              class="MuiButtonBase-root-JvZdr clbaxI MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root-dXqYNm kIRdVO MuiMenuItem-root MuiMenuItem-gutters sc-dkrFOg joCcgr"
+              id="remind_post_options_one_hour"
+              role="menuitem"
+              tabindex="-1"
+            >
+              <div
+                class="label-elements"
+              >
+                1 hour
+              </div>
+            </li>
+            <li
+              class="MuiButtonBase-root-JvZdr clbaxI MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root-dXqYNm kIRdVO MuiMenuItem-root MuiMenuItem-gutters sc-dkrFOg joCcgr"
+              id="remind_post_options_two_hours"
+              role="menuitem"
+              tabindex="-1"
+            >
+              <div
+                class="label-elements"
+              >
+                2 hours
+              </div>
+            </li>
+            <li
+              class="MuiButtonBase-root-JvZdr clbaxI MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root-dXqYNm kIRdVO MuiMenuItem-root MuiMenuItem-gutters sc-dkrFOg joCcgr"
+              id="remind_post_options_tomorrow"
+              role="menuitem"
+              tabindex="-1"
+            >
+              <div
+                class="label-elements"
+              >
+                Tomorrow
+              </div>
+              <div
+                class="trailing-elements"
+              >
+                <span
+                  class="postReminder-tomorrow_timestamp"
+                >
+                  Sat
+                  , 
+                  7:47 AM
+                </span>
+              </div>
+            </li>
+            <li
+              class="MuiButtonBase-root-JvZdr clbaxI MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters MuiMenuItem-root-dXqYNm kIRdVO MuiMenuItem-root MuiMenuItem-gutters sc-dkrFOg joCcgr"
+              id="remind_post_options_custom"
+              role="menuitem"
+              tabindex="-1"
+            >
+              <div
+                class="label-elements"
+              >
+                Custom
+              </div>
+            </li>
+          </ul>
+        </ul>
+      </div>
+      <div
+        data-testid="sentinelEnd"
+        tabindex="0"
+      />
+    </div>
+  </body>,
+  "container": <div
+    aria-hidden="true"
+  >
+    <li
+      aria-controls="remind_post_1y8hpek81byspd4enyk9mp1ncw-menu"
+      aria-expanded="true"
+      aria-haspopup="true"
+      class="MuiButtonBase-root-JvZdr clbaxI MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters Mui-focusVisible MuiMenuItem-root-dXqYNm kIRdVO MuiMenuItem-root MuiMenuItem-gutters sc-dkrFOg joCcgr"
+      id="remind_post_1y8hpek81byspd4enyk9mp1ncw"
+      role="menuitem"
+      tabindex="-1"
+    >
+      <div
+        class="leading-element"
+      >
+        <svg
+          fill="currentColor"
+          height="18"
+          version="1.1"
+          viewBox="0 0 24 24"
+          width="18"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12,20c4.4,0,8-3.6,8-8s-3.6-8-8-8s-8,3.6-8,8S7.6,20,12,20 M12,2c5.5,0,10,4.5,10,10s-4.5,10-10,10S2,17.5,2,12S6.5,2,12,2 M15.535,16.949L11,12.414V7h2v4.586l3.949,3.949L15.535,16.949z"
+          />
+        </svg>
+      </div>
+      <div
+        class="label-elements"
+      >
+        Remind
+      </div>
+      <div
+        class="trailing-elements"
+      >
+        <span
+          class="dot-menu__item-trailing-icon"
+        >
+          <svg
+            fill="currentColor"
+            height="16"
+            version="1.1"
+            viewBox="0 0 24 24"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
+            />
+          </svg>
+        </span>
+      </div>
+    </li>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

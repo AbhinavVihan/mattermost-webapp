@@ -184,7 +184,10 @@ export default class PostReminderCustomTimePicker extends React.PureComponent<Pr
             >
                 <div className='PostReminderModal__content'>
                     <div>
-                        <div className='PostReminderModal__input PostReminderModal__input--no-border'>
+                        <div
+                            data-testid='dayPicker-input'
+                            className='PostReminderModal__input PostReminderModal__input--no-border'
+                        >
                             <div className='PostReminderModal__input__label'>
                                 <FormattedMessage
                                     id='post_reminder_custom_time_picker_modal.date'
@@ -209,6 +212,7 @@ export default class PostReminderCustomTimePicker extends React.PureComponent<Pr
                         stopPropagationOnToggle={true}
                     >
                         <button
+                            data-testid='timePicker-button'
                             className='PostReminderModal__input'
                             type='button'
                         >

@@ -13,7 +13,6 @@ import {openModal} from 'actions/views/modals';
 import {ModalIdentifiers} from 'utils/constants';
 import {toUTCUnix} from 'utils/datetime';
 import PostReminderCustomTimePicker from 'components/post_reminder_time_picker_modal';
-import {addPostReminder} from 'mattermost-redux/actions/posts';
 
 import {Post} from '@mattermost/types/posts';
 
@@ -22,6 +21,7 @@ type Props = {
     post: Post;
     isMilitaryTime: boolean;
     timezone?: string;
+    addPostReminder: (userId: string, postId: string, timestamp: number) => void;
 }
 
 const postReminderTimes = [
@@ -58,7 +58,7 @@ export function PostReminderSubmenu(props: Props) {
             break;
         }
 
-        dispatch(addPostReminder(props.userId, props.post.id, toUTCUnix(endTime.toDate())));
+        props.addPostReminder(props.userId, props.post.id, toUTCUnix(endTime.toDate()));
     };
 
     const setCustomPostReminder = (): void => {

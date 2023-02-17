@@ -133,6 +133,11 @@ type Props = {
          */
         setGlobalItem: (name: string, value: any) => void;
 
+        /**
+         * Function to set a reminder on a post
+         */
+        addPostReminder: (userId: string, postId: string, timestamp: number) => void;
+
     }; // TechDebt: Made non-mandatory while converting to typescript
 
     canEdit: boolean;
@@ -647,6 +652,7 @@ export class DotMenuClass extends React.PureComponent<Props, State> {
                         post={this.props.post}
                         isMilitaryTime={this.props.isMilitaryTime}
                         timezone={this.props.timezone}
+                        addPostReminder={this.props.actions.addPostReminder}
                     />
                 }
                 {!isSystemMessage &&
