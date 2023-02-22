@@ -409,9 +409,13 @@
         margin-bottom: 24px;
     }
 
+    .setting-picture {
+        padding-left: 40px;
+    }
+
     .profile-img {
-        width: 128px;
-        height: 128px;
+        width: 120px;
+        height: 120px;
         border-radius: 100%;
     }
 
@@ -434,6 +438,29 @@
         top: 4px;
         right: 8px;
         display: flex;
+        width: 26px;
+        height: 26px;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: none;
+        background: $black;
+        border-radius: 50%;
+        color: $white;
+        text-decoration: none;
+        transition: all 0.15s ease;
+
+        span {
+            margin-top: -3px;
+            font-size: 22px;
+        }
+    }
+
+    .profile-img__edit {
+        position: absolute;
+        top: 165px;
+        right: 70px;
+        // display: flex;
         width: 26px;
         height: 26px;
         align-items: center;

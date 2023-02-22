@@ -52,3 +52,12 @@ legend {
 .mm-fieldset-error {
     color: #d24b4e;
 }
+
+.error-span {
+    color: #d24b4e;
+
+    :first-child {
+        margin-right: 5px;
+        margin-top: 6px;
+    }
+}

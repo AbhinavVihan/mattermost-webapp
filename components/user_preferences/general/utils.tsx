@@ -13,30 +13,20 @@ type setting = {
     };
     value: string | undefined;
     isDisabled?: boolean;
+    isPassword?: boolean;
 };
 
 export type Settings = {
-    [key: string]:
-        | {
-              hasError?: boolean;
-              errors?: {
-                  emailError?: string;
-                  clientError?: string;
-                  serverError?: string;
-              };
-              value?: string;
-              isDisabled?: boolean;
-          }
-        | undefined;
+    [key: string]: any;
     username: setting;
-    firstName: setting;
-    lastName: setting;
-    // fullName: setting;
+    // firstName: setting;
+    // lastName: setting;
+    fullName: setting;
     nickname: setting;
     position: setting;
-    originalEmail: setting;
+    // originalEmail: setting;
     email: setting;
-    confirmEmail: setting;
+    // confirmEmail: setting;
     currentPassword: setting;
 };
 

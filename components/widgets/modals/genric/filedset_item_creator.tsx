@@ -1,6 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
+import { AlertOutlineIcon } from "@mattermost/compass-icons/components";
 import React, { useState } from "react";
 import "./fieldset_item_creator.scss";
 
@@ -62,10 +63,11 @@ function FieldsetItemCreator({
                     disabled={isDisabled && isDisabled}
                 />
             </fieldset>
-            <span className="mm-fieldset-error">{errors?.clientError}</span>
-            {errors?.emailError && (
-                <span className="mm-fieldset-error">{errors.emailError}</span>
-            )}
+            <span className="error-span">
+                {errors?.clientError && <AlertOutlineIcon size={14} />}
+                {errors?.clientError}
+                {errors?.emailError}
+            </span>
         </div>
     );
 }

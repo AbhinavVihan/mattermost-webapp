@@ -1349,13 +1349,21 @@ export class UserSettingsGeneralTab extends React.Component<Props, State> {
                     user.last_picture_update
                 );
                 helpText = (
-                    <FormattedMessage
-                        id={"setting_picture.help.profile"}
-                        defaultMessage="Upload a picture in BMP, JPG, JPEG, or PNG format. Maximum file size: {max}"
-                        values={{
-                            max: Utils.fileSizeToString(this.props.maxFileSize),
-                        }}
-                    />
+                    <>
+                        <FormattedMessage
+                            id={"setting_picture.help.profile"}
+                            defaultMessage="Upload a picture in BMP, JPG, JPEG, or PNG format."
+                        />
+                        <FormattedMessage
+                            id={"setting_picture.help.profile.maxFileSize"}
+                            defaultMessage="Maximum file size: {max}"
+                            values={{
+                                max: Utils.fileSizeToString(
+                                    this.props.maxFileSize
+                                ),
+                            }}
+                        />
+                    </>
                 );
             }
 
@@ -1528,15 +1536,12 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
 
     const [settings, setSettings] = useState<Settings>({
         username: initialState(username, props.user.auth_service !== ""),
-        firstName: initialState(first_name, isFisrtnameDisabled),
-        lastName: initialState(last_name, isFisrtnameDisabled),
-        // fullName: initialState(
-        //     first_name + "," + last_name,
-        //     isFisrtnameDisabled
-        // ),
+        fullName: initialState(
+            first_name + " " + last_name,
+            isFisrtnameDisabled
+        ),
         nickname: initialState(nickname, isNickNameDisabled),
         position: initialState(position, isPositionDisabled),
-        originalEmail: initialState(email),
         email: {
             hasError: false,
             errors: {
@@ -1547,24 +1552,24 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
             value: email,
             isDisabled: false,
         },
-        confirmEmail: initialState(""),
-        currentPassword: initialState(""),
+        currentPassword: { ...initialState(""), isPassword: true },
     });
 
-    const [pictureFile, setPictureFile] = useState<File | null>(null);
-
-    const [errors, setErors] = useState({
-        key: "",
+    const [pictureFile, setPictureFile] = useState<{
+        value: File | null;
+        clientError: string;
+        serverError: string;
+        loadingPicture: boolean;
+    }>({
+        value: null,
         clientError: "",
         serverError: "",
+        loadingPicture: false,
     });
-    console.log(props.user.auth_service);
 
     const [haveChanges, setHaveChanges] = useState(false);
     const handleChange = useCallback(
         (values: { key: string; value: string }) => {
-            console.log("i handleChange is running");
-
             setSettings({
                 ...settings,
                 [values.key]: {
@@ -1579,39 +1584,12 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
 
     console.log(settings);
 
-    const setStateValues = (
-        hasError: boolean,
-        errors?: {
-            clientError?: string;
-            serverError?: string;
-            emailError?: string;
-        },
-        key?: string
-    ) => {
-        setSettings({
-            ...settings,
-            [key ?? ""]: {
-                ...settings[key ?? ""],
-                hasError: hasError,
-                errors: {
-                    ...settings[key ?? ""]?.errors,
-                    clientError: errors?.clientError,
-                    serverError: errors?.serverError,
-                    emailError: errors?.emailError,
-                },
-            },
-        });
-    };
-
     function restoreDefaults() {
         setSettings({
             username: initialState(username),
-            firstName: initialState(first_name),
-            lastName: initialState(last_name),
+            fullName: initialState(first_name + " " + last_name),
             nickname: initialState(nickname),
-            // fullName: initialState(first_name + " " + last_name),
             position: initialState(position),
-            originalEmail: initialState(email),
             email: {
                 hasError: false,
                 errors: {
@@ -1621,9 +1599,9 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
                 },
                 value: email,
             },
-            confirmEmail: initialState(""),
             currentPassword: initialState(""),
         });
+        setPictureFile({ ...pictureFile, value: null });
         setHaveChanges(false);
     }
 
@@ -1633,12 +1611,10 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
         const { formatMessage } = props.intl;
         const email = settings.email.value?.trim().toLowerCase();
 
-        const confirmEmail = settings.confirmEmail.value?.trim().toLowerCase();
         const currentPassword = settings.currentPassword.value;
         const Username = settings.username.value?.trim().toLowerCase();
         const usernameError = Utils.isValidUsername(Username as string);
         const position = settings.position.value?.trim();
-        console.log(usernameError);
 
         let errObj = {
             clientError: "",
@@ -1676,17 +1652,12 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
         trackEvent("settings", "user_settings_update", {
             field: "nickname",
         });
-        const firstName = settings.firstName.value?.trim();
-        const lastName = settings.lastName.value?.trim();
-        // user.first_name = settings.fullName.value
-        //     ?.split(",")[0]
-        //     .trim() as string;
-        // user.last_name = settings.fullName.value
-        //     ?.split(",")[1]
-        //     .trim() as string;
-
-        // user.first_name = firstName as string;
-        // user.last_name = lastName as string;
+        user.first_name = settings.fullName.value
+            ?.split(" ")[0]
+            .trim() as string;
+        user.last_name = settings.fullName.value
+            ?.split(" ")[1]
+            .trim() as string;
 
         trackEvent("settings", "user_settings_update", {
             field: "fullname",
@@ -1706,13 +1677,13 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
             hasEmailError = true;
             emailError = formatMessage(holders.validEmail);
         }
-        let hasConfirmEmailError = false;
-        let confirmEmailError = "";
-        if (email !== confirmEmail) {
-            shouldSubmit = false;
-            hasConfirmEmailError = true;
-            confirmEmailError = formatMessage(holders.emailMatch);
-        }
+        // let hasConfirmEmailError = false;
+        // let confirmEmailError = "";
+        // if (email !== confirmEmail) {
+        //     shouldSubmit = false;
+        //     hasConfirmEmailError = true;
+        //     confirmEmailError = formatMessage(holders.emailMatch);
+        // }
         let hasCurrPassworsErr = false;
         let currPasswordErr = "";
         if (settings.email.value !== props.user.email) {
@@ -1746,31 +1717,15 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
                 ...settings.position,
                 value: position,
             },
-            firstName: {
-                ...settings.firstName,
-                value: firstName,
+            fullName: {
+                ...settings.fullName,
+                value: user.first_name + " " + user.last_name,
             },
-            lastName: {
-                ...settings.lastName,
-                value: lastName,
-            },
-            // fullName: {
-            //     ...settings.fullName,
-            //     value: user.first_name + user.last_name,
-            // },
             email: {
                 ...settings.email,
                 hasError: hasEmailError,
                 errors: { ...settings.email.errors, emailError },
                 value: email,
-            },
-            confirmEmail: {
-                ...settings.confirmEmail,
-                hasError: hasConfirmEmailError,
-                errors: {
-                    ...settings.confirmEmail.errors,
-                    emailError: confirmEmailError,
-                },
             },
             currentPassword: {
                 ...settings.currentPassword,
@@ -1783,57 +1738,58 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
         });
         console.log("shouldSubmit", shouldSubmit);
         shouldSubmit && props.actions.updateMe(user);
+        submitPicture();
         setHaveChanges(false);
     };
 
-    const submitPicture = () => {
-        if (!pictureFile) {
+    console.log(props.user);
+
+    const submitPicture = useCallback(() => {
+        if (!pictureFile.value) {
             return;
         }
-
-        // if (!submitActive) {
-        //     return;
-        // }
 
         trackEvent("settings", "user_settings_update", { field: "picture" });
 
         const { formatMessage } = props.intl;
         const file = pictureFile;
 
-        if (!AcceptedProfileImageTypes.includes(file.type)) {
-            // setState({
-            //     clientError: formatMessage(holders.validImage),
-            //     serverError: "",
-            // });
+        if (
+            file.value &&
+            !AcceptedProfileImageTypes.includes(file.value.type)
+        ) {
+            setPictureFile({
+                ...pictureFile,
+                clientError: formatMessage(holders.validImage),
+            });
             return;
-        } else if (file.size > props.maxFileSize) {
-            // setState({
-            //     clientError: formatMessage(holders.imageTooLarge),
-            //     serverError: "",
-            // });
+        } else if (file.value && file.value.size > props.maxFileSize) {
+            setPictureFile({
+                ...pictureFile,
+                clientError: formatMessage(holders.imageTooLarge),
+            });
             return;
         }
 
-        // setState({ loadingPicture: true });
+        setPictureFile({ ...pictureFile, loadingPicture: true });
 
         props.actions
-            .uploadProfileImage(props.user.id, file)
+            .uploadProfileImage(props.user.id, file.value!)
             .then(({ data, error: err }) => {
                 if (data) {
-                    // updateSection("");
-                    // submitActive = false;
                 } else if (err) {
-                    // const state = setupInitialState(props);
-                    // state.serverError = err.message;
-                    // setState(state);
+                    setPictureFile({
+                        ...pictureFile,
+                        serverError: err.message,
+                    });
+                    setPictureFile({ ...pictureFile, loadingPicture: false });
                 }
             });
-    };
+    }, [pictureFile.value]);
 
     const setDefaultProfilePicture = async () => {
         try {
             await props.actions.setDefaultProfileImage(props.user.id);
-            // submitActive = false;
         } catch (err) {
             let serverError;
             if (err.message) {
@@ -1841,29 +1797,17 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
             } else {
                 serverError = err;
             }
-            // setState({
-            //     serverError,
-            //     emailError: "",
-            //     clientError: "",
-            //     sectionIsSaving: false,
-            // });
+            setPictureFile({ ...pictureFile, serverError });
         }
     };
-
-    const imgSrc = Utils.imageURLForUser(
-        props.user.id,
-        props.user.last_picture_update
-    );
 
     const updatePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             console.log(e.target.files[0]);
-            setPictureFile(e.target.files[0]);
-            // this.setState({ pictureFile: e.target.files[0] });
-            // this.submitActive = true;
-            // this.setState({ clientError: null });
+            setPictureFile({ ...pictureFile, value: e.target.files[0] });
+            setHaveChanges(true);
         } else {
-            // this.setState({ pictureFile: null });
+            setPictureFile({ ...pictureFile, value: null });
         }
     };
     const { formatMessage } = props.intl;
@@ -1892,6 +1836,7 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
                 {Object.keys(settings).map((setting) => (
                     <>
                         <FieldsetItemCreator
+                            isPassword={settings[setting]?.isPassword ?? false}
                             title={setting}
                             value={settings[setting]?.value}
                             onChange={(e) =>
@@ -1902,7 +1847,7 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
                             }
                             errors={settings[setting]?.errors}
                             classNames="mm-fieldset"
-                            borderClass="border__gray"
+                            borderClass="border__blue"
                             isDisabled={settings[setting]?.isDisabled}
                         />
                     </>
@@ -1913,20 +1858,22 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
                     title={formatMessage(holders.profilePicture)}
                     onSubmit={submitPicture}
                     onSetDefault={setDefault}
-                    src={imgSrc}
+                    src={Utils.imageURLForUser(
+                        props.user.id,
+                        props.user.last_picture_update
+                    )}
                     defaultImageSrc={Utils.defaultImageURLForUser(
                         props.user.id
                     )}
-                    // serverError={state.serverError}
-                    // clientError={state.clientError}
+                    serverError={pictureFile.serverError}
+                    clientError={pictureFile.clientError}
                     updateSection={(e: React.MouseEvent) => {
-                        // updateSection("");
                         e.preventDefault();
                     }}
-                    file={pictureFile}
+                    file={pictureFile.value}
                     onFileChange={updatePicture}
                     submitActive={true}
-                    loadingPicture={false}
+                    loadingPicture={pictureFile.loadingPicture}
                     maxFileSize={props.maxFileSize}
                     helpText={helpText}
                 />
