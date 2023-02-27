@@ -1,7 +1,9 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import { defineMessages } from "react-intl";
+import { InformationOutlineIcon } from "@mattermost/compass-icons/components";
+import React from "react";
+import { defineMessages, FormattedMessage } from "react-intl";
 import { t } from "utils/i18n";
 
 type setting = {
@@ -106,4 +108,24 @@ export const holders = defineMessages({
 export const yourInfo = {
     id: t("user.settings.general.yourInfo"),
     defaultMessage: "Your information",
+};
+
+export const serviceInfo = (service?: string) => {
+    return (
+        <div key="oauthEmailInfo" className="service-info">
+            <div>
+                <InformationOutlineIcon size={24} />
+                <FormattedMessage
+                    id="user.settings.general.serviceHandler"
+                    defaultMessage={`Some fields below are handled by your ${service} account`}
+                />
+            </div>
+            <div>
+                <FormattedMessage
+                    id="user.settings.general.serviceHandler.desc"
+                    defaultMessage={`Changes to locked fields must be made in your ${service} account.`}
+                />
+            </div>
+        </div>
+    );
 };

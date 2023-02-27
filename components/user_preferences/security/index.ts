@@ -10,16 +10,18 @@ import {
     deauthorizeOAuthApp,
 } from "mattermost-redux/actions/integrations";
 import * as UserUtils from "mattermost-redux/utils/user_utils";
-import { getConfig } from "mattermost-redux/selectors/entities/general";
+import { getConfig, getLicense } from "mattermost-redux/selectors/entities/general";
 import { getBool } from "mattermost-redux/selectors/entities/preferences";
 import { GlobalState } from "@mattermost/types/store";
 import { UserProfile } from "@mattermost/types/users";
 import { ActionFunc, ActionResult } from "mattermost-redux/types/actions";
 
 import { getPasswordConfig } from "utils/utils";
-import { Preferences } from "utils/constants";
+import Constants, { Preferences } from "utils/constants";
 
 import UserPreferencesSecurityTab from "./user_settings_security";
+import { getCurrentUser } from "mattermost-redux/selectors/entities/users";
+import { deactivateMfa } from "actions/views/mfa";
 
 type Actions = {
     getMe: () => void;
@@ -30,6 +32,7 @@ type Actions = {
     ) => Promise<ActionResult>;
     getAuthorizedOAuthApps: () => Promise<ActionResult>;
     deauthorizeOAuthApp: (clientId: string) => Promise<ActionResult>;
+    deactivateMfa: () => Promise<{error?: {message: string}}>;
 };
 
 type Props = {
@@ -43,6 +46,7 @@ type Props = {
 
 function mapStateToProps(state: GlobalState, ownProps: Props) {
     const config = getConfig(state);
+    const license = getLicense(state);
 
     const tokensEnabled = config.EnableUserAccessTokens === "true";
     const userHasTokenRole =
@@ -61,6 +65,18 @@ function mapStateToProps(state: GlobalState, ownProps: Props) {
         config.EnableSignUpWithOffice365 === "true";
     const experimentalEnableAuthenticationTransfer =
         config.ExperimentalEnableAuthenticationTransfer === "true";
+    const mfaLicensed = license && license.IsLicensed === 'true' && license.MFA === 'true';
+    const mfaEnabled = config.EnableMultifactorAuthentication === 'true';
+    const mfaEnforced = mfaLicensed && config.EnforceMultifactorAuthentication === 'true';
+    const user: UserProfile = getCurrentUser(state);
+
+
+    let mfaActive = false;
+    let mfaAvailable = false;
+    if (user) {
+        mfaActive = (user as any).mfa_active;
+        mfaAvailable = mfaEnabled && (user.auth_service === '' || user.auth_service === Constants.LDAP_SERVICE);
+    }
 
     return {
         canUseAccessTokens: tokensEnabled && userHasTokenRole,
@@ -80,6 +96,9 @@ function mapStateToProps(state: GlobalState, ownProps: Props) {
             Preferences.USE_MILITARY_TIME,
             false
         ),
+        mfaActive,
+        mfaAvailable,
+        mfaEnforced,
     };
 }
 
@@ -94,6 +113,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
                 updateUserPassword,
                 getAuthorizedOAuthApps,
                 deauthorizeOAuthApp,
+                deactivateMfa
             },
             dispatch
         ),

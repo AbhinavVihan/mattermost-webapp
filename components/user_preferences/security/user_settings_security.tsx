@@ -38,8 +38,12 @@ import {
     passwordDescription,
     PasswordSettings,
     passwordTitle,
+    renderMFAContent,
     showAccessHistory,
     showActiveSections,
+    showSwitchButtons,
+    signInDesc,
+    signInMethodTitle,
 } from "./utils";
 import SectionCreator from "components/widgets/modals/genric/section_creator";
 import { getHistory } from "utils/browser_history";
@@ -59,6 +63,7 @@ type Actions = {
     ) => Promise<ActionResult>;
     getAuthorizedOAuthApps: () => Promise<ActionResult>;
     deauthorizeOAuthApp: (clientId: string) => Promise<ActionResult>;
+    deactivateMfa: () => Promise<{ error?: { message: string } }>;
 };
 
 type Props = {
@@ -80,6 +85,9 @@ type Props = {
     experimentalEnableAuthenticationTransfer: boolean;
     passwordConfig: ReturnType<typeof Utils.getPasswordConfig>;
     militaryTime: boolean;
+    mfaActive: boolean;
+    mfaAvailable: boolean;
+    mfaEnforced: boolean;
     actions: Actions;
 };
 
@@ -1109,6 +1117,8 @@ export default function UserPreferencesSecurityTab(props: Props): JSX.Element {
                 ...passwordSettings,
                 [values.key]: {
                     ...passwordSettings[values.key],
+                    hasError: false,
+                    errors: { clientError: "", serverError: "" },
                     value: values.value,
                 },
             });
@@ -1117,23 +1127,190 @@ export default function UserPreferencesSecurityTab(props: Props): JSX.Element {
         [passwordSettings]
     );
     const d = new Date(props.user.last_password_update);
-    const changePasswordButton = (text: string, value: boolean) => (
+    const changePasswordButton = (
+        text: string,
+        value: boolean,
+        submit?: () => Promise<void>
+    ) => (
         <button
-            className="security_links__password"
-            onClick={() => setShowPassInputs(value)}
+            className="style--none security_links"
+            onClick={() => {
+                setShowPassInputs(value);
+                submit?.();
+            }}
         >
-            {text}
+            <FormattedMessage
+                id={`user.settings.security.${text}`}
+                defaultMessage={text}
+            />
         </button>
     );
 
+    const removeMfa = async (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+
+        const { error } = await props.actions.deactivateMfa();
+
+        // if (error) {
+        //     setState({
+        //         serverError: error.message,
+        //     });
+        //     return;
+        // }
+
+        if (props.mfaEnforced) {
+            getHistory().push("/mfa/setup");
+            return;
+        }
+
+        props.updateSection("");
+        // setState({
+        //     serverError: null,
+        // });
+    };
+
+    console.log(passwordSettings);
+
+    const submitPassword = async () => {
+        const user = props.user;
+        const currentPassword = passwordSettings.currentPassword.value;
+        const newPassword = passwordSettings.newPassword.value;
+        const confirmPassword = passwordSettings.confirmNewPassword?.value;
+
+        if (currentPassword === "") {
+            setPasswordSettings({
+                ...passwordSettings,
+                currentPassword: {
+                    ...passwordSettings.currentPassword,
+                    hasError: true,
+                    errors: {
+                        ...passwordSettings.currentPassword.errors,
+                        clientError: "Please enter your current password.",
+                    },
+                },
+            });
+            // setState({
+            //     passwordError: Utils.localizeMessage(
+            //         "user.settings.security.currentPasswordError",
+            //         "Please enter your current password."
+            //     ),
+            //     serverError: "",
+            // });
+            return;
+        }
+
+        const { valid, error } = Utils.isValidPassword(
+            newPassword as string,
+            props.passwordConfig
+        );
+        console.log(valid);
+        if (!valid && error) {
+            setPasswordSettings({
+                ...passwordSettings,
+                newPassword: {
+                    ...passwordSettings.newPassword,
+                    hasError: true,
+                    errors: {
+                        ...passwordSettings.newPassword.errors,
+                        clientError: error as any,
+                    },
+                },
+            });
+            // setState({
+            //     passwordError: error,
+            //     serverError: "",
+            // });
+            return;
+        }
+        console.log(newPassword, confirmPassword);
+
+        if (newPassword !== confirmPassword) {
+            // const defaultState = Object.assign(getDefaultState(), {
+            //     passwordError: Utils.localizeMessage(
+            //         "user.settings.security.passwordMatchError",
+            //         "The new passwords you entered do not match."
+            //     ),
+            //     serverError: "",
+            // });
+            // setState(defaultState);
+
+            setPasswordSettings({
+                ...passwordSettings,
+                confirmNewPassword: {
+                    ...passwordSettings.confirmNewPassword,
+                    hasError: true,
+                    errors: {
+                        ...passwordSettings.confirmNewPassword.errors,
+                        clientError:
+                            "The new passwords you entered do not match.",
+                    },
+                },
+            });
+            return;
+        }
+
+        // setState({ savingPassword: true });
+
+        const res = await props.actions.updateUserPassword(
+            user.id,
+            currentPassword as string,
+            newPassword as string
+        );
+        if ("data" in res) {
+            // props.updateSection("");
+            props.actions.getMe();
+            setPasswordSettings({
+                currentPassword: {
+                    ...passwordSettings.currentPassword,
+                    value: "",
+                },
+                newPassword: { ...passwordSettings.newPassword, value: "" },
+                confirmNewPassword: {
+                    ...passwordSettings.confirmNewPassword,
+                    value: "",
+                },
+            });
+            setShowPassInputs(false);
+            // setState(getDefaultState());
+        } else if ("error" in res) {
+            const { error: err } = res;
+            // const state = getDefaultState();
+            if (err.message) {
+                setPasswordSettings({
+                    ...passwordSettings,
+                    currentPassword: {
+                        ...passwordSettings.currentPassword,
+                        hasError: true,
+                        errors: {
+                            ...passwordSettings.currentPassword.errors,
+                            serverError: err.message,
+                        },
+                    },
+                });
+            } else {
+                setPasswordSettings({
+                    ...passwordSettings,
+                    currentPassword: {
+                        ...passwordSettings.currentPassword,
+                        hasError: true,
+                        errors: {
+                            ...passwordSettings.currentPassword.errors,
+                            serverError: err,
+                        },
+                    },
+                });
+            }
+            // state.passwordError = "";
+            // setState(state);
+        }
+    };
+
     return (
         <>
-            {
-                <SectionCreator
-                    title={passwordTitle}
-                    content={passw(d, props.militaryTime)}
-                />
-            }
+            <SectionCreator
+                title={passwordTitle}
+                content={passw(d, props.militaryTime)}
+            />
             {!showPassInputs && changePasswordButton("Change Password", true)}
 
             {showPassInputs &&
@@ -1155,11 +1332,28 @@ export default function UserPreferencesSecurityTab(props: Props): JSX.Element {
                         />
                     </>
                 ))}
+            {showPassInputs &&
+                changePasswordButton("Update password", true, submitPassword)}
             {showPassInputs && changePasswordButton("cancel", false)}
-            <SectionCreator title={MfaTitle} description={MfaDescription} />
-            <button className="security_links" onClick={setupMfa}>
-                Add Mfa to Account
-            </button>
+            {props.mfaAvailable && (
+                <SectionCreator
+                    title={MfaTitle}
+                    description={MfaDescription}
+                    content={renderMFAContent(
+                        props.mfaActive,
+                        props.mfaEnforced,
+                        removeMfa,
+                        setupMfa
+                    )}
+                />
+            )}
+
+            <SectionCreator
+                title={signInMethodTitle}
+                description={signInDesc}
+                content={showSwitchButtons(props.user, props)}
+            />
+
             <SectionCreator
                 title={AccessHistoryTitle}
                 description={AccessHistoryDesc}

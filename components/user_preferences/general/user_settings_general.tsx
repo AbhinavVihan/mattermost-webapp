@@ -34,7 +34,7 @@ import {
 import { UserProfile } from "@mattermost/types/users";
 import SettingItem from "components/setting_item";
 import FieldsetItemCreator from "components/widgets/modals/genric/filedset_item_creator";
-import { holders, Settings, yourInfo } from "./utils";
+import { holders, serviceInfo, Settings, yourInfo } from "./utils";
 import SaveChangesPanel from "components/widgets/modals/genric/save_changes_panel";
 import SectionCreator from "components/widgets/modals/genric/section_creator";
 
@@ -1534,6 +1534,26 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
         (props.user.auth_service === Constants.SAML_SERVICE &&
             props.samlPositionAttributeSet);
 
+    const showService = () => {
+        let service;
+        if (props.user.auth_service === Constants.GITLAB_SERVICE) {
+            service = Constants.GITLAB_SERVICE;
+        } else if (props.user.auth_service === Constants.GOOGLE_SERVICE) {
+            service = Constants.GOOGLE_SERVICE;
+        } else if (props.user.auth_service === Constants.OFFICE365_SERVICE) {
+            service = Constants.OFFICE365_SERVICE;
+        } else if (props.user.auth_service === Constants.OPENID_SERVICE) {
+            service = Constants.OPENID_SERVICE;
+        } else if (props.user.auth_service === Constants.LDAP_SERVICE) {
+            service = Constants.LDAP_SERVICE;
+        } else if (props.user.auth_service === Constants.SAML_SERVICE) {
+            service = Constants.SAML_SERVICE;
+        } else {
+            service = undefined;
+        }
+        return service;
+    };
+
     const [settings, setSettings] = useState<Settings>({
         username: initialState(username, props.user.auth_service !== ""),
         fullName: initialState(
@@ -1550,10 +1570,19 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
                 serverError: "",
             },
             value: email,
-            isDisabled: false,
+            isDisabled: showService() !== undefined,
         },
-        currentPassword: { ...initialState(""), isPassword: true },
+        currentPassword: {
+            ...initialState(""),
+            isPassword: true,
+            isDisabled: showService() !== undefined,
+        },
     });
+    console.log(
+        showService(),
+        showService() !== undefined,
+        props.user.auth_service
+    );
 
     const [pictureFile, setPictureFile] = useState<{
         value: File | null;
@@ -1574,6 +1603,8 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
                 ...settings,
                 [values.key]: {
                     ...settings[values.key],
+                    hasError: false,
+                    errors: { clientError: "", serverError: "" },
                     value: values.value,
                 },
             });
@@ -1777,12 +1808,13 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
             .uploadProfileImage(props.user.id, file.value!)
             .then(({ data, error: err }) => {
                 if (data) {
+                    setPictureFile({ ...pictureFile, loadingPicture: false });
                 } else if (err) {
                     setPictureFile({
                         ...pictureFile,
                         serverError: err.message,
+                        loadingPicture: false,
                     });
-                    setPictureFile({ ...pictureFile, loadingPicture: false });
                 }
             });
     }, [pictureFile.value]);
@@ -1830,61 +1862,66 @@ export const UserSettingsInfoTab = (props: Props): JSX.Element => {
     );
 
     return (
-        <div style={{ display: "flex" }}>
-            <div>
-                <SectionCreator title={yourInfo} />
-                {Object.keys(settings).map((setting) => (
-                    <>
-                        <FieldsetItemCreator
-                            isPassword={settings[setting]?.isPassword ?? false}
-                            title={setting}
-                            value={settings[setting]?.value}
-                            onChange={(e) =>
-                                handleChange({
-                                    key: setting,
-                                    value: e.target.value,
-                                })
-                            }
-                            errors={settings[setting]?.errors}
-                            classNames="mm-fieldset"
-                            borderClass="border__blue"
-                            isDisabled={settings[setting]?.isDisabled}
-                        />
-                    </>
-                ))}
+        <>
+            {showService() && serviceInfo(showService())}
+            <div className="general-settings-container">
+                <div>
+                    <SectionCreator title={yourInfo} />
+                    {Object.keys(settings).map((setting) => (
+                        <>
+                            <FieldsetItemCreator
+                                isPassword={
+                                    settings[setting]?.isPassword ?? false
+                                }
+                                title={setting}
+                                value={settings[setting]?.value}
+                                onChange={(e) =>
+                                    handleChange({
+                                        key: setting,
+                                        value: e.target.value,
+                                    })
+                                }
+                                errors={settings[setting]?.errors}
+                                classNames="mm-fieldset"
+                                borderClass="border__blue"
+                                isDisabled={settings[setting]?.isDisabled}
+                            />
+                        </>
+                    ))}
+                </div>
+                {!isPictureDisabled && (
+                    <SettingPicture
+                        title={formatMessage(holders.profilePicture)}
+                        onSubmit={submitPicture}
+                        onSetDefault={setDefault}
+                        src={Utils.imageURLForUser(
+                            props.user.id,
+                            props.user.last_picture_update
+                        )}
+                        defaultImageSrc={Utils.defaultImageURLForUser(
+                            props.user.id
+                        )}
+                        serverError={pictureFile.serverError}
+                        clientError={pictureFile.clientError}
+                        updateSection={(e: React.MouseEvent) => {
+                            e.preventDefault();
+                        }}
+                        file={pictureFile.value}
+                        onFileChange={updatePicture}
+                        submitActive={true}
+                        loadingPicture={pictureFile.loadingPicture}
+                        maxFileSize={props.maxFileSize}
+                        helpText={helpText}
+                    />
+                )}
+                {haveChanges && (
+                    <SaveChangesPanel
+                        handleSubmit={handleSubmit}
+                        handleCancel={restoreDefaults}
+                    />
+                )}
             </div>
-            {!isPictureDisabled && (
-                <SettingPicture
-                    title={formatMessage(holders.profilePicture)}
-                    onSubmit={submitPicture}
-                    onSetDefault={setDefault}
-                    src={Utils.imageURLForUser(
-                        props.user.id,
-                        props.user.last_picture_update
-                    )}
-                    defaultImageSrc={Utils.defaultImageURLForUser(
-                        props.user.id
-                    )}
-                    serverError={pictureFile.serverError}
-                    clientError={pictureFile.clientError}
-                    updateSection={(e: React.MouseEvent) => {
-                        e.preventDefault();
-                    }}
-                    file={pictureFile.value}
-                    onFileChange={updatePicture}
-                    submitActive={true}
-                    loadingPicture={pictureFile.loadingPicture}
-                    maxFileSize={props.maxFileSize}
-                    helpText={helpText}
-                />
-            )}
-            {haveChanges && (
-                <SaveChangesPanel
-                    handleSubmit={handleSubmit}
-                    handleCancel={restoreDefaults}
-                />
-            )}
-        </div>
+        </>
     );
 };
 

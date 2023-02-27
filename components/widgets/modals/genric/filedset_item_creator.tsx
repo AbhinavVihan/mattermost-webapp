@@ -64,8 +64,11 @@ function FieldsetItemCreator({
                 />
             </fieldset>
             <span className="error-span">
-                {errors?.clientError && <AlertOutlineIcon size={14} />}
+                {(errors?.clientError || errors?.serverError) && (
+                    <AlertOutlineIcon size={14} />
+                )}
                 {errors?.clientError}
+                {errors?.serverError}
                 {errors?.emailError}
             </span>
         </div>
