@@ -4,7 +4,12 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 
+import {Provider} from 'react-redux';
+
 import {TestHelper} from 'utils/test_helper';
+
+import {renderWithIntl} from 'tests/react_testing_utils';
+import store from 'stores/redux_store';
 
 import UserList from './user_list';
 
@@ -23,8 +28,10 @@ describe('components/UserList', () => {
                 isDisabled: false,
             },
         };
-        const wrapper = shallow(
-            <UserList {...props}/>,
+        const wrapper = renderWithIntl(
+            <Provider store={store}>
+                <UserList {...props}/>,
+            </Provider>,
         );
         expect(wrapper).toMatchSnapshot();
     });
@@ -51,8 +58,10 @@ describe('components/UserList', () => {
             },
         };
 
-        const wrapper = shallow(
-            <UserList {...props}/>,
+        const wrapper = renderWithIntl(
+            <Provider store={store}>
+                <UserList {...props}/>,
+            </Provider>,
         );
         expect(wrapper).toMatchSnapshot();
     });

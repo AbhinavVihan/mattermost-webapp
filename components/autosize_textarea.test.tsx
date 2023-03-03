@@ -2,13 +2,13 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {shallow} from 'enzyme';
 
 import {AutosizeTextarea} from 'components/autosize_textarea';
+import {renderWithIntl} from 'tests/react_testing_utils';
 
 describe('components/AutosizeTextarea', () => {
     test('should match snapshot, init', () => {
-        const wrapper = shallow(
+        const wrapper = renderWithIntl(
             <AutosizeTextarea/>,
         );
 

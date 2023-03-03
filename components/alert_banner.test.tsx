@@ -2,13 +2,14 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {shallow} from 'enzyme';
+
+import {renderWithIntl} from 'tests/react_testing_utils';
 
 import AlertBanner from './alert_banner';
 
 describe('Components/AlertBanner', () => {
     test('should match snapshot', () => {
-        const wrapper = shallow(
+        const wrapper = renderWithIntl(
             <AlertBanner
                 mode='info'
                 message='message'
@@ -20,7 +21,7 @@ describe('Components/AlertBanner', () => {
     });
 
     test('should match snapshot for app variant', () => {
-        const wrapper = shallow(
+        const wrapper = renderWithIntl(
             <AlertBanner
                 mode='info'
                 message='message'
@@ -33,7 +34,7 @@ describe('Components/AlertBanner', () => {
     });
 
     test('should match snapshot when icon disabled', () => {
-        const wrapper = shallow(
+        const wrapper = renderWithIntl(
             <AlertBanner
                 hideIcon={true}
                 mode='info'
@@ -47,7 +48,7 @@ describe('Components/AlertBanner', () => {
     });
 
     test('should match snapshot when buttons are passed', () => {
-        const wrapper = shallow(
+        const wrapper = renderWithIntl(
             <AlertBanner
                 hideIcon={true}
                 mode='info'

@@ -2,9 +2,9 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {shallow} from 'enzyme';
 
 import PictureSelector from 'components/picture_selector';
+import {renderWithIntl} from 'tests/react_testing_utils';
 
 describe('components/picture_selector', () => {
     const baseProps = {
@@ -14,7 +14,7 @@ describe('components/picture_selector', () => {
     };
 
     test('should match snapshot, no picture selected', () => {
-        const wrapper = shallow(
+        const wrapper = renderWithIntl(
             <PictureSelector {...baseProps}/>,
         );
 
@@ -28,7 +28,7 @@ describe('components/picture_selector', () => {
             defaultSrc: 'http:///url.com/default-picture.jpg',
         };
 
-        const wrapper = shallow(
+        const wrapper = renderWithIntl(
             <PictureSelector {...props}/>,
         );
 
@@ -41,7 +41,7 @@ describe('components/picture_selector', () => {
             defaultSrc: 'http:///url.com/default-picture.jpg',
         };
 
-        const wrapper = shallow(
+        const wrapper = renderWithIntl(
             <PictureSelector {...props}/>,
         );
 

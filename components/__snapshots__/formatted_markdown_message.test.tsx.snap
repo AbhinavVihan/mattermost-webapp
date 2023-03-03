@@ -1,173 +1,402 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`components/FormattedMarkdownMessage should allow to disable links 1`] = `
-<IntlProvider
-  defaultFormats={Object {}}
-  defaultLocale="en"
-  formats={Object {}}
-  locale="en"
-  messages={
-    Object {
-      "test.bar": "<b>hello</b> <script>var malicious = true;</script> world!",
-      "test.foo": "**bold** *italic* [link](https://mattermost.com/) <br/> [link target blank](!https://mattermost.com/)",
-      "test.vals": "*Hi* {petName}!",
-    }
-  }
-  onError={[Function]}
-  textComponent={Symbol(react.fragment)}
->
-  <FormattedMarkdownMessage
-    defaultMessage="*Hi* {petName}!"
-    disableLinks={true}
-    id="test.vals"
-    values={
-      Object {
-        "petName": "http://www.mattermost.com",
-      }
-    }
-  >
-    <span
-      dangerouslySetInnerHTML={
-        Object {
-          "__html": "<em>Hi</em> http://www.mattermost.com!",
-        }
-      }
-    />
-  </FormattedMarkdownMessage>
-</IntlProvider>
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <span>
+        <em>
+          Hi
+        </em>
+         http://www.mattermost.com!
+      </span>
+    </div>
+  </body>,
+  "container": <div>
+    <span>
+      <em>
+        Hi
+      </em>
+       http://www.mattermost.com!
+    </span>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
 exports[`components/FormattedMarkdownMessage should backup to default 1`] = `
-<IntlProvider
-  defaultFormats={Object {}}
-  defaultLocale="en"
-  formats={Object {}}
-  locale="en"
-  messages={
-    Object {
-      "test.bar": "<b>hello</b> <script>var malicious = true;</script> world!",
-      "test.foo": "**bold** *italic* [link](https://mattermost.com/) <br/> [link target blank](!https://mattermost.com/)",
-      "test.vals": "*Hi* {petName}!",
-    }
-  }
-  onError={[Function]}
-  textComponent={Symbol(react.fragment)}
->
-  <FormattedMarkdownMessage
-    defaultMessage="testing default message"
-    id="xxx"
-  >
-    <span
-      dangerouslySetInnerHTML={
-        Object {
-          "__html": "testing default message",
-        }
-      }
-    />
-  </FormattedMarkdownMessage>
-</IntlProvider>
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <span>
+        testing default message
+      </span>
+    </div>
+  </body>,
+  "container": <div>
+    <span>
+      testing default message
+    </span>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
 exports[`components/FormattedMarkdownMessage should escape non-BR 1`] = `
-<IntlProvider
-  defaultFormats={Object {}}
-  defaultLocale="en"
-  formats={Object {}}
-  locale="en"
-  messages={
-    Object {
-      "test.bar": "<b>hello</b> <script>var malicious = true;</script> world!",
-      "test.foo": "**bold** *italic* [link](https://mattermost.com/) <br/> [link target blank](!https://mattermost.com/)",
-      "test.vals": "*Hi* {petName}!",
-    }
-  }
-  onError={[Function]}
-  textComponent={Symbol(react.fragment)}
->
-  <FormattedMarkdownMessage
-    defaultMessage=""
-    id="test.bar"
-    values={
-      Object {
-        "b": [Function],
-        "script": [Function],
-      }
-    }
-  >
-    <span
-      dangerouslySetInnerHTML={
-        Object {
-          "__html": "&lt;b&gt;hello&lt;/b&gt; &lt;script&gt;var malicious = true;&lt;/script&gt; world!",
-        }
-      }
-    />
-  </FormattedMarkdownMessage>
-</IntlProvider>
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <span>
+        &lt;b&gt;hello&lt;/b&gt; &lt;script&gt;var malicious = true;&lt;/script&gt; world!
+      </span>
+    </div>
+  </body>,
+  "container": <div>
+    <span>
+      &lt;b&gt;hello&lt;/b&gt; &lt;script&gt;var malicious = true;&lt;/script&gt; world!
+    </span>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
 exports[`components/FormattedMarkdownMessage should render message 1`] = `
-<IntlProvider
-  defaultFormats={Object {}}
-  defaultLocale="en"
-  formats={Object {}}
-  locale="en"
-  messages={
-    Object {
-      "test.bar": "<b>hello</b> <script>var malicious = true;</script> world!",
-      "test.foo": "**bold** *italic* [link](https://mattermost.com/) <br/> [link target blank](!https://mattermost.com/)",
-      "test.vals": "*Hi* {petName}!",
-    }
-  }
-  onError={[Function]}
-  textComponent={Symbol(react.fragment)}
->
-  <FormattedMarkdownMessage
-    defaultMessage="**bold** *italic* [link](https://mattermost.com/) <br/> [link target blank](!https://mattermost.com/)"
-    id="test.foo"
-  >
-    <span
-      dangerouslySetInnerHTML={
-        Object {
-          "__html": "<strong>bold</strong> <em>italic</em> <a href=\\"https://mattermost.com/\\" rel=\\"noopener noreferrer\\" target=\\"_blank\\">link</a> &lt;br/&gt; <a href=\\"https://mattermost.com/\\" rel=\\"noopener noreferrer\\" target=\\"_blank\\">link target blank</a>",
-        }
-      }
-    />
-  </FormattedMarkdownMessage>
-</IntlProvider>
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <span>
+        <strong>
+          bold
+        </strong>
+         
+        <em>
+          italic
+        </em>
+         
+        <a
+          href="https://mattermost.com/"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          link
+        </a>
+         &lt;br/&gt; 
+        <a
+          href="https://mattermost.com/"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          link target blank
+        </a>
+      </span>
+    </div>
+  </body>,
+  "container": <div>
+    <span>
+      <strong>
+        bold
+      </strong>
+       
+      <em>
+        italic
+      </em>
+       
+      <a
+        href="https://mattermost.com/"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        link
+      </a>
+       &lt;br/&gt; 
+      <a
+        href="https://mattermost.com/"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        link target blank
+      </a>
+    </span>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
 exports[`components/FormattedMarkdownMessage values should work 1`] = `
-<IntlProvider
-  defaultFormats={Object {}}
-  defaultLocale="en"
-  formats={Object {}}
-  locale="en"
-  messages={
-    Object {
-      "test.bar": "<b>hello</b> <script>var malicious = true;</script> world!",
-      "test.foo": "**bold** *italic* [link](https://mattermost.com/) <br/> [link target blank](!https://mattermost.com/)",
-      "test.vals": "*Hi* {petName}!",
-    }
-  }
-  onError={[Function]}
-  textComponent={Symbol(react.fragment)}
->
-  <FormattedMarkdownMessage
-    defaultMessage="*Hi* {petName}!"
-    id="test.vals"
-    values={
-      Object {
-        "petName": "sweetie",
-      }
-    }
-  >
-    <span
-      dangerouslySetInnerHTML={
-        Object {
-          "__html": "<em>Hi</em> sweetie!",
-        }
-      }
-    />
-  </FormattedMarkdownMessage>
-</IntlProvider>
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <span>
+        <em>
+          Hi
+        </em>
+         sweetie!
+      </span>
+    </div>
+  </body>,
+  "container": <div>
+    <span>
+      <em>
+        Hi
+      </em>
+       sweetie!
+    </span>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;

@@ -2,8 +2,9 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {mount} from 'enzyme';
 import {IntlProvider} from 'react-intl';
+
+import {renderWithIntl} from 'tests/react_testing_utils';
 
 import FormattedMarkdownMessage from './formatted_markdown_message';
 
@@ -15,7 +16,7 @@ describe('components/FormattedMarkdownMessage', () => {
             id: 'test.foo',
             defaultMessage: '**bold** *italic* [link](https://mattermost.com/) <br/> [link target blank](!https://mattermost.com/)',
         };
-        const wrapper = mount(wrapProvider(<FormattedMarkdownMessage {...props}/>));
+        const wrapper = renderWithIntl(wrapProvider(<FormattedMarkdownMessage {...props}/>));
         expect(wrapper).toMatchSnapshot();
     });
 
@@ -24,7 +25,7 @@ describe('components/FormattedMarkdownMessage', () => {
             id: 'xxx',
             defaultMessage: 'testing default message',
         };
-        const wrapper = mount(wrapProvider(<FormattedMarkdownMessage {...props}/>));
+        const wrapper = renderWithIntl(wrapProvider(<FormattedMarkdownMessage {...props}/>));
         expect(wrapper).toMatchSnapshot();
     });
 
@@ -37,7 +38,7 @@ describe('components/FormattedMarkdownMessage', () => {
                 script: (...content: string[]) => `<script>${content}</script>`,
             },
         };
-        const wrapper = mount(wrapProvider(<FormattedMarkdownMessage {...props}/>));
+        const wrapper = renderWithIntl(wrapProvider(<FormattedMarkdownMessage {...props}/>));
         expect(wrapper).toMatchSnapshot();
     });
 
@@ -49,7 +50,7 @@ describe('components/FormattedMarkdownMessage', () => {
                 petName: 'sweetie',
             },
         };
-        const wrapper = mount(wrapProvider(<FormattedMarkdownMessage {...props}/>));
+        const wrapper = renderWithIntl(wrapProvider(<FormattedMarkdownMessage {...props}/>));
         expect(wrapper).toMatchSnapshot();
     });
 
@@ -62,7 +63,7 @@ describe('components/FormattedMarkdownMessage', () => {
             },
             disableLinks: true,
         };
-        const wrapper = mount(wrapProvider(<FormattedMarkdownMessage {...props}/>));
+        const wrapper = renderWithIntl(wrapProvider(<FormattedMarkdownMessage {...props}/>));
         expect(wrapper).toMatchSnapshot();
     });
 });
