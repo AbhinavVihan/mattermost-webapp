@@ -2,9 +2,11 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {mount} from 'enzyme';
+
+import {screen} from '@testing-library/react';
 
 import ProgressBar from 'components/progress_bar';
+import {renderWithIntl} from 'tests/react_testing_utils';
 
 describe('components/progress_bar', () => {
     test('should show no progress', () => {
@@ -12,11 +14,11 @@ describe('components/progress_bar', () => {
             current: 0,
             total: 10,
         };
-        const wrapper = mount(
+        renderWithIntl(
             <ProgressBar {...props}/>,
         );
 
-        expect(wrapper.find('.ProgressBar__progress').prop('style')).toHaveProperty('flexGrow', 0);
+        expect(screen.getByTestId('ProgressBar__progress').style.flexGrow).toEqual('0');
     });
 
     test('should show 50% progress', () => {
@@ -24,11 +26,11 @@ describe('components/progress_bar', () => {
             current: 5,
             total: 10,
         };
-        const wrapper = mount(
+        renderWithIntl(
             <ProgressBar {...props}/>,
         );
 
-        expect(wrapper.find('.ProgressBar__progress').prop('style')).toHaveProperty('flexGrow', 0.5);
+        expect(screen.getByTestId('ProgressBar__progress').style.flexGrow).toEqual('0.5');
     });
 
     test('should show full progress', () => {
@@ -36,11 +38,11 @@ describe('components/progress_bar', () => {
             current: 7,
             total: 7,
         };
-        const wrapper = mount(
+        renderWithIntl(
             <ProgressBar {...props}/>,
         );
 
-        expect(wrapper.find('.ProgressBar__progress').prop('style')).toHaveProperty('flexGrow', 1);
+        expect(screen.getByTestId('ProgressBar__progress').style.flexGrow).toEqual('1');
     });
 
     test('should have flex basis', () => {
@@ -49,10 +51,10 @@ describe('components/progress_bar', () => {
             total: 7,
             basePercentage: 10,
         };
-        const wrapper = mount(
+        renderWithIntl(
             <ProgressBar {...props}/>,
         );
 
-        expect(wrapper.find('.ProgressBar__progress').prop('style')).toHaveProperty('flexBasis', '10%');
+        expect(screen.getByTestId('ProgressBar__progress').style.flexBasis).toEqual('10%');
     });
 });

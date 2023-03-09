@@ -20,6 +20,7 @@ const ProgressBar: React.FC<Props> = (props: Props) => {
                     flexBasis: props.basePercentage ? `${props.basePercentage}%` : '',
                     flexGrow: props.current / props.total,
                 }}
+                data-testid='ProgressBar__progress'
             />
         </div>
     );

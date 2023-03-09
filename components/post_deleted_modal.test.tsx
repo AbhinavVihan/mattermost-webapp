@@ -2,9 +2,9 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {shallow} from 'enzyme';
 
 import PostDeletedModal from 'components/post_deleted_modal';
+import {renderWithIntl} from 'tests/react_testing_utils';
 
 describe('components/ChannelInfoModal', () => {
     const baseProps = {
@@ -12,7 +12,7 @@ describe('components/ChannelInfoModal', () => {
     };
 
     test('should match snapshot', () => {
-        const wrapper = shallow(
+        const wrapper = renderWithIntl(
             <PostDeletedModal {...baseProps}/>,
         );
 

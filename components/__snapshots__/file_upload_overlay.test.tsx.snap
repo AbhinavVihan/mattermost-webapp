@@ -1,121 +1,364 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`components/FileUploadOverlay should match snapshot when file upload is showing with no overlay type 1`] = `
-<div
-  className="file-overlay hidden"
->
-  <div
-    className="overlay__indent"
-  >
-    <div
-      className="overlay__circle"
-    >
-      <img
-        alt="Files"
-        className="overlay__files"
-        src={null}
-      />
-      <span>
-        <LocalizedIcon
-          className="fa fa-upload"
-          title={
-            Object {
-              "defaultMessage": "Upload Icon",
-              "id": "generic_icons.upload",
-            }
-          }
-        />
-        <MemoizedFormattedMessage
-          defaultMessage="Drop a file to upload it."
-          id="upload_overlay.info"
-        />
-      </span>
-      <img
-        alt="Logo"
-        className="overlay__logo"
-        src={null}
-      />
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="file-overlay hidden"
+      >
+        <div
+          class="overlay__indent"
+        >
+          <div
+            class="overlay__circle"
+          >
+            <img
+              alt="Files"
+              class="overlay__files"
+              src="fileOverlayImage"
+            />
+            <span>
+              <i
+                class="fa fa-upload"
+                title="Upload Icon"
+              />
+              Drop a file to upload it.
+            </span>
+            <img
+              alt="Logo"
+              class="overlay__logo"
+              src="overlayLogoImage"
+            />
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  </body>,
+  "container": <div>
+    <div
+      class="file-overlay hidden"
+    >
+      <div
+        class="overlay__indent"
+      >
+        <div
+          class="overlay__circle"
+        >
+          <img
+            alt="Files"
+            class="overlay__files"
+            src="fileOverlayImage"
+          />
+          <span>
+            <i
+              class="fa fa-upload"
+              title="Upload Icon"
+            />
+            Drop a file to upload it.
+          </span>
+          <img
+            alt="Logo"
+            class="overlay__logo"
+            src="overlayLogoImage"
+          />
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
 exports[`components/FileUploadOverlay should match snapshot when file upload is showing with overlay type of center 1`] = `
-<div
-  className="file-overlay hidden center-file-overlay"
->
-  <div
-    className="overlay__indent"
-  >
-    <div
-      className="overlay__circle"
-    >
-      <img
-        alt="Files"
-        className="overlay__files"
-        src={null}
-      />
-      <span>
-        <LocalizedIcon
-          className="fa fa-upload"
-          title={
-            Object {
-              "defaultMessage": "Upload Icon",
-              "id": "generic_icons.upload",
-            }
-          }
-        />
-        <MemoizedFormattedMessage
-          defaultMessage="Drop a file to upload it."
-          id="upload_overlay.info"
-        />
-      </span>
-      <img
-        alt="Logo"
-        className="overlay__logo"
-        src={null}
-      />
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="file-overlay hidden center-file-overlay"
+      >
+        <div
+          class="overlay__indent"
+        >
+          <div
+            class="overlay__circle"
+          >
+            <img
+              alt="Files"
+              class="overlay__files"
+              src="fileOverlayImage"
+            />
+            <span>
+              <i
+                class="fa fa-upload"
+                title="Upload Icon"
+              />
+              Drop a file to upload it.
+            </span>
+            <img
+              alt="Logo"
+              class="overlay__logo"
+              src="overlayLogoImage"
+            />
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  </body>,
+  "container": <div>
+    <div
+      class="file-overlay hidden center-file-overlay"
+    >
+      <div
+        class="overlay__indent"
+      >
+        <div
+          class="overlay__circle"
+        >
+          <img
+            alt="Files"
+            class="overlay__files"
+            src="fileOverlayImage"
+          />
+          <span>
+            <i
+              class="fa fa-upload"
+              title="Upload Icon"
+            />
+            Drop a file to upload it.
+          </span>
+          <img
+            alt="Logo"
+            class="overlay__logo"
+            src="overlayLogoImage"
+          />
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
 exports[`components/FileUploadOverlay should match snapshot when file upload is showing with overlay type of right 1`] = `
-<div
-  className="file-overlay hidden right-file-overlay"
->
-  <div
-    className="overlay__indent"
-  >
-    <div
-      className="overlay__circle"
-    >
-      <img
-        alt="Files"
-        className="overlay__files"
-        src={null}
-      />
-      <span>
-        <LocalizedIcon
-          className="fa fa-upload"
-          title={
-            Object {
-              "defaultMessage": "Upload Icon",
-              "id": "generic_icons.upload",
-            }
-          }
-        />
-        <MemoizedFormattedMessage
-          defaultMessage="Drop a file to upload it."
-          id="upload_overlay.info"
-        />
-      </span>
-      <img
-        alt="Logo"
-        className="overlay__logo"
-        src={null}
-      />
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="file-overlay hidden right-file-overlay"
+      >
+        <div
+          class="overlay__indent"
+        >
+          <div
+            class="overlay__circle"
+          >
+            <img
+              alt="Files"
+              class="overlay__files"
+              src="fileOverlayImage"
+            />
+            <span>
+              <i
+                class="fa fa-upload"
+                title="Upload Icon"
+              />
+              Drop a file to upload it.
+            </span>
+            <img
+              alt="Logo"
+              class="overlay__logo"
+              src="overlayLogoImage"
+            />
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  </body>,
+  "container": <div>
+    <div
+      class="file-overlay hidden right-file-overlay"
+    >
+      <div
+        class="overlay__indent"
+      >
+        <div
+          class="overlay__circle"
+        >
+          <img
+            alt="Files"
+            class="overlay__files"
+            src="fileOverlayImage"
+          />
+          <span>
+            <i
+              class="fa fa-upload"
+              title="Upload Icon"
+            />
+            Drop a file to upload it.
+          </span>
+          <img
+            alt="Logo"
+            class="overlay__logo"
+            src="overlayLogoImage"
+          />
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
