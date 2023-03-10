@@ -18,7 +18,10 @@ const LoadingImagePreview: React.FC<Props> = ({loading, progress, containerClass
 
     if (progress) {
         progressView = (
-            <span className='loader-percent'>
+            <span
+                data-testid='loader-percent'
+                className='loader-percent'
+            >
                 {`${loading} ${progress}%`}
             </span>
         );

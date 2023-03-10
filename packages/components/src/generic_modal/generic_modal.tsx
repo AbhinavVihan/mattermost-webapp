@@ -131,6 +131,7 @@ export class GenericModal extends React.PureComponent<Props, State> {
                     })}
                     onClick={this.handleConfirm}
                     disabled={this.props.isConfirmDisabled}
+                    data-testid='GenericModal__button_confirm'
                 >
                     {confirmButtonText}
                 </button>
@@ -154,6 +155,7 @@ export class GenericModal extends React.PureComponent<Props, State> {
                     type='button'
                     className={classNames('GenericModal__button cancel', this.props.cancelButtonClassName)}
                     onClick={this.handleCancel}
+                    data-testid='GenericModal__button_cancel'
                 >
                     {cancelButtonText}
                 </button>

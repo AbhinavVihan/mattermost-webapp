@@ -57,7 +57,10 @@ class MessageSubmitError extends React.PureComponent<MessageSubmitErrorProps> {
 
         return (
             <div className='has-error'>
-                <label className='control-label'>
+                <label
+                    data-testid='control-label'
+                    className='control-label'
+                >
                     {errorContent}
                 </label>
             </div>

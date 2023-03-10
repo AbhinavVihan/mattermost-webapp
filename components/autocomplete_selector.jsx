@@ -151,6 +151,7 @@ export default class AutocompleteSelector extends React.PureComponent {
                         replaceAllInputOnSelect={true}
                         disabled={disabled}
                         listPosition={listPosition}
+                        data-testid='suggestionBox-input'
                     />
                     {helpTextContent}
                     {footer}

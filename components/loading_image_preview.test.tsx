@@ -2,16 +2,18 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {shallow} from 'enzyme';
+
+import {screen} from '@testing-library/react';
 
 import LoadingImagePreview from 'components/loading_image_preview';
+import {renderWithIntl} from 'tests/react_testing_utils';
 
 describe('components/LoadingImagePreview', () => {
     test('should match snapshot', () => {
         const loading = 'Loading';
-        let progress = 50;
+        const progress = 50;
 
-        const wrapper = shallow(
+        const wrapper = renderWithIntl(
             <LoadingImagePreview
                 loading={loading}
                 progress={progress}
@@ -19,12 +21,23 @@ describe('components/LoadingImagePreview', () => {
         );
 
         expect(wrapper).toMatchSnapshot();
-        expect(wrapper.find('span').text()).toBe('Loading 50%');
-
-        progress = 90;
-        wrapper.setProps({loading, progress});
+        expect(screen.getByTestId('loader-percent').textContent).toBe('Loading 50%');
 
         expect(wrapper).toMatchSnapshot();
-        expect(wrapper.find('span').text()).toBe('Loading 90%');
+    });
+
+    test('should set the loading percent to 90', () => {
+        const loading = 'Loading';
+        const progress = 90;
+        const wrapper = renderWithIntl(
+            <LoadingImagePreview
+                loading={loading}
+                progress={progress}
+            />,
+        );
+
+        expect(screen.getByTestId('loader-percent').textContent).toBe('Loading 90%');
+
+        expect(wrapper).toMatchSnapshot();
     });
 });

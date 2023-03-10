@@ -2,12 +2,15 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {shallow} from 'enzyme';
+
+import {fireEvent, screen} from '@testing-library/react';
 
 import GenericModal from 'components/generic_modal';
-import {mountWithIntl} from 'tests/helpers/intl-test-helper';
+import {renderWithIntl} from 'tests/react_testing_utils';
 
 describe('components/GenericModal', () => {
+    const handleConfirm = jest.fn();
+    const handleCancel = jest.fn();
     const requiredProps = {
         onExited: jest.fn(),
         modalHeaderText: 'Modal Header Text',
@@ -15,7 +18,7 @@ describe('components/GenericModal', () => {
     };
 
     test('should match snapshot for base case', () => {
-        const wrapper = shallow(
+        const wrapper = renderWithIntl(
             <GenericModal {...requiredProps}/>,
         );
 
@@ -25,32 +28,32 @@ describe('components/GenericModal', () => {
     test('should match snapshot with both buttons', () => {
         const props = {
             ...requiredProps,
-            handleConfirm: jest.fn(),
-            handleCancel: jest.fn(),
+            handleConfirm,
+            handleCancel,
         };
 
-        const wrapper = shallow(
+        const wrapper = renderWithIntl(
             <GenericModal {...props}/>,
         );
 
         expect(wrapper).toMatchSnapshot();
-        expect(wrapper.find('.GenericModal__button.confirm')).toHaveLength(1);
-        expect(wrapper.find('.GenericModal__button.cancel')).toHaveLength(1);
+        expect(screen.getByTestId('GenericModal__button_confirm')).not.toBeDisabled();
+        expect(screen.getByTestId('GenericModal__button_cancel')).not.toBeDisabled();
     });
 
     test('should match snapshot with disabled confirm button', () => {
         const props = {
             ...requiredProps,
-            handleConfirm: jest.fn(),
+            handleConfirm: handleCancel,
             isConfirmDisabled: true,
         };
 
-        const wrapper = shallow(
+        const wrapper = renderWithIntl(
             <GenericModal {...props}/>,
         );
 
         expect(wrapper).toMatchSnapshot();
-        expect(wrapper.find('.GenericModal__button.confirm.disabled')).toHaveLength(1);
+        expect(screen.getByTestId('GenericModal__button_confirm')).toBeDisabled();
     });
 
     test('should hide and run handleConfirm on confirm button click', (done) => {
@@ -58,16 +61,16 @@ describe('components/GenericModal', () => {
 
         const props = {
             ...requiredProps,
-            handleConfirm: jest.fn(),
+            handleConfirm,
         };
 
-        const wrapper = mountWithIntl(
+        renderWithIntl(
             <GenericModal {...props}/>,
         );
 
-        wrapper.find('.GenericModal__button.confirm').simulate('click');
+        fireEvent.click(screen.getByTestId('GenericModal__button_confirm'));
 
-        expect(props.handleConfirm).toHaveBeenCalled();
+        expect(handleConfirm).toHaveBeenCalled();
     });
 
     test('should hide and run handleCancel on cancel button click', (done) => {
@@ -75,15 +78,15 @@ describe('components/GenericModal', () => {
 
         const props = {
             ...requiredProps,
-            handleCancel: jest.fn(),
+            handleCancel,
         };
 
-        const wrapper = mountWithIntl(
+        renderWithIntl(
             <GenericModal {...props}/>,
         );
 
-        wrapper.find('.GenericModal__button.cancel').simulate('click');
+        fireEvent.click(screen.getByTestId('GenericModal__button_cancel'));
 
-        expect(props.handleCancel).toHaveBeenCalled();
+        expect(handleCancel).toHaveBeenCalled();
     });
 });

@@ -123,6 +123,7 @@ export default class ConfirmModal extends React.Component<Props, State> {
                             type='checkbox'
                             onChange={this.handleCheckboxChange}
                             checked={this.state.checked}
+                            data-testid='confirm_modal-checkbox'
                         />
                         {this.props.checkboxText}
                     </label>
@@ -150,6 +151,7 @@ export default class ConfirmModal extends React.Component<Props, State> {
                     className='btn btn-link btn-cancel'
                     onClick={this.handleCancel}
                     id='cancelModalButton'
+                    data-testid='cancelModalButton'
                 >
                     {cancelText}
                 </button>
@@ -189,6 +191,7 @@ export default class ConfirmModal extends React.Component<Props, State> {
                         className={this.props.confirmButtonClass}
                         onClick={this.handleConfirm}
                         id='confirmModalButton'
+                        data-testid='confirmModalButton'
                     >
                         {this.props.confirmButtonText}
                     </button>

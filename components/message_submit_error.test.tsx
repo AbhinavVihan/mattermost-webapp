@@ -2,9 +2,11 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {shallow} from 'enzyme';
+
+import {screen} from '@testing-library/react';
 
 import MessageSubmitError from 'components/message_submit_error';
+import {renderWithIntl} from 'tests/react_testing_utils';
 
 describe('components/MessageSubmitError', () => {
     const baseProps = {
@@ -24,12 +26,13 @@ describe('components/MessageSubmitError', () => {
             submittedMessage,
         };
 
-        const wrapper = shallow(
+        const wrapper = renderWithIntl(
             <MessageSubmitError {...props}/>,
         );
 
-        expect(wrapper.find('[id="message_submit_error.invalidCommand"]').exists()).toBe(true);
-        expect(wrapper.text()).not.toEqual('No command found');
+        expect(wrapper.container.querySelector('#message_submit_error.invalidCommand')).toBeDefined();
+
+        expect(screen.getByTestId('control-label').textContent).not.toBe('No command found');
     });
 
     it('should not display the submit link if the error is not for an invalid slash command', () => {
@@ -45,11 +48,12 @@ describe('components/MessageSubmitError', () => {
             submittedMessage,
         };
 
-        const wrapper = shallow(
+        const wrapper = renderWithIntl(
             <MessageSubmitError {...props}/>,
         );
 
-        expect(wrapper.find('[id="message_submit_error.invalidCommand"]').exists()).toBe(false);
-        expect(wrapper.text()).toEqual('Some server error');
+        expect(wrapper.container.querySelector('#message_submit_error.invalidCommand')).toBeNull();
+
+        expect(screen.getByTestId('control-label').textContent).toBe('Some server error');
     });
 });
