@@ -83,10 +83,10 @@ class JobTable extends React.PureComponent<Props> {
 
     render() {
         const showFilesColumn = this.props.jobType === JobTypes.MESSAGE_EXPORT && this.props.downloadExportResults;
-        const items = this.props.jobs.map((job) => {
+        const items = this.props.jobs.map((job, i) => {
             return (
                 <tr
-                    key={job.id}
+                    key={job.id + i}
                 >
                     <td className='cancel-button-field whitespace--nowrap text-center'>
                         <JobCancelButton
@@ -122,6 +122,7 @@ class JobTable extends React.PureComponent<Props> {
                                 className='btn btn-default'
                                 onClick={this.handleCreateJob}
                                 disabled={this.props.disabled}
+                                data-testid='job-table__create-button'
                             >
                                 {this.props.createJobButtonText}
                             </button>

@@ -313,7 +313,6 @@ export default class Textbox extends React.PureComponent<Props> {
                     onComposition={this.props.onComposition}
                     onBlur={this.handleBlur}
                     onHeightChange={this.props.onHeightChange}
-                    onWidthChange={this.props.onWidthChange}
                     onPaste={this.props.onPaste}
                     style={this.getStyle()}
                     inputComponent={this.props.inputComponent}

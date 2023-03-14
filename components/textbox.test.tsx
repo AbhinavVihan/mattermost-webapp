@@ -2,9 +2,12 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {shallow} from 'enzyme';
+
+import {Provider} from 'react-redux';
 
 import Textbox from 'components/textbox/textbox';
+import {renderWithIntl} from 'tests/react_testing_utils';
+import store from 'stores/redux_store';
 
 describe('components/TextBox', () => {
     const baseProps = {
@@ -32,17 +35,21 @@ describe('components/TextBox', () => {
     test('should match snapshot with required props', () => {
         function emptyFunction() {} //eslint-disable-line no-empty-function
 
-        const wrapper = shallow(
-            <Textbox
-                id='someid'
-                value='some test text'
-                onChange={emptyFunction}
-                onKeyPress={emptyFunction}
-                characterLimit={4000}
-                createMessage='placeholder text'
-                supportsCommands={false}
-                {...baseProps}
-            />,
+        const wrapper = renderWithIntl(
+            <Provider store={store}>
+
+                <Textbox
+                    id='someid'
+                    value='some test text'
+                    onChange={emptyFunction}
+                    onKeyPress={emptyFunction}
+                    characterLimit={4000}
+                    createMessage='placeholder text'
+                    supportsCommands={false}
+                    {...baseProps}
+                />,
+            </Provider>,
+
         );
         expect(wrapper).toMatchSnapshot();
     });
@@ -50,34 +57,38 @@ describe('components/TextBox', () => {
     test('should match snapshot with additional, optional props', () => {
         function emptyFunction() {} //eslint-disable-line no-empty-function
 
-        const wrapper = shallow(
-            <Textbox
-                id='someid'
-                value='some test text'
-                onChange={emptyFunction}
-                onKeyPress={emptyFunction}
-                characterLimit={4000}
-                createMessage='placeholder text'
-                supportsCommands={false}
-                {...baseProps}
-                rootId='root_id'
-                onComposition={() => {}}
-                onHeightChange={() => {}}
-                onKeyDown={() => {}}
-                onSelect={() => {}}
-                onMouseUp={() => {}}
-                onKeyUp={() => {}}
-                onBlur={() => {}}
-                handlePostError={() => {}}
-                suggestionListPosition='top'
-                emojiEnabled={true}
-                isRHS={true}
-                disabled={true}
-                badConnection={true}
-                listenForMentionKeyClick={true}
-                preview={true}
-                openWhenEmpty={true}
-            />,
+        const wrapper = renderWithIntl(
+            <Provider store={store}>
+
+                <Textbox
+                    id='someid'
+                    value='some test text'
+                    onChange={emptyFunction}
+                    onKeyPress={emptyFunction}
+                    characterLimit={4000}
+                    createMessage='placeholder text'
+                    supportsCommands={false}
+                    {...baseProps}
+                    rootId='root_id'
+                    onComposition={() => {}}
+                    onHeightChange={() => {}}
+                    onKeyDown={() => {}}
+                    onSelect={() => {}}
+                    onMouseUp={() => {}}
+                    onKeyUp={() => {}}
+                    onBlur={() => {}}
+                    handlePostError={() => {}}
+                    suggestionListPosition='top'
+                    emojiEnabled={true}
+                    isRHS={true}
+                    disabled={true}
+                    badConnection={true}
+                    listenForMentionKeyClick={true}
+                    preview={true}
+                    openWhenEmpty={true}
+                />,
+            </Provider>,
+
         );
         expect(wrapper).toMatchSnapshot();
     });
@@ -91,18 +102,20 @@ describe('components/TextBox', () => {
             gotError = msg !== null;
         }
 
-        const wrapper = shallow(
-            <Textbox
-                id='someid'
-                value='some test text that exceeds char limit'
-                onChange={emptyFunction}
-                onKeyPress={emptyFunction}
-                characterLimit={14}
-                createMessage='placeholder text'
-                supportsCommands={false}
-                handlePostError={handlePostError}
-                {...baseProps}
-            />,
+        const wrapper = renderWithIntl(
+            <Provider store={store}>
+                <Textbox
+                    id='someid'
+                    value='some test text that exceeds char limit'
+                    onChange={emptyFunction}
+                    onKeyPress={emptyFunction}
+                    characterLimit={14}
+                    createMessage='placeholder text'
+                    supportsCommands={false}
+                    handlePostError={handlePostError}
+                    {...baseProps}
+                />,
+            </Provider>,
         );
 
         expect(gotError).toEqual(true);
@@ -118,22 +131,23 @@ describe('components/TextBox', () => {
             gotError = msg !== null;
         }
 
-        const wrapper = shallow(
-            <Textbox
-                id='someid'
-                value='some test text'
-                onChange={emptyFunction}
-                onKeyPress={emptyFunction}
-                characterLimit={14}
-                createMessage='placeholder text'
-                supportsCommands={false}
-                handlePostError={handlePostError}
-                {...baseProps}
-            />,
-        );
+        const wrapper = renderWithIntl(
+            <Provider store={store}>
 
-        wrapper.setProps({value: 'some test text that exceeds char limit'});
-        wrapper.update();
+                <Textbox
+                    id='someid'
+                    value='some test text that exceeds char limit'
+                    onChange={emptyFunction}
+                    onKeyPress={emptyFunction}
+                    characterLimit={14}
+                    createMessage='placeholder text'
+                    supportsCommands={false}
+                    handlePostError={handlePostError}
+                    {...baseProps}
+                />,
+            </Provider>,
+
+        );
         expect(gotError).toEqual(true);
 
         expect(wrapper).toMatchSnapshot();

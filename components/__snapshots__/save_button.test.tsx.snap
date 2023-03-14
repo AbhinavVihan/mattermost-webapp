@@ -1,128 +1,266 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`components/SaveButton should match snapshot, extraClasses 1`] = `
-<button
-  className="save-button btn btn-primary some-class"
-  data-testid="saveSetting"
-  disabled={false}
-  id="saveSetting"
-  type="submit"
->
-  <LoadingWrapper
-    loading={false}
-    text={
-      <Memo(MemoizedFormattedMessage)
-        defaultMessage="Saving"
-        id="save_button.saving"
-      />
-    }
-  >
-    <span>
-      <MemoizedFormattedMessage
-        defaultMessage="Save"
-        id="save_button.save"
-      />
-    </span>
-  </LoadingWrapper>
-</button>
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <button
+        class="save-button btn btn-primary some-class"
+        data-testid="saveSetting"
+        id="saveSetting"
+        type="submit"
+      >
+        <span>
+          Save
+        </span>
+      </button>
+    </div>
+  </body>,
+  "container": <div>
+    <button
+      class="save-button btn btn-primary some-class"
+      data-testid="saveSetting"
+      id="saveSetting"
+      type="submit"
+    >
+      <span>
+        Save
+      </span>
+    </button>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
 exports[`components/SaveButton should match snapshot, on defaultMessage 1`] = `
-<button
-  className="save-button btn btn-primary"
-  data-testid="saveSetting"
-  disabled={false}
-  id="saveSetting"
-  type="submit"
->
-  <LoadingWrapper
-    loading={false}
-    text={
-      <Memo(MemoizedFormattedMessage)
-        defaultMessage="Saving"
-        id="save_button.saving"
-      />
-    }
-  >
-    <span>
-      <MemoizedFormattedMessage
-        defaultMessage="Save"
-        id="save_button.save"
-      />
-    </span>
-  </LoadingWrapper>
-</button>
-`;
-
-exports[`components/SaveButton should match snapshot, on defaultMessage 2`] = `
-<button
-  className="save-button btn btn-primary"
-  data-testid="saveSetting"
-  disabled={false}
-  id="saveSetting"
-  type="submit"
->
-  <LoadingWrapper
-    loading={false}
-    text={
-      <Memo(MemoizedFormattedMessage)
-        defaultMessage="Saving"
-        id="save_button.saving"
-      />
-    }
-  >
-    <span>
-      Go
-    </span>
-  </LoadingWrapper>
-</button>
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <button
+        class="save-button btn btn-primary"
+        data-testid="saveSetting"
+        id="saveSetting"
+        type="submit"
+      >
+        <span>
+          Go
+        </span>
+      </button>
+    </div>
+  </body>,
+  "container": <div>
+    <button
+      class="save-button btn btn-primary"
+      data-testid="saveSetting"
+      id="saveSetting"
+      type="submit"
+    >
+      <span>
+        Go
+      </span>
+    </button>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
 exports[`components/SaveButton should match snapshot, on savingMessage 1`] = `
-<button
-  className="save-button btn btn-primary"
-  data-testid="saveSetting"
-  disabled={true}
-  id="saveSetting"
-  type="submit"
->
-  <LoadingWrapper
-    loading={true}
-    text={
-      <Memo(MemoizedFormattedMessage)
-        defaultMessage="Saving"
-        id="save_button.saving"
-      />
-    }
-  >
-    <span>
-      <MemoizedFormattedMessage
-        defaultMessage="Save"
-        id="save_button.save"
-      />
-    </span>
-  </LoadingWrapper>
-</button>
-`;
-
-exports[`components/SaveButton should match snapshot, on savingMessage 2`] = `
-<button
-  className="save-button btn btn-primary"
-  data-testid="saveSetting"
-  disabled={true}
-  id="saveSetting"
-  type="submit"
->
-  <LoadingWrapper
-    loading={true}
-    text="Saving Config..."
-  >
-    <span>
-      <MemoizedFormattedMessage
-        defaultMessage="Save"
-        id="save_button.save"
-      />
-    </span>
-  </LoadingWrapper>
-</button>
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <button
+        class="save-button btn btn-primary"
+        data-testid="saveSetting"
+        disabled=""
+        id="saveSetting"
+        type="submit"
+      >
+        <span
+          class="LoadingSpinner with-text"
+          id="loadingSpinner"
+        >
+          <span
+            class="fa fa-spinner fa-fw fa-pulse spinner"
+            title="Loading Icon"
+          />
+          Saving Config...
+        </span>
+      </button>
+    </div>
+  </body>,
+  "container": <div>
+    <button
+      class="save-button btn btn-primary"
+      data-testid="saveSetting"
+      disabled=""
+      id="saveSetting"
+      type="submit"
+    >
+      <span
+        class="LoadingSpinner with-text"
+        id="loadingSpinner"
+      >
+        <span
+          class="fa fa-spinner fa-fw fa-pulse spinner"
+          title="Loading Icon"
+        />
+        Saving Config...
+      </span>
+    </button>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;

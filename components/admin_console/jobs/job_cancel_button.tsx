@@ -33,6 +33,7 @@ const JobCancelButton = (props: Props): JSX.Element|null => {
                 onClick={handleClick}
                 className='JobCancelButton'
                 title={intl.formatMessage({id: 'admin.jobTable.cancelButton', defaultMessage: 'Cancel'})}
+                data-testid='JobCancelButton'
             >
                 {'×'}
             </span>

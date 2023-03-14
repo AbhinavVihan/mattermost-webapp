@@ -5,10 +5,11 @@ import {shallow} from 'enzyme';
 import React from 'react';
 
 import GroupUsersRow from 'components/admin_console/group_settings/group_details/group_users_row';
+import {renderWithIntl} from 'tests/react_testing_utils';
 
 describe('components/admin_console/group_settings/group_details/GroupUsersRow', () => {
     test('should match snapshot', () => {
-        const wrapper = shallow(
+        const wrapper = renderWithIntl(
             <GroupUsersRow
                 username='test'
                 displayName='Test display name'

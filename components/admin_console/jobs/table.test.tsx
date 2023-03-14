@@ -3,10 +3,12 @@
 
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
-import {shallow} from 'enzyme';
+
+import {fireEvent, screen} from '@testing-library/react';
+
+import {renderWithIntl} from 'tests/react_testing_utils';
 
 import JobTable, {Props} from './table';
-import JobCancelButton from './job_cancel_button';
 
 describe('components/admin_console/jobs/table', () => {
     const createJobButtonText = (
@@ -110,20 +112,21 @@ describe('components/admin_console/jobs/table', () => {
     };
 
     test('should call create job func', () => {
-        const wrapper = shallow(
+        renderWithIntl(
             <JobTable {...baseProps}/>,
         );
 
-        wrapper.find('.job-table__create-button > div > .btn-default').simulate('click', {preventDefault: jest.fn()});
+        fireEvent.click(screen.getByTestId('job-table__create-button'));
         expect(createJob).toHaveBeenCalledTimes(1);
     });
 
     test('should call cancel job func', () => {
-        const wrapper = shallow(
+        renderWithIntl(
             <JobTable {...baseProps}/>,
         );
 
-        wrapper.find(JobCancelButton).first().simulate('click', {preventDefault: jest.fn(), currentTarget: {getAttribute: () => '1234'}});
+        fireEvent.click(screen.getAllByTestId('JobCancelButton')[0]);
+
         expect(cancelJob).toHaveBeenCalledTimes(1);
     });
 
@@ -137,7 +140,7 @@ describe('components/admin_console/jobs/table', () => {
             {header: 'Details'},
         ];
 
-        const wrapper = shallow(
+        renderWithIntl(
             <JobTable
                 {...baseProps}
                 jobType='message_export'
@@ -146,15 +149,15 @@ describe('components/admin_console/jobs/table', () => {
         );
 
         // There should be ONLY 1 table element
-        const table = wrapper.find('table');
-        expect(table).toHaveLength(1);
+        const table = screen.getByRole('table');
+        expect(table).toBeInTheDocument();
 
         // The table should have ONLY 1 thead element
-        const thead = table.find('thead');
-        expect(thead).toHaveLength(1);
+        const thead = table.firstElementChild;
+        expect(thead).toBeInTheDocument();
 
         // The number of th tags should be equal to number of columns
-        const headers = thead.find('th');
+        const headers = thead?.childNodes[0].childNodes;
         expect(headers).toHaveLength(cols.length);
     });
 
@@ -167,47 +170,47 @@ describe('components/admin_console/jobs/table', () => {
             {header: 'Details'},
         ];
 
-        const wrapper = shallow(
+        renderWithIntl(
             <JobTable
                 {...baseProps}
                 downloadExportResults={false}
             />,
         );
 
-        // There should be ONLY 1 table element
-        const table = wrapper.find('table');
-        expect(table).toHaveLength(1);
+        const table = screen.getByRole('table');
+        expect(table).toBeInTheDocument();
 
         // The table should have ONLY 1 thead element
-        const thead = table.find('thead');
-        expect(thead).toHaveLength(1);
+        // const thead = table.find('thead');
+        const thead = table.firstElementChild;
+        expect(thead).toBeInTheDocument();
 
         // The number of th tags should be equal to number of columns
-        const headers = thead.find('th');
+        const headers = thead?.childNodes[0].childNodes;
         expect(headers).toHaveLength(cols.length);
     });
 
     test('hide create job button', () => {
-        const wrapper = shallow(
+        renderWithIntl(
             <JobTable
                 {...baseProps}
                 hideJobCreateButton={true}
             />,
         );
 
-        const button = wrapper.find('button.btn-default');
-        expect(button).toHaveLength(0);
+        const button = screen.queryByText('Run Compliance Export Job Now');
+
+        expect(button).not.toBeInTheDocument();
     });
 
     test('add custom class', () => {
-        const wrapper = shallow(
+        const wrapper = renderWithIntl(
             <JobTable
                 {...baseProps}
                 className={'job-table__data-retention'}
             />,
         );
 
-        const element = wrapper.find('.job-table__data-retention');
-        expect(element).toHaveLength(1);
+        expect(wrapper.container.firstChild).toHaveClass('job-table__data-retention');
     });
 });
