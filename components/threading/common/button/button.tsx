@@ -31,9 +31,13 @@ function Button({
         <button
             {...attrs}
             className={classNames('Button Button___transparent', {'is-active': isActive, allowTextOverflow}, attrs.className)}
+            data-testid='Button___transparent'
         >
             {prepend && (
-                <span className='Button_prepended'>
+                <span
+                    data-testid='Button_prepended'
+                    className='Button_prepended'
+                >
                     {prepend}
                 </span>
             )}
@@ -42,7 +46,10 @@ function Button({
                 {hasDot && <span className='dot'/>}
             </span>
             {append && (
-                <span className='Button_appended'>
+                <span
+                    data-testid='Button_appended'
+                    className='Button_appended'
+                >
                     {append}
                 </span>
             )}

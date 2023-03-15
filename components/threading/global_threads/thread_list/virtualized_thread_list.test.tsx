@@ -2,7 +2,8 @@
 // See LICENSE.txt for license information.
 
 import React, {ComponentProps} from 'react';
-import {shallow} from 'enzyme';
+
+import {renderWithIntl} from 'tests/react_testing_utils';
 
 import VirtualizedThreadList from './virtualized_thread_list';
 
@@ -24,7 +25,7 @@ describe('components/threading/global_threads/thread_list/virtualized_thread_lis
     });
 
     test('should match snapshot', () => {
-        const wrapper = shallow(<VirtualizedThreadList {...props}/>);
+        const wrapper = renderWithIntl(<VirtualizedThreadList {...props}/>);
 
         expect(wrapper).toMatchSnapshot();
     });

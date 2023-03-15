@@ -2,9 +2,12 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {shallow} from 'enzyme';
+
+import {fireEvent, screen} from '@testing-library/react';
 
 import ReplyIcon from 'components/widgets/icons/reply_icon';
+
+import {renderWithIntl} from 'tests/react_testing_utils';
 
 import Button from './button';
 
@@ -12,7 +15,7 @@ describe('components/threading/common/button', () => {
     test('should support onClick', () => {
         const action = jest.fn();
 
-        const wrapper = shallow<typeof Button>(
+        const wrapper = renderWithIntl(
             <Button
                 onClick={action}
             />,
@@ -20,13 +23,14 @@ describe('components/threading/common/button', () => {
 
         expect(wrapper).toMatchSnapshot();
 
-        wrapper.simulate('click');
+        fireEvent.click(screen.getByTestId('Button___transparent'));
+
         expect(action).toHaveBeenCalled();
     });
 
     test('should support className', () => {
         const className = 'test-class other-test-class';
-        const wrapper = shallow<typeof Button>(
+        const wrapper = renderWithIntl(
             <Button
                 className={className}
             />,
@@ -34,12 +38,13 @@ describe('components/threading/common/button', () => {
 
         expect(wrapper).toMatchSnapshot();
 
-        expect(wrapper.hasClass('test-class')).toBe(true);
-        expect(wrapper.hasClass('other-test-class')).toBe(true);
+        const button = screen.getByTestId('Button___transparent');
+        expect(button).toHaveClass('test-class');
+        expect(button).toHaveClass('other-test-class');
     });
 
     test('should support prepended content', () => {
-        const wrapper = shallow<typeof Button>(
+        const wrapper = renderWithIntl(
             <Button
                 prepend={<ReplyIcon className='Icon'/>}
             />,
@@ -47,11 +52,11 @@ describe('components/threading/common/button', () => {
 
         expect(wrapper).toMatchSnapshot();
 
-        expect(wrapper.exists('.Button_prepended ReplyIcon')).toBe(true);
+        expect(wrapper.container.className.includes('Button_prepended ReplyIcon'));
     });
 
     test('should support appended content', () => {
-        const wrapper = shallow<typeof Button>(
+        const wrapper = renderWithIntl(
             <Button
                 append={<ReplyIcon className='Icon'/>}
             />,
@@ -59,17 +64,18 @@ describe('components/threading/common/button', () => {
 
         expect(wrapper).toMatchSnapshot();
 
-        expect(wrapper.exists('.Button_appended ReplyIcon')).toBe(true);
+        expect(wrapper.container.className.includes('Button_appended ReplyIcon'));
     });
 
     test('should support children', () => {
-        const wrapper = shallow<typeof Button>(
+        const wrapper = renderWithIntl(
             <Button>
                 {'text-goes-here'}
             </Button>,
         );
 
         expect(wrapper).toMatchSnapshot();
-        expect(wrapper.text()).toBe('text-goes-here');
+        const button = screen.getByTestId('Button___transparent');
+        expect(button).toHaveTextContent('text-goes-here');
     });
 });

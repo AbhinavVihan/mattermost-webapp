@@ -1,163 +1,405 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`components/team_members_dropdown should match snapshot for a bot with group-constrained team 1`] = `
-<MenuWrapper
-  animationComponent={[Function]}
-  className=""
->
-  <button
-    aria-expanded="true"
-    className="dropdown-toggle theme color--link style--none"
-    id="teamMembersDropdown_bot"
-    type="button"
-  >
-    <span>
-      <MemoizedFormattedMessage
-        defaultMessage="Team Admin"
-        id="team_members_dropdown.teamAdmin"
-      />
-       
-    </span>
-    <DropdownIcon />
-  </button>
-  <div>
-    <Menu
-      ariaLabel="Change the role of a team member"
-      openLeft={true}
-      openUp={false}
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="MenuWrapper "
+      >
+        <button
+          aria-expanded="true"
+          class="dropdown-toggle theme color--link style--none"
+          id="teamMembersDropdown_bot"
+          type="button"
+        >
+          <span>
+            Team Admin
+             
+          </span>
+          <i
+            class="fa fa-angle-down"
+            title="Dropdown Icon"
+          />
+        </button>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MenuWrapper "
     >
-      <MenuItemAction
-        id="removeFromTeam"
-        onClick={[Function]}
-        show={true}
-        text="Remove From Team"
-      />
-      <MenuItemAction
-        onClick={[Function]}
-        show={true}
-        text="Make Member"
-      />
-    </Menu>
-  </div>
-</MenuWrapper>
+      <button
+        aria-expanded="true"
+        class="dropdown-toggle theme color--link style--none"
+        id="teamMembersDropdown_bot"
+        type="button"
+      >
+        <span>
+          Team Admin
+           
+        </span>
+        <i
+          class="fa fa-angle-down"
+          title="Dropdown Icon"
+        />
+      </button>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
 exports[`components/team_members_dropdown should match snapshot for team_members_dropdown 1`] = `
-<MenuWrapper
-  animationComponent={[Function]}
-  className=""
->
-  <button
-    aria-expanded="true"
-    className="dropdown-toggle theme color--link style--none"
-    id="teamMembersDropdown_username2"
-    type="button"
-  >
-    <span>
-      <MemoizedFormattedMessage
-        defaultMessage="Team Admin"
-        id="team_members_dropdown.teamAdmin"
-      />
-       
-    </span>
-    <DropdownIcon />
-  </button>
-  <div>
-    <Menu
-      ariaLabel="Change the role of a team member"
-      openLeft={true}
-      openUp={false}
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="MenuWrapper "
+      >
+        <button
+          aria-expanded="true"
+          class="dropdown-toggle theme color--link style--none"
+          id="teamMembersDropdown_username2"
+          type="button"
+        >
+          <span>
+            Team Admin
+             
+          </span>
+          <i
+            class="fa fa-angle-down"
+            title="Dropdown Icon"
+          />
+        </button>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MenuWrapper "
     >
-      <MenuItemAction
-        id="removeFromTeam"
-        onClick={[Function]}
-        show={true}
-        text="Remove From Team"
-      />
-      <MenuItemAction
-        onClick={[Function]}
-        show={true}
-        text="Make Member"
-      />
-    </Menu>
-  </div>
-</MenuWrapper>
+      <button
+        aria-expanded="true"
+        class="dropdown-toggle theme color--link style--none"
+        id="teamMembersDropdown_username2"
+        type="button"
+      >
+        <span>
+          Team Admin
+           
+        </span>
+        <i
+          class="fa fa-angle-down"
+          title="Dropdown Icon"
+        />
+      </button>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
 exports[`components/team_members_dropdown should match snapshot opening dropdown upwards 1`] = `
-<MenuWrapper
-  animationComponent={[Function]}
-  className=""
->
-  <button
-    aria-expanded="true"
-    className="dropdown-toggle theme color--link style--none"
-    id="teamMembersDropdown_username2"
-    type="button"
-  >
-    <span>
-      <MemoizedFormattedMessage
-        defaultMessage="Team Admin"
-        id="team_members_dropdown.teamAdmin"
-      />
-       
-    </span>
-    <DropdownIcon />
-  </button>
-  <div>
-    <Menu
-      ariaLabel="Change the role of a team member"
-      openLeft={true}
-      openUp={true}
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="MenuWrapper "
+      >
+        <button
+          aria-expanded="true"
+          class="dropdown-toggle theme color--link style--none"
+          id="teamMembersDropdown_username2"
+          type="button"
+        >
+          <span>
+            Team Admin
+             
+          </span>
+          <i
+            class="fa fa-angle-down"
+            title="Dropdown Icon"
+          />
+        </button>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MenuWrapper "
     >
-      <MenuItemAction
-        id="removeFromTeam"
-        onClick={[Function]}
-        show={true}
-        text="Remove From Team"
-      />
-      <MenuItemAction
-        onClick={[Function]}
-        show={true}
-        text="Make Member"
-      />
-    </Menu>
-  </div>
-</MenuWrapper>
+      <button
+        aria-expanded="true"
+        class="dropdown-toggle theme color--link style--none"
+        id="teamMembersDropdown_username2"
+        type="button"
+      >
+        <span>
+          Team Admin
+           
+        </span>
+        <i
+          class="fa fa-angle-down"
+          title="Dropdown Icon"
+        />
+      </button>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
 exports[`components/team_members_dropdown should match snapshot with group-constrained team 1`] = `
-<MenuWrapper
-  animationComponent={[Function]}
-  className=""
->
-  <button
-    aria-expanded="true"
-    className="dropdown-toggle theme color--link style--none"
-    id="teamMembersDropdown_username2"
-    type="button"
-  >
-    <span>
-      <MemoizedFormattedMessage
-        defaultMessage="Team Admin"
-        id="team_members_dropdown.teamAdmin"
-      />
-       
-    </span>
-    <DropdownIcon />
-  </button>
-  <div>
-    <Menu
-      ariaLabel="Change the role of a team member"
-      openLeft={true}
-      openUp={false}
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="MenuWrapper "
+      >
+        <button
+          aria-expanded="true"
+          class="dropdown-toggle theme color--link style--none"
+          id="teamMembersDropdown_username2"
+          type="button"
+        >
+          <span>
+            Team Admin
+             
+          </span>
+          <i
+            class="fa fa-angle-down"
+            title="Dropdown Icon"
+          />
+        </button>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MenuWrapper "
     >
-      <MenuItemAction
-        onClick={[Function]}
-        show={true}
-        text="Make Member"
-      />
-    </Menu>
-  </div>
-</MenuWrapper>
+      <button
+        aria-expanded="true"
+        class="dropdown-toggle theme color--link style--none"
+        id="teamMembersDropdown_username2"
+        type="button"
+      >
+        <span>
+          Team Admin
+           
+        </span>
+        <i
+          class="fa fa-angle-down"
+          title="Dropdown Icon"
+        />
+      </button>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;

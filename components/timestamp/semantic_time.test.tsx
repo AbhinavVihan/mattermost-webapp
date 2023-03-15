@@ -4,22 +4,24 @@
 import React from 'react';
 import {mount} from 'enzyme';
 
+import {render, screen} from '@testing-library/react';
+
 import SemanticTime from './semantic_time';
 
 describe('components/timestamp/SemanticTime', () => {
     test('should render time semantically', () => {
         const date = new Date('2020-06-05T10:20:30Z');
-        const wrapper = mount(
+        render(
             <SemanticTime
                 value={date}
             />,
         );
-        expect(wrapper.find('time').prop('dateTime')).toBe('2020-06-05T10:20:30.000');
+        expect(screen.getByTestId('SemanticTime')).toHaveProperty('dateTime', '2020-06-05T10:20:30.000');
     });
 
     test('should support passthrough children', () => {
         const date = new Date('2020-06-05T10:20:30Z');
-        const wrapper = mount(
+        render(
             <SemanticTime
                 value={date}
             >
@@ -27,12 +29,12 @@ describe('components/timestamp/SemanticTime', () => {
             </SemanticTime>,
         );
 
-        expect(wrapper.find('time').text()).toBe('10:20');
+        expect(screen.getByTestId('SemanticTime')).toHaveTextContent('10:20');
     });
 
     test('should support custom label', () => {
         const date = new Date('2020-06-05T10:20:30Z');
-        const wrapper = mount(
+        const wrapper = render(
             <SemanticTime
                 value={date}
                 aria-label='A custom label'

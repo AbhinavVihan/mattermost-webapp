@@ -2,9 +2,10 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {shallow} from 'enzyme';
 
 import {TestHelper} from 'utils/test_helper';
+
+import {renderWithIntl} from 'tests/react_testing_utils';
 
 import TeamSelectorModal, {Props} from './team_selector_modal';
 
@@ -57,17 +58,18 @@ describe('components/TeamSelectorModal', () => {
     };
 
     test('should match snapshot', () => {
-        const wrapper = shallow(<TeamSelectorModal {...defaultProps}/>);
+        const wrapper = renderWithIntl(<TeamSelectorModal {...defaultProps}/>);
 
         expect(wrapper).toMatchSnapshot();
     });
 
     test('should hide group constrained teams when excludeGroupConstrained is true', () => {
-        const wrapper = shallow(
-            <TeamSelectorModal {...defaultProps}/>,
+        const wrapper = renderWithIntl(
+            <TeamSelectorModal
+                {...defaultProps}
+                excludeGroupConstrained={true}
+            />,
         );
-
-        wrapper.setProps({excludeGroupConstrained: true});
 
         expect(wrapper).toMatchSnapshot();
     });

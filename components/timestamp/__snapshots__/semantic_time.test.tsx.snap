@@ -1,13 +1,74 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`components/timestamp/SemanticTime should support custom label 1`] = `
-<Memo(SemanticTime)
-  aria-label="A custom label"
-  value={2020-06-05T10:20:30.000Z}
->
-  <time
-    aria-label="A custom label"
-    dateTime="2020-06-05T10:20:30.000"
-  />
-</Memo(SemanticTime)>
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <time
+        aria-label="A custom label"
+        data-testid="SemanticTime"
+        datetime="2020-06-05T10:20:30.000"
+      />
+    </div>
+  </body>,
+  "container": <div>
+    <time
+      aria-label="A custom label"
+      data-testid="SemanticTime"
+      datetime="2020-06-05T10:20:30.000"
+    />
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
